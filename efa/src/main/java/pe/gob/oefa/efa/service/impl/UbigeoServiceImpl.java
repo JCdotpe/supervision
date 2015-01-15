@@ -40,7 +40,7 @@ public class UbigeoServiceImpl implements UbigeoService {
 	    ResultSet rs = null;
 	    try{
 	    	connection = ConnectionManagerVPN.getConnection();
-		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_DEPARTAMENTO(?); END;");
+		    CallableStatement stmt = connection.prepareCall("BEGIN PADRONES.SP_GET_DEPARTAMENTO(?); END;");
 		    stmt.registerOutParameter(1, OracleTypes.CURSOR); //REF CURSOR
 		    stmt.execute();
 		    rs = ((OracleCallableStatement)stmt).getCursor(1);
@@ -74,7 +74,7 @@ public class UbigeoServiceImpl implements UbigeoService {
 	    ResultSet rs = null;
 	    try{
 	    	connection = ConnectionManagerVPN.getConnection();
-		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_PROVINCIA(?,?); END;");
+		    CallableStatement stmt = connection.prepareCall("BEGIN PADRONES.SP_GET_PROVINCIA(?,?); END;");
 		    stmt.setString(1, depId); 
 		    stmt.registerOutParameter(2, OracleTypes.CURSOR); //REF CURSOR
 		    stmt.execute();
@@ -109,7 +109,7 @@ public class UbigeoServiceImpl implements UbigeoService {
 	    ResultSet rs = null;
 	    try{
 	    	connection = ConnectionManagerVPN.getConnection();
-		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_DISTRITO(?,?,?); END;");
+		    CallableStatement stmt = connection.prepareCall("BEGIN PADRONES.SP_GET_DISTRITO(?,?,?); END;");
 		    stmt.setString(1, depId); 
 		    stmt.setString(2, provId); 
 		    stmt.registerOutParameter(3, OracleTypes.CURSOR); //REF CURSOR
