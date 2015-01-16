@@ -11,7 +11,11 @@
     <jsp:attribute name="footer">
       <p id="copyright">OEFA</p>
  	<script type="text/javascript"
-		src='<c:url value="/web-resources/js/js-for-listActSupervision.js"/>'></script>     
+		src='<c:url value="/web-resources/js/lib/jquery.form.js"/>'></script>  
+ 	<script type="text/javascript"
+		src='<c:url value="/web-resources/js/js-for-listActSupervision.js"/>'></script>  
+ 	<script type="text/javascript"
+		src='<c:url value="/web-resources/js/js-for-listMatriz.js"/>'></script>     
     </jsp:attribute>
     
     <jsp:body>
@@ -87,3 +91,32 @@
 		</table>
     </jsp:body>
 </t:simple>
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<c:url var="actionUrlMatriz" value="/matriz/saveMatrizActividad" />
+	<form id="frm_matriz_add" method="post" accept-charset="UTF-8"
+	action="${actionUrlMatriz}">
+		<input type="hidden" name="idactividad" id="idactividad_modal" value="" />
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">Matriz</h3>
+		</div>
+		<div class="modal-body">
+	  		<table class="table uppertext">
+	  			<thead>
+		  			<tr>
+		  				<th width="100"><center>Check</center></th>
+		  				<th>Matriz</th>
+		  			</tr>
+	  			</thead>
+	  			<tbody id="listMatriz">
+	  				<tr><td colspan="3"><div class="loader"></div></td></tr>
+	  			</tbody>
+	  		</table>
+		</div>
+		<div class="modal-footer">
+	  		<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+	  		<a href="#" id="modalverMatriz" class="btn btn-primary">Seleccionar</a>
+		</div>
+	</form>
+</div>

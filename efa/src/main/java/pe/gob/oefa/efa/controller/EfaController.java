@@ -35,7 +35,7 @@ import pe.gob.oefa.efa.service.UtilService;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 @Controller
-@RequestMapping("/efa")
+@RequestMapping({"/","/efa"})
 public class EfaController {
 
 	@Autowired
