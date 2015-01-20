@@ -48,7 +48,7 @@ public class EjecucionActividadController {
 	
 	@ModelAttribute("listUMestado")
 	public List<LabelValue> listUM_estado(){
-	    return utilService.listUM_estado();
+	    return utilService.listEstadoEjecucion();
 	}		
 	@ModelAttribute("listTiposejecfile")
 	public List<LabelValue> listTiposejecfile(){

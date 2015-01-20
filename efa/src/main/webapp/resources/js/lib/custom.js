@@ -163,7 +163,9 @@ $("#departamento").change(function(event) {
         	sel.append('<option value="-1">-</option>');
             $.each(json_data, function(i, data){
             	sel.append('<option value="' + data.value + '">' + data.label + '</option>');
-        });                	
+        });           
+            $("#distrito").empty();
+            $("#distrito").append('<option value="-1">-</option>');
         }
     });        
 });
