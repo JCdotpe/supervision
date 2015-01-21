@@ -12,7 +12,7 @@ import java.util.Properties;
 public class ConnectionManagerVPN {
 
 //    private static String url = "jdbc:oracle:thin:@10.0.0.15:1521:DESARROLLO";   
-	 private static String url = "jdbc:oracle:thin:@10.0.0.15:1521:DESARROLLO"; 
+	 private static String url = "jdbc:oracle:thin:@localhost:1521:xe"; 
     private static String driverName = "oracle.jdbc.OracleDriver";   
     private static String username = "SUPERVISION";   
     private static String password = "desa3dev";

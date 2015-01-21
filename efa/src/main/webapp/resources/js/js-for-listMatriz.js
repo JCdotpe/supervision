@@ -118,9 +118,11 @@ $(document).ready(function() {
 	$(".btnArchive").click(function(e){
 		idmatrizactividad = $(this).data("matrizactividad");
 		idfuncion = $(this).data("funcion");
-		
+		var titulofuncion = $(this).data("titulo");
+		$("#myModalLabel").html(titulofuncion);
 		$("#idmatrizactividad").val(idmatrizactividad);
 		$("#idfuncion").val(idfuncion);
+    	$("#frm_archive .txt").val("");
 		var disabled = $(this).data('disabled');
 		if (disabled) {
 			$("#frm_archive").hide();
@@ -161,6 +163,7 @@ $(document).ready(function() {
     });
     function showRequest(){
     	listArchivos.html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
+    	$("#frm_archive .txt").val("");
     }
     function processJson(json_data) {
     	listArchivos.html("");
@@ -176,10 +179,10 @@ $(document).ready(function() {
 		var v = data.arhivo;
 		v.replace('"', '');
 		if (estado) {
-			row += '<td colspan="2"><a href="http://localhost/efa/'+ v  +'" target="_blank">Archivo</a></td>';
+			row += '<td colspan="2"><a href="http://10.0.0.59:8080/efa/'+ v  +'" target="_blank">Archivo</a></td>';
 		}
 		else{
-			row += '<td><a href="http://localhost/efa/'+ v  +'" target="_blank">Archivo</a></td>';
+			row += '<td><a href="http://10.0.0.59:8080/efa/'+ v  +'" target="_blank">Archivo</a></td>';
 			row += '<td><a href="#" class="btn btn-primary delete_archive" data-id="'+ data.idarchivofunciones  +'">X</a></td>';
 		}
 		row += '</tr>';

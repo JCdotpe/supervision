@@ -7,11 +7,17 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 
 
+
+
+
+import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.Efa;
@@ -32,7 +39,9 @@ import pe.gob.oefa.efa.model.MatrizActividad;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
 import pe.gob.oefa.efa.service.ActividadService;
+import pe.gob.oefa.efa.service.EfaService;
 import pe.gob.oefa.efa.service.MatrizService;
+import pe.gob.oefa.efa.service.UtilService;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 
@@ -42,9 +51,15 @@ public class MatrizController {
 	
 	@Autowired
 	private MatrizService matrizservice;
-	
+
 	@Autowired
 	private ActividadService actividadService;
+	
+	@Autowired
+	private EfaService efaService;
+	
+	@Autowired
+	private UtilService utilService;
 	
 	
 	@RequestMapping(value = "/addIndicadoresbyFuncion", method = RequestMethod.POST)
@@ -139,7 +154,8 @@ public class MatrizController {
 		List<IndicadoresFuncion> mlistIndicadores = new ArrayList<IndicadoresFuncion>();
 		List<MatrizActividadFuncion> mListActividadFuncion = new ArrayList<MatrizActividadFuncion>();
 		List<MatrizActividadIndicador> mListActividadIndicador = new ArrayList<MatrizActividadIndicador>();
-		
+		Actividad act = actividadService.getActividad(idactividad);
+		Efa efa = efaService.getEfa(act.getIdefa());
 		for (int i = 0; i < ma.size(); i++) {
 			Matriz m = matrizservice.getMatriz(ma.get(i).getIdmatriz());
 			List<ComponenteMatriz> mlistComp = matrizservice.getComponente(ma.get(i).getIdmatriz());
@@ -187,6 +203,8 @@ public class MatrizController {
 		map.put("mlistIndicadores", mlistIndicadores);
 		map.put("mListActividadFuncion", mListActividadFuncion);
 		map.put("mListActividadIndicador", mListActividadIndicador);
+		map.put("actividad", act);
+		map.put("nombreefa", efa.getNombre());
 	    return ("/matriz/listMatriz");
 	}
 	
@@ -216,34 +234,38 @@ public class MatrizController {
             @RequestParam("archivo") MultipartFile file, Map<String, Object> map) {
 		if (!file.isEmpty()) {
 			try {
-				byte[] bytes = file.getBytes();
-
-				// modificar ruta, asimismo modificar la ruta en el archivo js/js-for-listMatriz.js
-				// linea 178
-				String rootPath = "C:/xampp/htdocs/efa";
-				File dir = new File(rootPath + File.separator);
-				if (!dir.exists())
-					dir.mkdirs();
-
-				File serverFile = new File(dir.getAbsolutePath()
-						+ File.separator + file.getOriginalFilename());
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-
-				System.out.println("Server File Location="
-						+ serverFile.getAbsolutePath());
-				
-				List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
-				MatrizActividadFuncion maf = listMaf.get(0);
-				ArchivoFunciones af = new ArchivoFunciones();
-				af.setIdmatrizactividadfunciones(maf.getIdmatrizactividadfunciones());
-				af.setEstadoarchivo("1");
-				af.setNombrearchivo(nombrearchivo);
-				af.setTipo(tipo);
-				af.setArhivo(file.getOriginalFilename());
-				matrizservice.addArchiveFuncion(af);
+				String saveDirectory = "/oefa.gob.pe/oefa/Desarrollo_App/SISEFA/"; 
+//				String saveDirectory = "c:/upload-efa/supervisor/";     
+				Integer max = 5 * 1024 * 1024; // 10MB
+                String fileName = file.getOriginalFilename();
+                
+                String filexname = utilService.createNewFileName(fileName);
+                
+                String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(pdf|doc|docx))$)";		
+                Pattern pattern = Pattern.compile(IMAGE_PATTERN);
+                Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
+                
+                if (file.getSize() > max || file.getSize() == 0) {
+                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }else{            
+	                if(matcher.matches()){
+		                file.transferTo(new File(saveDirectory + filexname));
+						List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
+						MatrizActividadFuncion maf = listMaf.get(0);
+						ArchivoFunciones af = new ArchivoFunciones();
+						af.setIdmatrizactividadfunciones(maf.getIdmatrizactividadfunciones());
+						af.setEstadoarchivo("1");
+						af.setNombrearchivo(nombrearchivo);
+						af.setTipo(tipo);
+						af.setArhivo(filexname);
+						matrizservice.addArchiveFuncion(af);
+	                }
+	                else{
+	                	JOptionPane.showMessageDialog(null, "La extension del archivo no esta permitida.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+	                }
+	           }
 				
 			} catch (Exception e) {
 				List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);

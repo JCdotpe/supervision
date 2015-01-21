@@ -19,9 +19,15 @@
     <jsp:body>
 		<span>Actividad</span>
 		<h2>Matriz</h2>
+		<h4>Código de Actividad: ${actividad.codactividad}</h4>
+		<h4>Nombre Efa: ${nombreefa}</h4>
+		<h4>Ubigeo de Actividad: ${actividad.departamentodes} - ${actividad.provinciades} - ${actividad.distritodes} </h4>
+		<h4>Fecha de Inicio de Actividad: ${actividad.fechaini}</h4>
+		<br />
+		<a href="/efa/actsupervision/" class="btn" style="float:right; background:#5faf2f; color:#ffffff; font-size:15px">Regresar a la consulta</a>
 		<br />
 		<br />
-		<ul class="nav nav-tabs" id="tabMatriz">
+		<ul class="nav nav-tabs" style="clear:both" id="tabMatriz">
 		<c:forEach items="${listMatrices}" var="matriz" varStatus="loopCounter">
 			<c:if test="${loopCounter.count == 1}">
 				<li class="active"><a href="#tab${loopCounter.count}">${matriz.nombrematriz}</a></li>
@@ -77,14 +83,14 @@
 					  						<table class="table uppertext table_funciones">
 			  									<thead>
 				  									<tr>
-				  										<th width="200">Funciones</th>
-				  										<th width="180">Indicadores</th>
-				  										<th width="20"></th>
-				  										<th>Observacion</th>
-				  										<th width="180">Base legal</th>
-				  										<th>Verificable</th>
-				  										<th></th>
-				  										<th width="90"></th>
+				  										<th width="20%">Funciones</th>
+				  										<th width="18%">Indicadores</th>
+				  										<th width="2%"></th>
+				  										<th width="15%">Observacion</th>
+				  										<th width="15%">Base legal</th>
+				  										<th width="10%">Verificable</th>
+				  										<th width="10%">Completo</th>
+				  										<th width="10%"></th>
 				  									</tr>
 				  								</thead>
 				  								<tbody>
@@ -100,8 +106,8 @@
 									  											<form id="frm_funcion_${loopCounter3.count}" method="post" action="${actionUrlMatriz2}">
 										  											<table class="table uppertext">
 										  												<tr>
-													  										<td width="200">${funciones.descripcionfuncion}</td>
-													  										<td width="200" colspan="2">
+													  										<td width="20%">${funciones.descripcionfuncion}</td>
+													  										<td width="20%" colspan="2">
 													  											<table  class="table" style="font-size: 9px">
 													  												<c:forEach items="${mlistIndicadores}" var="indicadores" varStatus="loopCounter4">
 													  													<c:if test="${funciones.idfuncion == indicadores.idfuncion}">
@@ -131,7 +137,7 @@
 													  												</c:forEach>
 													  											</table>
 													  										</td>
-													  										<td width="114">
+													  										<td width="15%">
 													  											<c:if test="${actividadfuncion.observaciones == null}"> 											
 														  											<textarea class="txtaObservacion" name="txtaObservacion"></textarea>
 												  												</c:if>
@@ -140,14 +146,21 @@
 														  											${actividadfuncion.observaciones}
 												  												</c:if>
 													  										</td>
-													  										<td width="180">${funciones.baselegal}</td>
-													  										<td width="104"></td>
-													  										<td width="75"></td>
-													  										<td width="90">
+													  										<td width="15%">${funciones.baselegal}</td>
+													  										<td width="10%">${funciones.verificable}</td>
+													  										<td width="10%">
+													  											<c:if test="${actividadfuncion.estadomatrizactividadfunciones == '0'}"> 
+													  												No
+												  												</c:if>
+												  												<c:if test="${actividadfuncion.estadomatrizactividadfunciones != '0'}"> 
+												  													Si
+														  										</c:if>
+													  										</td>
+													  										<td width="10%">
 												  												<c:if test="${actividadfuncion.estadomatrizactividadfunciones == '0'}"> 											
 														  											<input type="hidden" name="idmatrizactividad" value="${matrizactividad.idmatrizactividad}">
 														  											<input type="hidden" name="idfuncion" value="${funciones.idfuncion}">
-														  											<a href="#myModal" data-disabled="false" role="button" data-toggle="modal" 
+														  											<a href="#myModal" data-disabled="false" role="button" data-toggle="modal" data-titulo="${funciones.descripcionfuncion}"
 														  												data-matrizactividad="${matrizactividad.idmatrizactividad}" 
 														  												data-funcion="${funciones.idfuncion}" class="btn btnArchive">Archivos</a>
 														  											<br /><br />
@@ -192,16 +205,23 @@
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel">Archivos</h3>
+		<h4 id="myModalLabel">Archivos</h4>
 	</div>
 	<div class="modal-body">
 		<c:url var="actionUrlMatriz" value="/matriz/saveArchive" />
 	
 		<form id="frm_archive" style="padding-bottom: 40px" action="${actionUrlMatriz}" 
 			enctype="multipart/form-data" method="POST"  class="form-inline">
-		  	<input type="text" name="tipo" class="txt input-small" placeholder="Tipo">
+		  	<select name="tipo" class="txt input-small">
+		  		<option value="">Tipo</option>
+		  		<option value="Memo">Memo</option>
+		  		<option value="Informe">Informe</option>
+		  		<option value="Oficio">Oficio</option>
+		  		<option value="Otro">Otro</option>
+		  	</select>
 		  	<input type="text" name="nombrearchivo" class="txt input-medium" placeholder="Nombre del Archivo">
 		  	<input type="file" name="archivo" class="txt input-medium" placeholder="Archivo">
+		  	<label>Formato PDF y WORD <br />Peso max de 5Mb </label>
 		  	<input type="hidden" name="idmatrizactividad" id="idmatrizactividad" value="" />
 		  	<input type="hidden" name="idfuncion" id="idfuncion" value="" />
 		  	<br />

@@ -27,7 +27,7 @@ public class MatrizDaoImpl implements MatrizDao {
 	@SuppressWarnings("unchecked")
 	public List<MatrizActividad> listByActividad(BigDecimal codActividad) {
 		// TODO Auto-generated method stub
-		return getSession().createQuery("from MatrizActividad where IDACTIVIDAD=:parameter1 and ESTADOMATRIZACTIVIDAD = '1' or ESTADOMATRIZACTIVIDAD = '2'")
+		return getSession().createQuery("from MatrizActividad where IDACTIVIDAD=:parameter1 and ESTADOMATRIZACTIVIDAD = '1' or IDACTIVIDAD=:parameter1 and ESTADOMATRIZACTIVIDAD = '2'")
 				.setParameter("parameter1", codActividad).list();
 		
 	}
