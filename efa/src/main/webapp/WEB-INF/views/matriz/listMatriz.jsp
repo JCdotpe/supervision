@@ -19,10 +19,11 @@
     <jsp:body>
 		<span>Actividad</span>
 		<h2>Matriz</h2>
-		<h4>Código de Actividad: ${actividad.codactividad}</h4>
-		<h4>Nombre Efa: ${nombreefa}</h4>
-		<h4>Ubigeo de Actividad: ${actividad.departamentodes} - ${actividad.provinciades} - ${actividad.distritodes} </h4>
-		<h4>Fecha de Inicio de Actividad: ${actividad.fechaini}</h4>
+		<h5 class="head_matriz"><span>Código de Actividad:</span> ${actividad.codactividad}</h5>
+		<h5 class="head_matriz"><span>Ubigeo de Actividad:</span> ${actividad.departamentodes} - ${actividad.provinciades} - ${actividad.distritodes} </h5>
+		<h5 class="head_matriz"><span>Nombre Efa:</span> ${nombreefa}</h5>
+		<h5 class="head_matriz"><span>Fecha de Inicio de Actividad:</span> ${actividad.fechaini}</h5>
+		<br />
 		<br />
 		<a href="/efa/actsupervision/" class="btn" style="float:right; background:#5faf2f; color:#ffffff; font-size:15px">Regresar a la consulta</a>
 		<br />
