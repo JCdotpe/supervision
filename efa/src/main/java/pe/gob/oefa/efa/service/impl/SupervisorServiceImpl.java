@@ -75,8 +75,8 @@ public class SupervisorServiceImpl implements SupervisorService {
 			
 //		connection = ConnectionManagerVPN.getConnection();	.
 		connection = ConnectionManager.getConnection();	
-//		String getDBUSERByUserIdSql = "{CALL PADRONES.SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";
-		String getDBUSERByUserIdSql = "{CALL SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";
+		String getDBUSERByUserIdSql = "{CALL PADRONES.SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";
+//		String getDBUSERByUserIdSql = "{CALL SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";
 		callableStatement = connection.prepareCall(getDBUSERByUserIdSql);
 
 		callableStatement.setString(1, dni);
