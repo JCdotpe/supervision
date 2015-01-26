@@ -52,7 +52,8 @@ public class EjecucionFileController {
 	    public String save(@RequestParam("id") BigDecimal actId, @RequestParam("file") MultipartFile file,
 	    		@RequestParam("tipo") String tipo,@RequestParam("nombre") String nombre, Model map) throws IllegalStateException, IOException {
 		
-			String saveDirectory = "/oefa.gob.pe/oefa/Desarrollo_App/SISEFA/";  
+		new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
+		String saveDirectory = "C:/Desarrollo_App/SISEFA/";  
 //			String saveDirectory = "c:/upload-efa/ejecucion/";    
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();

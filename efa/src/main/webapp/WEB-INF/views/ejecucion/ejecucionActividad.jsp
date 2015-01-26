@@ -20,10 +20,10 @@
 		<!--<div id="bookDialog" style="display: none;">
 		</div>
 		-->
-		<span> Ejecución Actividad</span>
+		<span> EjecuciÃ³n Actividad</span>
 		
-		<h2>Ejecución de Actividad </h2>
-		<h4>Código Actividad: ${act.codactividad}</h4>	
+		<h2>EjecuciÃ³n de Actividad </h2>
+		<h4>CÃ³digo Actividad: ${act.codactividad}</h4>	
 		<h4>EFA: ${efa.nombre}</h4>	
 		<h4>Ubigeo: ${act.departamentodes} ${act.provinciades} ${act.distritodes}</h4>	
 		<div>

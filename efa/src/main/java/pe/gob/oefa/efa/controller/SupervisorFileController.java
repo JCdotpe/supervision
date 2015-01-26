@@ -47,8 +47,9 @@ public class SupervisorFileController {
 	@RequestMapping(value = "/savefile", method = RequestMethod.POST)
 	    public String save(@RequestParam("id") BigDecimal ciId, @RequestParam("file") MultipartFile file,
 	    		@RequestParam("tipo") String tipo, Model map) throws IllegalStateException, IOException {
-	        
-			String saveDirectory = "/oefa.gob.pe/oefa/Desarrollo_App/SISEFA/";  
+
+			new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
+			String saveDirectory = "C:/Desarrollo_App/SISEFA/";  
 //			String saveDirectory = "c:/upload-efa/supervisor/";     
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();
