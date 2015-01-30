@@ -55,7 +55,7 @@
 						</c:forEach>						
 						</td>		
 						<td><c:out value="${sup.nombre}" /></td>					
-						<td><a href="ftp://ftp.oefa.gob.pe/efa/${sup.archivo}" target="top"><c:out value="${sup.archivo}" /></a></td>
+						<td><a href="file:///C:/Desarrollo_App/SISEFA/${sup.archivo}" target="_blank"><c:out value="${sup.archivo}" /></a></td>
 						
 						  <td><nobr>																					
 								<a class="btn btn-efa-del btn-xs"
