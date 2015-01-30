@@ -52,7 +52,7 @@ public class ActividadController {
 	private UbigeoService ubigeoService;
 	
 	@Autowired
-	private ActividadService actividadService;
+	private ActividadService actividadService ;
 	
 	@Autowired
 	private EfaService efaService;	
