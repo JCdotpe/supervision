@@ -4,12 +4,17 @@ import java.math.BigDecimal;
 import java.util.List;
 
 
+
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.databind.node.DecimalNode;
+
 import pe.gob.oefa.efa.dao.EfaDao;
+import pe.gob.oefa.efa.model.Auditoria;
 import pe.gob.oefa.efa.model.Efa;
 
 @Repository
@@ -19,7 +24,26 @@ public class EfaDaoImpl implements EfaDao {
 	private SessionFactory sessionFactory;
 
 	public void saveEfa(Efa efa) {
-		getSession().merge(efa);
+		
+		try {
+			/*Auditoria auditoria = new Auditoria();
+			auditoria.setidAuditoria(new BigDecimal(1));
+			auditoria.setDescripcion("dd");
+			
+			BigDecimal asd = auditoria.getidAuditoria();
+			String asds = auditoria.getdescripcion();
+			
+			getSession().merge(auditoria)*/
+			getSession().merge(efa);
+			
+			
+			 /*getSession().createQuery("INSERT INTO AUDITORIA VALUES (parameter1,parameter2)").list();
+					.setParameter("parameter1", 3)
+					.setParameter("parameter2", "DEMO 3");*/
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 
