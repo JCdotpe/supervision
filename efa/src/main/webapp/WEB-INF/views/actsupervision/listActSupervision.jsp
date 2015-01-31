@@ -74,17 +74,24 @@
 					  	</c:if>
 						</c:forEach>	
 						</td>	
-						
-						<td>															
-                             <a href="#myModal" role="button" class="btn btn-efa-del btn-xs btn-pop-matriz" data-toggle="modal" data-level="${resp.NIVEL}" data-id="${resp.IDACTIVIDAD}"> <span class="glyphicon glyphicon-edit"></span>
-                             </a>
-						</td>
-						
-						<td>
-                            <a href="/efa/ejeact/${resp.IDACTIVIDAD}"class="btn btn-efa btn-xs">
-                                <span class="glyphicon glyphicon-edit"></span>
-                            </a>
-						</td>																				
+						<c:choose>
+							<c:when test="${usuario.codPerfil eq '14'}">						
+								<td>---</td>
+								<td>---</td>
+							</c:when>
+							<c:otherwise>
+								<td>
+		                            <a href="/efa/ejeact/${resp.IDACTIVIDAD}"class="btn btn-efa btn-xs">
+		                                <span class="glyphicon glyphicon-edit"></span>
+		                            </a>
+								</td>
+								<td>							
+	                             <a href="#myModal" role="button" class="btn btn-efa-del btn-xs btn-pop-matriz" data-toggle="modal" data-level="${resp.NIVEL}" data-id="${resp.IDACTIVIDAD}"> <span class="glyphicon glyphicon-edit"></span>
+	                             </a>
+								</td>	                             
+	                           								
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</tbody>
