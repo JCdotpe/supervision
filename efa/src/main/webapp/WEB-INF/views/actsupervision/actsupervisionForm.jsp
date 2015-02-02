@@ -16,12 +16,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Fecha inicio Ejecución Supervisión</label>
         <div class="col-sm-3">
-        	<input name = "fechaini"  class="form-control datepicker" value="${fechaini }" />
+        	<input name = "fechaini" maxlength="10" class="form-control datepicker" value="${fechaini }" />
         	<div class="help-block error"></div>
         </div>     
-        <label for="inputType"  class="col-sm-1 control-label">Fecha Fin Ejecución Supervisión</label>
+        <label for="inputType" class="col-sm-1 control-label">Fecha Fin Ejecución Supervisión</label>
         <div class="col-sm-3">
-        	<input name = "fechafin" class="form-control datepicker" value="${fechafin }"/>
+        	<input name = "fechafin" maxlength="10" class="form-control datepicker" value="${fechafin }"/>
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -29,12 +29,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">EFA</label>
         <div class="col-sm-3">
-        	<input name="nombrefa" class="form-control" value="${nombrefa }"/>
+        	<input name="nombrefa" maxlength="255" class="form-control" value="${nombrefa }"/>
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Supervisor Responsable</label>
         <div class="col-sm-3">
-        	<input name="nombresup" class="form-control" value="${nombresup }"/>
+        	<input name="nombresup" maxlength="255" class="form-control" value="${nombresup }"/>
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -57,7 +57,7 @@
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Informe</label>
         <div class="col-sm-3">
-        	<input name="informe" class="form-control" />
+        	<input name="informe" maxlength="255" class="form-control" />
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -65,7 +65,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Código Act. Programada</label>
         <div class="col-sm-3">
-        	<input name="codact" class="form-control" />
+        	<input maxlength="60" name="codact" class="form-control" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Estado</label>
@@ -121,7 +121,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Sector</label>
         <div class="col-sm-3">
-        	<input name="sector" class="form-control"/>
+        	<input maxlength="255" name="sector" class="form-control"/>
         	<div class="help-block error"></div>
         </div>               
 </div>

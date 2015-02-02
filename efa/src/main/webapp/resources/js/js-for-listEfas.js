@@ -80,6 +80,7 @@ $("#efaForm").validate({
     		email:true,
     	}, 	   
     	celular:{
+    		digits:true,
     		required:true,
     	},     	
     },

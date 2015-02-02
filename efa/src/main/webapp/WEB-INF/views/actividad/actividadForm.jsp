@@ -98,7 +98,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Dirección</label>
         <div class="col-sm-11">
-        	<input id="edireccion" readonly class="form-control"/>
+        	<input id="edireccion" maxlength="255" readonly class="form-control"/>
         	<div class="help-block error"></div>
         </div>                  
 </div> 
@@ -108,7 +108,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Nombre del Titular de la EFA</label>
         <div class="col-sm-3">
-        	<input id="enombre" readonly class="form-control" />
+        	<input id="enombre" maxlength="255" readonly class="form-control" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Web Institucional</label>
@@ -120,7 +120,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Descripción</label>
         <div class="col-sm-11">
-        	<form:input name = "descripcion" path="descripcion" class="form-control" />
+        	<form:input name = "descripcion" path="descripcion" maxlength="255" class="form-control" />
         	<div class="help-block error"></div>
         </div>                  
 </div> 
@@ -140,12 +140,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Hora Inicio<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "horaini" path="horaini" class="form-control" />
+        	<form:input name = "horaini" path="horaini" maxlength="5" class="form-control" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Hora Fin<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "horafin" path="horafin" class="form-control" />
+        	<form:input name = "horafin" path="horafin" maxlength="5" class="form-control" />
         	<div class="help-block error"></div>
         </div>              
 </div>

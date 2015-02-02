@@ -32,6 +32,10 @@
 	    </table>
 	    <br/>	<button type="submit" class="btn btn-success">Subir Archivo</button>
 	</form:form>
+	
+			<br />
+			<br />
+	
 		
 <table class="table datatable uppertext" id="tblSupervisor">
 			<thead>
