@@ -68,9 +68,11 @@ $("#efaForm").validate({
     		valueNotEquals:'-1',
     	}, 
     	telefono:{
+    		digits:true,
     		required:true,
     	}, 	  
     	fax:{
+    		digits:true,
     		//required:true,
     	}, 	
     	correo:{
@@ -120,14 +122,17 @@ $("#responsableForm").validate({
     		required:true,
     	},		
 		appaterno:{
+			minlength:2,
     		validName:true,
     		required:true,
     	},
     	apmaterno:{
+    		minlength:2,
     		validName:true,
     		required:true,
     	},
     	nombre:{
+    		minlength:2,
     		validName:true,
     		required:true,
     	}, 	
@@ -135,9 +140,11 @@ $("#responsableForm").validate({
     		required:true,
     	}, 	    	
     	direccion:{
+    		
     		required:true,
     	}, 	  
     	telefono:{
+    		digits:true,
     		required:true,
     	}, 	  
     	correo:{
@@ -145,9 +152,11 @@ $("#responsableForm").validate({
     		email:true,
     	}, 	    	
     	fax:{
+    		digits:true,
 //    		required:true,
     	}, 	
     	celular:{
+    		digits:true,
     		required:true,
     	}, 	    	
      	

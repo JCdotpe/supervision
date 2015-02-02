@@ -22,74 +22,69 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import pe.gob.oefa.efa.model.EjecucionActividad;
-import pe.gob.oefa.efa.model.EjecucionFile;
 import pe.gob.oefa.efa.model.Responsable;
 import pe.gob.oefa.efa.model.SupervisorFile;
 import pe.gob.oefa.efa.model.Supervisor;
 import pe.gob.oefa.efa.model.FileUploadForm;
-import pe.gob.oefa.efa.service.EjecucionActividadService;
-import pe.gob.oefa.efa.service.EjecucionFileService;
 import pe.gob.oefa.efa.service.SupervisorFileService;
 import pe.gob.oefa.efa.service.SupervisorService;	
 import pe.gob.oefa.efa.service.UtilService;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 @Controller
-@RequestMapping("/ejecarchivo")
-public class EjecucionFileController {
+@RequestMapping("/suparchivo")
+public class SupervisorFileController {
 	
 	@Autowired
-	private EjecucionActividadService ejecucionActividadService;	
+	private SupervisorService supervisorService;	
 	
 	@Autowired
-	private EjecucionFileService ejecucionFileService;	
+	private SupervisorFileService supervisorFileService;	
 	
 	@Autowired
 	private UtilService utilService;
 		
 	@RequestMapping(value = "/savefile", method = RequestMethod.POST)
-	    public String save(@RequestParam("id") BigDecimal actId, @RequestParam("file") MultipartFile file,
-	    		@RequestParam("tipo") String tipo,@RequestParam("nombre") String nombre, Model map) throws IllegalStateException, IOException {
-		
-		new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
-		String saveDirectory = "C:/Desarrollo_App/SISEFA/";  
-//			String saveDirectory = "c:/upload-efa/ejecucion/";    
+	    public String save(@RequestParam("id") BigDecimal ciId, @RequestParam("file") MultipartFile file,
+	    		@RequestParam("tipo") String tipo, Model map) throws IllegalStateException, IOException {
+
+			new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
+			String saveDirectory = "C:/Desarrollo_App/SISEFA/";  
+//			String saveDirectory = "c:/upload-efa/supervisor/";     
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();
 	                
 	                String filexname = utilService.createNewFileName(fileName);
 	                
-	                String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|doc|docx|pdf))$)";		
+	                String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|doc|docx))$)";		
 	                Pattern pattern = Pattern.compile(IMAGE_PATTERN);
 	                Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
 	                
 	                if (file.getSize() > max || file.getSize() == 0) {
-	                	JOptionPane.showMessageDialog(null, "El tama?o del archivo no es el permitido", "Error",
+	                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
                                 JOptionPane.ERROR_MESSAGE);
 	                }else{            
 		                if(matcher.matches()){
 			                file.transferTo(new File(saveDirectory + filexname));
-			                EjecucionFile ejecucionFile = new EjecucionFile();
-			                EjecucionActividad ejecucionActividad = ejecucionActividadService.getEjecucionActividad_BY(actId);
-			                ejecucionFile.setEjecucionActividad(ejecucionActividad);
-			                ejecucionFile.setNombre(nombre);
-			                ejecucionFile.setArchivo(filexname);
-			                ejecucionFile.setTipo(tipo);
-			                ejecucionFileService.saveEjecucionFile(ejecucionFile);
+			                SupervisorFile supervisorFile = new SupervisorFile();
+			                Supervisor supervisor = supervisorService.getSupervisor(ciId);
+			                supervisorFile.setSupervisor(supervisor);
+			                supervisorFile.setNombre(filexname);
+			                supervisorFile.setTipo(tipo);
+			                supervisorFileService.saveSupervisorFile(supervisorFile);
 		                }else{
-		                	JOptionPane.showMessageDialog(null, "La extensi?n del archivo no esta permitida", "Error",
+		                	JOptionPane.showMessageDialog(null, "La extension del archivo no esta permitida", "Error",
 	                                JOptionPane.ERROR_MESSAGE);
 		                }
 	                }
-	        return "redirect:/ejeact/" + actId;
+	        return "redirect:/supervisor/suparchivo/" + ciId;
 	    }	
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		ejecucionFileService.deleteEjecucionFile(id);;
+		supervisorFileService.deleteSupervisorFile(id);
 		selectItems.add(new LabelValue("success","1"));
 		return selectItems;
 	}		

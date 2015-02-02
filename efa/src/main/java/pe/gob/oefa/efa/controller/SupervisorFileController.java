@@ -56,7 +56,7 @@ public class SupervisorFileController {
 	                
 	                String filexname = utilService.createNewFileName(fileName);
 	                
-	                String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|doc|docx))$)";		
+	                String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|doc|docx|pdf))$)";		
 	                Pattern pattern = Pattern.compile(IMAGE_PATTERN);
 	                Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
 	                
