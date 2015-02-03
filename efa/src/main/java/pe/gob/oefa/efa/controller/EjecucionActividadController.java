@@ -55,12 +55,12 @@ public class EjecucionActividadController {
 	    return utilService.listTipos_ejecfile();
 	}	
 	@RequestMapping(value = "/{actId}", method = RequestMethod.GET)
-	public String getResponsables(@PathVariable BigDecimal actId, Map<String, Object> map) {
+	public String getResponsables(@PathVariable BigDecimal actId, Map<String, Object> map, HttpSession session) {
 		EjecucionActividad eje = ejecucionActividadService.getEjecucionActividad_BY(actId);
 		if(eje.getIdejecucion() == null){
 			EjecucionActividad ejeact = new EjecucionActividad();
 			ejeact.setActividad(actividadService.getActividad(actId));
-			ejecucionActividadService.saveEjecucionActividad(ejeact);
+			ejecucionActividadService.saveEjecucionActividad(ejeact,session);
 		}
 		Actividad act = actividadService.getActividad(actId);
 		Efa efa = efaService.getEfa(act.getIdefa());
@@ -82,7 +82,7 @@ public class EjecucionActividadController {
 		
 		actividad.setSupervision(ejecucionActividad.getSupespecial());
 		actividad.setHallazgo(ejecucionActividad.getHallazgos());
-		actividadService.saveActividad(actividad);
+		actividadService.saveActividad(actividad,session);
 //		EjecucionActividad peje = ejecucionActividadService.getEjecucionActividad(ideje);
 		ejecucionActividad.setActividad(actividad);
 //		peje.setEstado(ejecucionActividad.getEstado());
@@ -91,7 +91,7 @@ public class EjecucionActividadController {
 //		peje.setHallazgos(ejecucionActividad.getHallazgos());
 //		peje.setSupespecial(ejecucionActividad.getSupespecial());
 //		peje.setObservacion(ejecucionActividad.getObservacion());
-		ejecucionActividadService.saveEjecucionActividad(ejecucionActividad);
+		ejecucionActividadService.saveEjecucionActividad(ejecucionActividad,session);
 		
 		String linkr = "redirect:/ejeact/" + actId;  
 					

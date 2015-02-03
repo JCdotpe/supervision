@@ -63,7 +63,7 @@ public class ResponsableController {
 	public String getResponsablesdsa(@RequestParam("id") BigDecimal efaId,@ModelAttribute("responsable") Responsable responsable, HttpSession session) {
 		Efa efa = efaService.getEfa(efaId);
 		responsable.setEfa(efa);		
-		responsableService.saveResponsable2(responsable);
+		responsableService.saveResponsable2(responsable,session);
 		
 		String linkr = "redirect:/efa/detail/" + efaId;  
 		if(session.getAttribute("actEfa") != null)
@@ -75,12 +75,13 @@ public class ResponsableController {
 	@RequestMapping("/deleteres/{responsableId}")
 	public String deleteResponsable(@PathVariable("responsableId") BigDecimal id, HttpSession session) {
 		Responsable responsable = responsableService.getResponsable(id);
-		responsableService.deleteResponsable(id);
+		responsableService.deleteResponsable(id,session);
 		String asd = responsable.getEfa().getId().toString();
 		
 		String linkr = "redirect:/efa/detail/" + asd;  
 		if(session.getAttribute("actEfa") != null)
-				linkr = "redirect:/efa/detail/" + asd + "/" + session.getAttribute("actEfa");				
+				linkr = "redirect:/efa/detail/" + asd + "/" + session.getAttribute("actEfa");
+		
 		return linkr;
 	}	
 	

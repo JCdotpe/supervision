@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
+
+
+
+
+
+import org.apache.axis.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,21 +31,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mysql.jdbc.Constants;
+
+import pe.gob.oefa.efa.model.Auditoria;
 import pe.gob.oefa.efa.model.Efa;
 import pe.gob.oefa.efa.model.Responsable;
 import pe.gob.oefa.efa.model.Ubigeo;
+import pe.gob.oefa.efa.service.AuditoriaService;
 import pe.gob.oefa.efa.service.EfaService;
 import pe.gob.oefa.efa.service.ResponsableService;
 import pe.gob.oefa.efa.service.UbigeoService;
 import pe.gob.oefa.efa.service.UtilService;
+import pe.gob.oefa.efa.utils.ConstantAuditoria;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 @Controller
 @RequestMapping({"/","/efa"})
 public class EfaController {
-
+	
 	@Autowired
 	private EfaService efaService;
+	
+	@Autowired
+	private AuditoriaService auditoriaService;
 	
 	@Autowired
 	private UbigeoService ubigeoService;
@@ -90,6 +104,7 @@ public class EfaController {
 	    map.put("efa", efa);
 	    map.put("listProv", ubigeoService.listProv(efa.getDepartamento()));
 	    map.put("listDis", ubigeoService.listDist(efa.getDepartamento(),efa.getProvincia()));
+	    
 	    return ("/efa/listEfas");
 	}		
 
@@ -102,7 +117,7 @@ public class EfaController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveEfa(@ModelAttribute("efa") Efa efa, BindingResult result, HttpSession session) {
-		efaService.saveEfa(efa);
+		efaService.saveEfa(efa, session);
 		return "redirect:listEfas";
 	}
 
@@ -114,11 +129,11 @@ public class EfaController {
 
 	@RequestMapping(value = "/pdelete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
+	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id, HttpSession session) {
 		List<Responsable> asd = responsableService.listResponsables_by_ID(id);
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(asd.isEmpty()){
-			efaService.deleteEfa(id);
+			efaService.deleteEfa(id, session);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","0"));
@@ -146,7 +161,7 @@ public class EfaController {
 		map.put("respList", responsableService.listResponsables_by_ID(efaId));
 		Efa efa = efaService.getEfa(efaId);
 		map.put("responsable", new Responsable());
-		map.put("efa", efa);
+		map.put("efa", efa);		
 		return "/efa/listResponsables";
 	}	
 

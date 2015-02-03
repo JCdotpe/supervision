@@ -1,5 +1,16 @@
 $(document).ready(function() {
 
+		$(".datepicker").val("");
+		
+		$("input[name='nombrefa']").val("");
+		$("input[name='nombresup']").val("");
+		
+		$("input[name='informe']").val("");
+		$("input[name='codact']").val("");
+		$("input[name='sector']").val("");
+		
+		$(".cboActSuper").prop('selectedIndex', 0);
+	
 $("#actividadForm").validate({
     rules: {  
 		nivel:{

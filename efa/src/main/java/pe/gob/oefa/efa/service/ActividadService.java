@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import pe.gob.oefa.efa.model.Actividad;
 //import pe.gob.oefa.efa.model.ActividadResponsable;
 import pe.gob.oefa.efa.model.MatrizActividad;
@@ -17,8 +19,8 @@ public interface ActividadService {
 	/*
 	 * CREATE and UPDATE 
 	 */
-	public void saveActividad(Actividad actividad);
-	public void saveActividadMatriz(MatrizActividad matrizactividad);
+	public void saveActividad(Actividad actividad, HttpSession session);
+	public void saveActividadMatriz(MatrizActividad matrizactividad, HttpSession session);
 
 	/*
 	 * READ
@@ -31,7 +33,7 @@ public interface ActividadService {
 	 * DELETE
 	 */
 	public void setEstadoAct(BigDecimal idact, String estado);
-	public void deleteActResponsable(BigDecimal actid, BigDecimal resid );
-	public void deleteActSupervisor(BigDecimal actid, BigDecimal supid );
-	public void deleteActividad(BigDecimal id);
+	public void deleteActResponsable(BigDecimal actid, BigDecimal resid, HttpSession session );
+	public void deleteActSupervisor(BigDecimal actid, BigDecimal supid, HttpSession session );
+	public void deleteActividad(BigDecimal id, HttpSession session);
 }

@@ -1,11 +1,16 @@
 package pe.gob.oefa.efa.dao.impl;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
 
 
+
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,33 +28,20 @@ public class EfaDaoImpl implements EfaDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy"); 
+	SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm"); 
+	Date currentDate = new Date(0);
+	
 	public void saveEfa(Efa efa) {
-		
-		try {
-			/*Auditoria auditoria = new Auditoria();
-			auditoria.setidAuditoria(new BigDecimal(1));
-			auditoria.setDescripcion("dd");
-			
-			BigDecimal asd = auditoria.getidAuditoria();
-			String asds = auditoria.getdescripcion();
-			
-			getSession().merge(auditoria)*/
-			getSession().merge(efa);
-			
-			
-			 /*getSession().createQuery("INSERT INTO AUDITORIA VALUES (parameter1,parameter2)").list();
-					.setParameter("parameter1", 3)
-					.setParameter("parameter2", "DEMO 3");*/
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
+		    getSession().merge(efa);
 	}
 
+	public int saveEfaPrueba(Efa efa) {
+	    return (Integer)getSession().merge(efa);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Efa> listEfas() {
-
 		return getSession().createCriteria(Efa.class).list();
 	}
 

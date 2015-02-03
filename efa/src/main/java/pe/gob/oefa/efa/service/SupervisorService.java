@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import pe.gob.oefa.efa.model.Responsable;
 import pe.gob.oefa.efa.model.Supervisor;
 import pe.gob.oefa.efa.model.SupervisorEmergencia;
@@ -17,7 +19,7 @@ public interface SupervisorService {
 	/*
 	 * CREATE and UPDATE 
 	 */
-	public void saveSupervisor(Supervisor supervisor);
+	public void saveSupervisor(Supervisor supervisor, HttpSession session);
 
 	/*
 	 * READ
@@ -29,6 +31,6 @@ public interface SupervisorService {
 	/*
 	 * DELETE
 	 */
-	public void deleteSupervisor(BigDecimal id);
+	public void deleteSupervisor(BigDecimal id, HttpSession session);
 	public Map<String, String> getDni(String dni);
 }

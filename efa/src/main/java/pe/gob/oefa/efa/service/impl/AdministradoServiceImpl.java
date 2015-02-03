@@ -7,6 +7,8 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.Administrado;
 import pe.gob.oefa.efa.service.ActividadService;
 import pe.gob.oefa.efa.service.AdministradoService;
+import pe.gob.oefa.efa.service.AuditoriaService;
+import pe.gob.oefa.efa.utils.ConstantAuditoria;
 
 
 @Service
@@ -26,10 +30,16 @@ public class AdministradoServiceImpl implements AdministradoService {
 	
 	@Autowired
 	private AdministradoDao administradodDao;
+	@Autowired
+	private AuditoriaService auditoriaService;
 	
 	@Transactional
-	public void saveAdministrado(Administrado administrado) {
-		administradodDao.saveAdministrado(administrado);;
+	public void saveAdministrado(Administrado administrado, HttpSession session) {
+		administradodDao.saveAdministrado(administrado);
+		
+		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
+				administrado.getIdadministrados() != null ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
+						ConstantAuditoria.Table_Supervision_TAdministrados, administrado.getIdadministrados() != null ? administrado.getIdadministrados().toString() : "");
 	}
 
 	@Transactional(readOnly = true)
@@ -48,8 +58,11 @@ public class AdministradoServiceImpl implements AdministradoService {
 //	}	
 	
 	@Transactional
-	public void deleteAdministrado(BigDecimal id) {
-		administradodDao.deleteAdministrado(id);;
+	public void deleteAdministrado(BigDecimal id, HttpSession session) {
+		administradodDao.deleteAdministrado(id);
+		
+		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
+				ConstantAuditoria.Acc_Eliminar, ConstantAuditoria.Table_Supervision_TAdministrados, id.toString());
 	}
 	
 	

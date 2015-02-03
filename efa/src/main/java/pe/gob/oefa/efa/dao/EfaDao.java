@@ -11,7 +11,7 @@ public interface EfaDao {
 	 * CREATE and UPDATE
 	 */
 	public void saveEfa(Efa efa); // create and update
-
+	public int saveEfaPrueba(Efa efa);
 	/*
 	 * READ
 	 */

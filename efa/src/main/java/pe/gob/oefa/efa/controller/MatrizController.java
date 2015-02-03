@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class MatrizController {
 	
 	
 	@RequestMapping(value = "/addIndicadoresbyFuncion", method = RequestMethod.POST)
-	public String addIndicadoresbyFuncion(HttpServletRequest request, Map<String, Object> map) {
+	public String addIndicadoresbyFuncion(HttpServletRequest request, Map<String, Object> map, HttpSession session) {
 		String[] chk_indicador = request.getParameterValues("chk_indicador");
 		int idmatrizactividad = Integer.parseInt(request.getParameter("idmatrizactividad"));
 		int idfuncion = Integer.parseInt(request.getParameter("idfuncion"));
@@ -78,12 +79,12 @@ public class MatrizController {
 		ma.setIdfuncion(maf.getIdfuncion());
 		ma.setIdmatrizactividad(maf.getIdmatrizactividad());
 		ma.setObservaciones(txtaObservacion);
-		matrizservice.saveMatrizActividadFuncion(ma);
+		matrizservice.saveMatrizActividadFuncion(ma, session);
 		for(int i =0; i<chk_indicador.length; i++){
 			MatrizActividadIndicador mai = new MatrizActividadIndicador();
 			mai.setIdmatrizactividadfunciones(maf.getIdmatrizactividadfunciones());
 			mai.setIdindicador(Integer.parseInt(chk_indicador[i]));
-			matrizservice.addMatrizactividadindicador(mai);
+			matrizservice.addMatrizactividadindicador(mai, session);
 		}
 		MatrizActividad mactividad = matrizservice.getMatrizAct(maf.getIdmatrizactividad());
 
@@ -102,7 +103,7 @@ public class MatrizController {
 			mactividad.setIdactividad(mactividad.getIdactividad());
 			mactividad.setIdmatriz(mactividad.getIdmatriz());
 			mactividad.setEstadomatrizactividad("2");
-			actividadService.saveActividadMatriz(mactividad);
+			actividadService.saveActividadMatriz(mactividad,session);
 		}
 		
 		return "redirect:get/" + mactividad.getIdactividad();
@@ -110,7 +111,7 @@ public class MatrizController {
 	
 	@RequestMapping(value = { "/saveMatrizActividad" }, method = RequestMethod.POST)
 	@ResponseBody
-	public String saveMatrizActividad(HttpServletRequest request, Map<String, Object> map ){
+	public String saveMatrizActividad(HttpServletRequest request, Map<String, Object> map, HttpSession session ){
 		String chk_matriz = request.getParameter("idMatriz");
 		String estado = request.getParameter("estado");	
 		int codActividad = Integer.parseInt(request.getParameter("idactividad"));
@@ -121,7 +122,7 @@ public class MatrizController {
 			mact.setIdactividad(codActividad);
 			mact.setIdmatriz(codMatriz);
 			mact.setEstadomatrizactividad("1");
-			actividadService.saveActividadMatriz(mact);
+			actividadService.saveActividadMatriz(mact,session);
 			List<ComponenteMatriz> mlistComp = matrizservice.getComponente(codMatriz);
 			for (int k = 0; k < mlistComp.size(); k++) {
 				List<FuncionesComponente> lf = matrizservice.getFunciones(mlistComp.get(k).getIdcomponente());
@@ -132,14 +133,14 @@ public class MatrizController {
 					maf.setIdmatrizactividad(ma.get(0).getIdmatrizactividad().intValueExact());
 					maf.setEstadomatrizactividadfunciones("0");
 					maf.setObservaciones("");
-					matrizservice.addMatrizActividadFuncion(maf);
+					matrizservice.addMatrizActividadFuncion(maf, session);
 				}
 			}
 		}
 		else{
 			MatrizActividad ma = ListMacti.get(0);
 			ma.setEstadomatrizactividad(estado);
-			matrizservice.updateMatrizActividad(ma);
+			matrizservice.updateMatrizActividad(ma,session);
 		}
 		return "redirect:get/"+codActividad;
 		
@@ -231,7 +232,7 @@ public class MatrizController {
 	@ResponseBody
 	public List<ArchivoFunciones> saveArchive(@RequestParam("idmatrizactividad") int idmatrizactividad, @RequestParam("idfuncion") int idfuncion,
 			@RequestParam("tipo") String tipo, @RequestParam("nombrearchivo") String nombrearchivo,
-            @RequestParam("archivo") MultipartFile file, Map<String, Object> map) {
+            @RequestParam("archivo") MultipartFile file, Map<String, Object> map, HttpSession session) {
 		if (!file.isEmpty()) {
 			try {
 				String saveDirectory = "/oefa.gob.pe/oefa/Desarrollo_App/SISEFA/"; 
@@ -259,7 +260,7 @@ public class MatrizController {
 						af.setNombrearchivo(nombrearchivo);
 						af.setTipo(tipo);
 						af.setArhivo(filexname);
-						matrizservice.addArchiveFuncion(af);
+						matrizservice.addArchiveFuncion(af, session);
 	                }
 	                else{
 	                	JOptionPane.showMessageDialog(null, "La extension del archivo no esta permitida.", "Error",
@@ -301,8 +302,8 @@ public class MatrizController {
 	
 	@RequestMapping(value = "/deleteArchive", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public boolean deleteArchive(@RequestParam("idArchive") int idArchive) {
-		matrizservice.deleteArchive(idArchive);
+	public boolean deleteArchive(@RequestParam("idArchive") int idArchive, HttpSession session) {
+		matrizservice.deleteArchive(idArchive,session);
 
 		return true;
 	}

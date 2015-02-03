@@ -14,6 +14,8 @@ import java.util.Set;
 import javax.servlet.ServletException;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,7 +54,7 @@ public class ActividadController {
 	private UbigeoService ubigeoService;
 	
 	@Autowired
-	private ActividadService actividadService ;
+	private ActividadService actividadService;
 	
 	@Autowired
 	private EfaService efaService;	
@@ -146,20 +148,31 @@ public class ActividadController {
 	
 	
 	@RequestMapping("/contactos/{supId}")
-	public String getContactos(@PathVariable BigDecimal supId, Map<String, Object> map) {
+	public String getContactos(@PathVariable BigDecimal supId, Map<String, Object> map, HttpSession session) {	
 		Actividad act = actividadService.getActividad(supId);
+		int xd = 0;
+		if(session.getAttribute("msg") != null){
+			String asd = session.getAttribute("msg").toString();
+				xd = Integer.parseInt(asd);
+		}else{
+			xd = 2;
+		}
+		session.removeAttribute("msg");
+		map.put("msgx",xd);
 		map.put("respSector",utilService.listSector_contacto());
 		map.put("respTipos",utilService.listTipos_contacto());
 		map.put("respList", responsableService.listResponsables_by_ID(act.getIdefa()));
 		map.put("efa", efaService.getEfa(act.getIdefa()));
 		map.put("act",act);
 		map.put("listActres", act.getResponsables());
+		session.removeAttribute("msg");
 		return "/actividad/listActividadesContactos";
 	}		
 
 	
 	@RequestMapping("/addcon/{actid}/{resid}")
-	public String saveActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid) {
+	public String saveActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid, HttpSession session) {
+		
 		Actividad act = actividadService.getActividad(actid);
 		Set<Responsable> responsables = act.getResponsables();
 		
@@ -171,10 +184,12 @@ public class ActividadController {
 			if(a.equals(resid) )
 				flag = true;
 		}
-		
+		int msg = 0;
 		if(!flag){
+			msg = 1;
 			responsables.add(res);	
 		}
+		session.setAttribute("msg", msg);
 		act.setResponsables(responsables);
 		actividadService.saveActividad(act);	
 		
@@ -188,8 +203,16 @@ public class ActividadController {
 	}			
 	
 	@RequestMapping("/supervisores/{supId}")
-	public String getSupervisores(@PathVariable BigDecimal supId, Map<String, Object> map) {
-
+	public String getSupervisores(@PathVariable BigDecimal supId, Map<String, Object> map, HttpSession session) {
+		int xd = 0;
+		if(session.getAttribute("msg") != null){
+			String asd = session.getAttribute("msg").toString();
+				xd = Integer.parseInt(asd);
+		}else{
+			xd = 2;
+		}
+		session.removeAttribute("msg");
+		map.put("msgx",xd);
 		Actividad act = actividadService.getActividad(supId);
 		map.put("listMcontrato",utilService.listMcontrato());	
 		map.put("listSexo",utilService.listSexo());
@@ -200,7 +223,8 @@ public class ActividadController {
 	}	
 	
 	@RequestMapping("/addsup/{actid}/{supid}")
-	public String saveActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid) {
+	public String saveActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid, HttpSession session) {
+		
 		Actividad act = actividadService.getActividad(actid);
 		Set<Supervisor> supervisores = act.getSupervisores();
 		Supervisor sup = supervisorService.getSupervisor(supid);
@@ -214,11 +238,12 @@ public class ActividadController {
 			if(a.equals(supid) )
 				flag = true;
 		}
-		
+		int msg = 0;
 		if(!flag && date.compareTo(sup.getFinLaboral()) < 0 ){
+			msg = 1;
 			supervisores.add(sup);
 		}		
-		
+		session.setAttribute("msg", msg);
 		act.setSupervisores(supervisores);
 		actividadService.saveActividad(act);
 		return "redirect:/actividad/supervisores/" + actid ;

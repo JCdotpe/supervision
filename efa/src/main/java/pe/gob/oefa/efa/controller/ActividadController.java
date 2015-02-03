@@ -108,7 +108,7 @@ public class ActividadController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveSupervisor(@ModelAttribute("actividad") Actividad actividad,
-			BindingResult result) {
+			BindingResult result, HttpSession session) {
 		//edicion
 		if(actividad.getId() != null){
 			Actividad preact = actividadService.getActividad(actividad.getId());
@@ -125,19 +125,19 @@ public class ActividadController {
 		}else{
 			actividad.setEstado("0");
 		}
-		actividadService.saveActividad(actividad);
+		actividadService.saveActividad(actividad,session);
 		return "redirect:listActividades";
 	}
 	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id) {
+	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id, HttpSession session) {
 		Actividad act = actividadService.getActividad(id);
 		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(act.getSupervisores().size() == 0 || act.getResponsables().size() == 0){
-			actividadService.deleteActividad(id);
+			actividadService.deleteActividad(id,session);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","0"));
@@ -191,14 +191,14 @@ public class ActividadController {
 		}
 		session.setAttribute("msg", msg);
 		act.setResponsables(responsables);
-		actividadService.saveActividad(act);	
+		actividadService.saveActividad(act,session);	
 		
 		return "redirect:/actividad/contactos/" + actid ;
 	}		
 
 	@RequestMapping("/delcon/{actid}/{resid}")
-	public String delActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid) {
-		actividadService.deleteActResponsable(actid, resid);
+	public String delActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid, HttpSession session) {
+		actividadService.deleteActResponsable(actid, resid,session);
 		return "redirect:/actividad/contactos/" + actid ;
 	}			
 	
@@ -245,27 +245,27 @@ public class ActividadController {
 		}		
 		session.setAttribute("msg", msg);
 		act.setSupervisores(supervisores);
-		actividadService.saveActividad(act);
+		actividadService.saveActividad(act,session);
 		return "redirect:/actividad/supervisores/" + actid ;
 	}		
 
 	@RequestMapping("/delsup/{actid}/{supid}")
-	public String delActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid) {
+	public String delActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid, HttpSession session) {
 		Actividad act = actividadService.getActividad(actid);
 		if(act.getIdsupres().equals(supid) ){
 			act.setIdsupres(null);
-			actividadService.saveActividad(act);
+			actividadService.saveActividad(act,session);
 		}
-		actividadService.deleteActSupervisor(actid, supid);
+		actividadService.deleteActSupervisor(actid, supid,session);
 		return "redirect:/actividad/supervisores/" + actid ;
 	}		
 	
 	@RequestMapping(value = "/setsup", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody	
-	public Map<String, String> setSup(@RequestParam("idact") BigDecimal idact, @RequestParam("idsupres") BigDecimal idsupres, Map<String, Object> map) {
+	public Map<String, String> setSup(@RequestParam("idact") BigDecimal idact, @RequestParam("idsupres") BigDecimal idsupres, Map<String, Object> map, HttpSession session) {
 		Actividad act = actividadService.getActividad(idact);
 		act.setIdsupres(idsupres);
-		actividadService.saveActividad(act);
+		actividadService.saveActividad(act,session);
 		Map<String, String> selectItems =   new HashMap<String, String>();
 		selectItems.put("success","1");
 		return selectItems;
