@@ -11,8 +11,8 @@ import java.util.Properties;
 
 public class ConnectionManagerVPN {
 
-//    private static String url = "jdbc:oracle:thin:@10.0.0.15:1521:DESARROLLO";   
-	 private static String url = "jdbc:oracle:thin:@192.168.56.202:1521:orcl"; 
+    private static String url = "jdbc:oracle:thin:@10.0.0.15:1521:DESARROLLO";   
+//	private static String url = "jdbc:oracle:thin:@192.168.56.202:1521:orcl"; 
     private static String driverName = "oracle.jdbc.OracleDriver";   
     private static String username = "SUPERVISION";   
     private static String password = "desa3dev";
