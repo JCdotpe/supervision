@@ -48,7 +48,9 @@ public class MatrizServiceImpl implements MatrizService{
 		
 		Actividad act = new Actividad();
 		ActividadServiceImpl actService = new ActividadServiceImpl();
-		act = actService.getActividad( BigDecimal.valueOf(Double.parseDouble(codActividad) ));
+		
+		BigDecimal bdec = new BigDecimal(codActividad);		
+		act = actService.getActividad(bdec);
 		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 	    
