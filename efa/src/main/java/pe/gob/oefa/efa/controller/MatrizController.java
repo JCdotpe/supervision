@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import pe.gob.oefa.efa.dao.ActividadDao;
 import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
@@ -215,7 +216,7 @@ public class MatrizController {
 	public List<LabelValue> getMatrices(@RequestParam("codActividad") String codActividad,
 			@RequestParam("codNivel") int codNivel) {
 			
-		return matrizservice.listMatrices(codNivel);
+		return matrizservice.listMatrices(codNivel, codActividad);
 	}
 	
 	@RequestMapping(value = "/getMatricesActividadbyId", method = RequestMethod.POST, produces = "application/json")
@@ -223,7 +224,7 @@ public class MatrizController {
 	public List<MatrizActividad> getMatricesActividadbyId(@RequestParam("idActividad") int idActividad,
 			@RequestParam("idMatriz") int idMatriz) {
 		
-		return matrizservice.getbyMatrizActividad(idActividad, idMatriz);
+			return matrizservice.getbyMatrizActividad(idActividad, idMatriz);
 		
 	}
 	
@@ -235,7 +236,7 @@ public class MatrizController {
             @RequestParam("archivo") MultipartFile file, Map<String, Object> map, HttpSession session) {
 		if (!file.isEmpty()) {
 			try {
-				String saveDirectory = "/oefa.gob.pe/oefa/Desarrollo_App/SISEFA/"; 
+				String saveDirectory = "C:/Desarrollo_App/SISEFA/"; 
 //				String saveDirectory = "c:/upload-efa/supervisor/";     
 				Integer max = 5 * 1024 * 1024; // 10MB
                 String fileName = file.getOriginalFilename();
@@ -247,7 +248,7 @@ public class MatrizController {
                 Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
                 
                 if (file.getSize() > max || file.getSize() == 0) {
-                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
+                	JOptionPane.showMessageDialog(null, "El tamaï¿½o del archivo no es el permitido", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }else{            
 	                if(matcher.matches()){

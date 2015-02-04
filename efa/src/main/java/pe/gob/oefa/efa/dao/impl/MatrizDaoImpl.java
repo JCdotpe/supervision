@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import pe.gob.oefa.efa.dao.MatrizDao;
+import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.FuncionesComponente;
@@ -17,6 +18,9 @@ import pe.gob.oefa.efa.model.Matriz;
 import pe.gob.oefa.efa.model.MatrizActividad;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
+import pe.gob.oefa.efa.service.MatrizService;
+import pe.gob.oefa.efa.service.impl.ActividadServiceImpl;
+import pe.gob.oefa.efa.service.impl.MatrizServiceImpl;
 
 @Repository
 public class MatrizDaoImpl implements MatrizDao {
@@ -135,8 +139,9 @@ public class MatrizDaoImpl implements MatrizDao {
 	public List<MatrizActividad> getbyMatrizActividad(int codActividad,
 			int codMatriz) {
 		// TODO Auto-generated method stub
-		return getSession().createQuery("from MatrizActividad where IDACTIVIDAD=:parameter1 and IDMATRIZ = :parameter2")
-				.setParameter("parameter1", codActividad).setParameter("parameter2", codMatriz).list();
+			return getSession().createQuery("from MatrizActividad where IDACTIVIDAD=:parameter1 and IDMATRIZ = :parameter2")
+					.setParameter("parameter1", codActividad).setParameter("parameter2", codMatriz).list();
+			
 	}
 
 	public void updateMatrizActividad(MatrizActividad ma) {

@@ -17,7 +17,7 @@ import pe.gob.oefa.efa.utils.LabelValue;
 
 public interface MatrizService {
 
-	public List<LabelValue> listMatrices(int codNivel);
+	public List<LabelValue> listMatrices(int codNivel, String codActividad);
 	public  List<MatrizActividad> listByActividad(BigDecimal codActividad);
 	public Matriz getMatriz(int idmatriz);
 	public MatrizActividad getMatrizAct(int idmatrizact);

@@ -13,11 +13,13 @@ import javax.servlet.http.HttpSession;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
+import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.gob.oefa.efa.dao.MatrizDao;
+import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.FuncionesComponente;
@@ -42,7 +44,12 @@ public class MatrizServiceImpl implements MatrizService{
 	private AuditoriaService auditoriaService;
 	
 	@Transactional(readOnly=true) 
-	public List<LabelValue> listMatrices(int codNivel) {
+	public List<LabelValue> listMatrices(int codNivel, String codActividad) {
+		
+		Actividad act = new Actividad();
+		ActividadServiceImpl actService = new ActividadServiceImpl();
+		act = actService.getActividad( BigDecimal.valueOf(Double.parseDouble(codActividad) ));
+		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 	    
 	    CallableStatement callableStatement = null;
@@ -50,9 +57,10 @@ public class MatrizServiceImpl implements MatrizService{
 	    ResultSet rs = null;
 	    try{
 	    	connection = ConnectionManagerVPN.getConnection();
-		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_MATRICES(?,?); END;");
+		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_MATRICES(?,?,?); END;");
 		    stmt.setInt(1, codNivel); 
-		    stmt.registerOutParameter(2, OracleTypes.CURSOR); //REF CURSOR
+		    stmt.setBigDecimal(2, act.getIdefa());
+		    stmt.registerOutParameter(3, OracleTypes.CURSOR); //REF CURSOR
 		    stmt.execute();
 		    rs = ((OracleCallableStatement)stmt).getCursor(2);
 		    while (rs.next()) {
