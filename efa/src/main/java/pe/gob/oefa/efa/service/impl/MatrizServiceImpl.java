@@ -44,13 +44,7 @@ public class MatrizServiceImpl implements MatrizService{
 	private AuditoriaService auditoriaService;
 	
 	@Transactional(readOnly=true) 
-	public List<LabelValue> listMatrices(int codNivel, String codActividad) {
-		
-		Actividad act = new Actividad();
-		ActividadServiceImpl actService = new ActividadServiceImpl();
-		
-		BigDecimal bdec = new BigDecimal(codActividad);		
-		act = actService.getActividad(bdec);
+	public List<LabelValue> listMatrices(int codNivel, BigDecimal idEfa) {
 		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 	    
@@ -61,13 +55,13 @@ public class MatrizServiceImpl implements MatrizService{
 	    	connection = ConnectionManagerVPN.getConnection();
 		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_MATRICES(?,?,?); END;");
 		    stmt.setInt(1, codNivel); 
-		    stmt.setBigDecimal(2, act.getIdefa());
+		    stmt.setBigDecimal(2, idEfa);
 		    stmt.registerOutParameter(3, OracleTypes.CURSOR); //REF CURSOR
 		    stmt.execute();
-		    rs = ((OracleCallableStatement)stmt).getCursor(2);
+		    rs = ((OracleCallableStatement)stmt).getCursor(3);
 		    while (rs.next()) {
 		    	selectItems.add(new LabelValue(rs.getString("CODIGO"),rs.getString("NOMBRE")));
-	        }		  
+		    }  
 		    
 	    }catch (SQLException e) { e.printStackTrace(); }		
 		finally {

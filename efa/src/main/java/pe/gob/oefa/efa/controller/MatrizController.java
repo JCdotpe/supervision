@@ -44,6 +44,7 @@ import pe.gob.oefa.efa.service.ActividadService;
 import pe.gob.oefa.efa.service.EfaService;
 import pe.gob.oefa.efa.service.MatrizService;
 import pe.gob.oefa.efa.service.UtilService;
+import pe.gob.oefa.efa.service.impl.ActividadServiceImpl;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 
@@ -215,8 +216,11 @@ public class MatrizController {
 	@ResponseBody
 	public List<LabelValue> getMatrices(@RequestParam("codActividad") String codActividad,
 			@RequestParam("codNivel") int codNivel) {
-			
-		return matrizservice.listMatrices(codNivel, codActividad);
+		
+		Actividad act = new Actividad();
+		act = actividadService.getActividad(new BigDecimal(codActividad));	
+		
+		return matrizservice.listMatrices(codNivel, act.getIdefa());
 	}
 	
 	@RequestMapping(value = "/getMatricesActividadbyId", method = RequestMethod.POST, produces = "application/json")

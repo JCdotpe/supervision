@@ -213,15 +213,21 @@
 	
 		<form id="frm_archive" style="padding-bottom: 40px" action="${actionUrlMatriz}" 
 			enctype="multipart/form-data" method="POST"  class="form-inline">
+			<label style="margin: 12px 35px 0px 0px; float: left;">Tipo de Archivo</label>
 		  	<select name="tipo" class="txt input-small">
-		  		<option value="">Tipo</option>
+		  		<option value="">Seleccionar Tipo</option>
 		  		<option value="Memo">Memo</option>
 		  		<option value="Informe">Informe</option>
 		  		<option value="Oficio">Oficio</option>
 		  		<option value="Otro">Otro</option>
 		  	</select>
+		  	
+		  	<label style="float: left; margin-top: 12px; margin-right: 10px;">Nombre del Archivo:</label>
 		  	<input type="text" name="nombrearchivo" class="txt input-medium" placeholder="Nombre del Archivo">
+		  	
+		  	<label style="float: left; margin: 12px 10px 10px 0px;">Seleccionar Archivo:</label>
 		  	<input type="file" name="archivo" class="txt input-medium" placeholder="Archivo">
+		  	
 		  	<label>Formato PDF y WORD <br />Peso max de 5Mb </label>
 		  	<input type="hidden" name="idmatrizactividad" id="idmatrizactividad" value="" />
 		  	<input type="hidden" name="idfuncion" id="idfuncion" value="" />
