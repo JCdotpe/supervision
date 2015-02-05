@@ -39,7 +39,8 @@ $(document).ready(function() {
 	      validator.focusInvalid();
 	    },
 	    submitHandler: function(form) {
-	    	form.submit();
+	    	alert("Datos Guardados");
+	    	$("#supemForm").ajaxSubmit();
 	    }       
 	}); 
 

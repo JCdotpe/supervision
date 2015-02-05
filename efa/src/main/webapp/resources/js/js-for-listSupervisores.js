@@ -123,7 +123,8 @@ $("#supervisorForm").validate({
     	i_enable("#appMaterno");
     	i_enable("#nombre");
     	i_enable("#sexo");    	
-    	form.submit();
+    	alert("Datos Guardados");
+    	$("#supervisorForm").ajaxSubmit();
     }       
 }); 
 

@@ -21,7 +21,7 @@
 <c:if test="${usuario.codPerfil eq '8' }">
 	<c:set var="desha2" value="true"/>
 </c:if>
-<c:if test="${usuario.codPerfil eq '2'}">
+<c:if test="${usuario.codPerfil eq '4'}">
 	<c:set var="desha1" value="true"/>
 	<c:set var="desha2" value="true"/>
 	<c:set var="desha3" value="true"/>

@@ -71,24 +71,24 @@
         </div>           
          <label for="inputType" class="col-sm-1 control-label">Celular<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="celular" id="celular" class="form-control"/>
+        	<form:input path="celular" id="celular" maxlength="25" class="form-control"/>
         	<div class="help-block error"></div>
         </div>                    
 </div>    
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Teléfono<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="telefono" id="telefono" class="form-control"/>
+        	<form:input path="telefono" id="telefono" maxlength="25" class="form-control"/>
         	<div class="help-block error"></div>
         </div>   
         <label for="inputType" class="col-sm-1 control-label">Correo<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="correo" id="correo" class="form-control"/>
+        	<form:input path="correo" id="correo" maxlength="250" class="form-control"/>
         	<div class="help-block error"></div>
         </div>   
         <label for="inputType" class="col-sm-1 control-label">Fax</label>
         <div class="col-sm-3">
-        	<form:input path="fax" id="fax" class="form-control"/>
+        	<form:input path="fax" id="fax" maxlength="25" class="form-control"/>
         	<div class="help-block error"></div>
         </div>                    
 </div>       

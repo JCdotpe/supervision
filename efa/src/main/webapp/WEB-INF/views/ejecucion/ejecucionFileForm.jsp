@@ -12,6 +12,7 @@
 	     commandName="ejecfile" enctype="multipart/form-data">
 	<p class="green info-form">Datos del Archivo</p>
 	
+	
 	<div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Tipo</label>
         <div class="col-sm-3">
@@ -40,6 +41,9 @@
 	    <br/>	<button type="submit" class="btn btn-success" disabled="${desha0}">Subir Archivo</button>
 	</form:form>
 		
+		
+			<br />
+		
 <table class="table datatable uppertext" id="tblSupervisor">
 			<thead>
 				<tr>
@@ -63,7 +67,7 @@
 						</td>		
 						<td><c:out value="${sup.nombre}" /></td>
 						<c:choose>	
-							<c:when test="${usuario.codPerfil eq '2'}">				
+							<c:when test="${usuario.codPerfil eq '4'}">				
 							<td><a><c:out value="${sup.archivo}" /></a></td>
 							</c:when>
 							<c:otherwise>
@@ -72,7 +76,7 @@
 						</c:choose>
 						
 						<c:choose>	
-							<c:when test="${usuario.codPerfil eq '2'}">				
+							<c:when test="${usuario.codPerfil eq '4'}">				
 						  <td><nobr>
 								<a class="btn btn-efa-del btn-xs"> <span class="glyphicon glyphicon-remove"></span>Eliminar</a>
 							</nobr></td>

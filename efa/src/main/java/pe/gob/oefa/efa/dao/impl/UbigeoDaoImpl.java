@@ -70,7 +70,7 @@ public class UbigeoDaoImpl implements UbigeoDao {
 	    ResultSet rs = null;
 	    try{
 	    	connection = ConnectionManager.getConnection();
-		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_DEPARTAMENTO(?); END;");
+		    CallableStatement stmt = connection.prepareCall("BEGIN PADRONES.SP_GET_DEPARTAMENTO(?); END;");
 		    stmt.registerOutParameter(1, OracleTypes.CURSOR); //REF CURSOR
 		    stmt.execute();
 		    rs = ((OracleCallableStatement)stmt).getCursor(1);

@@ -11,22 +11,23 @@
 	<!-- 	<legend></legend> -->
 <p class="green info-form">Datos Ejecución de la Actividad</p>
 
-<c:set var="vis1" value=""/>
 <c:set var="desha1" value="false"/>
-
-<c:set var="vis2" value=""/>
 <c:set var="desha2" value="false"/>
+<c:set var="desha3" value="false"/>
 
 <c:if test="${usuario.codPerfil eq '7'}">
-	<c:set var="vis1" value="display:none;"/>
 	<c:set var="desha1" value="true"/>
 </c:if>
 <c:if test="${usuario.codPerfil eq '8' }">
-	<c:set var="vis2" value="display:none;"/>
 	<c:set var="desha2" value="true"/>
 </c:if>
+<c:if test="${usuario.codPerfil eq '2'}">
+	<c:set var="desha1" value="true"/>
+	<c:set var="desha2" value="true"/>
+	<c:set var="desha3" value="true"/>
+</c:if>
 
-<div class="form-group" style="${vis2}">
+<div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Fecha de Ejecución Supervisión<span class="error"> (*)</span></label>
         <div class="col-sm-3">
         	<form:input name = "fechaejec" path="fechaejec" class="form-control datepicker" disabled="${desha2}" />
@@ -44,15 +45,15 @@
          </div> 	
 </div>
 
-<div class="form-group" style="${vis1}">
+<div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Fecha<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "fecha" path="fecha" class="form-control datepicker" disabled="${deshabilitado}"/>
+        	<form:input name = "fecha" path="fecha" class="form-control datepicker" disabled="${desha1}"/>
         	<div class="help-block error"></div>
         </div>    
         <label for="inputType" class="col-sm-1 control-label">Estado<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:select id="estado" path="estado"  class="form-control" disabled="${deshabilitado}">	
+        	<form:select id="estado" path="estado"  class="form-control" disabled="${desha1}">	
 				<form:option value="-1" label="--- Seleccionar ---" />
 				 <form:options items="${listUMestado}" itemValue="value" itemLabel="label"/>
 	         </form:select>	   
@@ -66,7 +67,7 @@
         </div>          
 </div>
 	<form:input path="idejecucion" type="hidden" />
-	<button type="submit" class="btn btn-success">Guardar</button>
+	<button type="submit" class="btn btn-success" disabled="${desha3}">Guardar</button>
 
 	</fieldset>
 </form:form>

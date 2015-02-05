@@ -134,6 +134,9 @@ $.validator.addMethod("exactlength", function(value, element, param) {
     return this.optional(element) || value.length == param;
 }, jQuery.format("Ingrese {0} caracteres."));
 
+$.validator.addMethod("lettersonly", function (value, element) {
+	   return this.optional(element) || /^[a-zA-Zñáéíóú ]+$/i.test(value);
+	}, "Caracteres no permitidos");
 
 $.validator.addMethod("greaterThan", 
 		function(value, element, params) {

@@ -61,7 +61,8 @@ $("#actividadForm").validate({
       validator.focusInvalid();
     },
     submitHandler: function(form) {
-    	form.submit();
+    	alert("Datos guardados");
+    	$("#actividadForm").ajaxSubmit();
     }       
 }); 
 

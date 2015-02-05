@@ -35,10 +35,10 @@ public class UtilServiceImpl implements UtilService {
 	@Transactional(readOnly=true) 
 	public List<LabelValue> listSector_contacto() {
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		selectItems.add(new LabelValue("MINERÃ�A","1"));
+		selectItems.add(new LabelValue("MINERÍA","1"));
 		selectItems.add(new LabelValue("ELECTRICIDAD","2"));
 		selectItems.add(new LabelValue("HIDROCARBUROS","3"));
-		selectItems.add(new LabelValue("PESQUERÃ�A","4"));
+		selectItems.add(new LabelValue("PESQUERÍA","4"));
 		selectItems.add(new LabelValue("INDUSTRIA","5"));
 		return selectItems;
 	}	
@@ -137,7 +137,7 @@ public class UtilServiceImpl implements UtilService {
 
 	public List<LabelValue> listEstadoEjecucion() {
 	    List<LabelValue> selectItems = new ArrayList<LabelValue>();
-	    selectItems.add(new LabelValue("En revisiÃ³n","1"));
+	    selectItems.add(new LabelValue("En revisión","1"));
 	    selectItems.add(new LabelValue("Observado","2"));
 	    selectItems.add(new LabelValue("Cerrado","3"));
 	    return selectItems;
@@ -145,7 +145,7 @@ public class UtilServiceImpl implements UtilService {
 	public List<LabelValue> listTipos_Persona() {
 	    List<LabelValue> selectItems = new ArrayList<LabelValue>();
 	    selectItems.add(new LabelValue("Natural","1"));
-	    selectItems.add(new LabelValue("JurÃ­dica","2"));
+	    selectItems.add(new LabelValue("Jurídica","2"));
 	    return selectItems;
 	}
 	public List<LabelValue> listTipos_Documento() {
@@ -267,7 +267,7 @@ public class UtilServiceImpl implements UtilService {
 
 	public List<LabelValue> listTipos_DerechoM() {
 	    List<LabelValue> selectItems = new ArrayList<LabelValue>();
-	    selectItems.add(new LabelValue("ConcesiÃ³n Minera","1"));
+	    selectItems.add(new LabelValue("Concesión Minera","1"));
 	    selectItems.add(new LabelValue("U.E.A.","2"));
 	    selectItems.add(new LabelValue("Otro derecho minero","3"));
 	    selectItems.add(new LabelValue("Fuera de un derecho minero","4"));

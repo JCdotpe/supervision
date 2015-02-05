@@ -67,7 +67,7 @@
 						<td><c:out value="${newdatevar}" /></td>				
 						<td><nobr>
 							
-								<a class="btn btn-efa btn-xs"
+								<a class="btn btn-efa btn-xs" onClick="alert('Se agrego al Supervisor')"
 									href="${addUrl}/${act.id}/${sup.id}">
 									<span class="glyphicon glyphicon-edit"></span> Agregar
 								</a>		

@@ -26,15 +26,16 @@
 		<h4>Código Actividad: ${act.codactividad}</h4>	
 		<h4>EFA: ${efa.nombre}</h4>	
 		<h4>Ubigeo: ${act.departamentodes} ${act.provinciades} ${act.distritodes}</h4>	
+
+		<div>
+		<%@ include file="ejecucionFileForm.jsp"%>
+		</div>
+
 		<div>
 			<%@ include file="ejecucionActForm.jsp"%>
 		</div>	
-		<br />
-		<br />
-		<div>
-		<%@ include file="ejecucionFileForm.jsp"%>
+
 	
-		</div>	
         
 
     </jsp:body>

@@ -40,7 +40,6 @@
                 <th width="8%">Descripci&oacute;n de los hechos</th>
                 <th width="8%">Fecha de denuncia</th>
                 <th width="3%">Fecha de sistema</th>
-                <th width="2%">Operaciones</th>
             </tr>
             </thead>
             <tbody>
@@ -55,11 +54,6 @@
                     <td><c:out value="${denuncia.descHecho}"/></td>
                     <td><c:out value="${denuncia.fechaDenuncia}"/></td>
                     <td><c:out value="${denuncia.fechaRegistro}"/></td>
-                    <td>
-                        <a class="btn btn-efa btn-xs">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>

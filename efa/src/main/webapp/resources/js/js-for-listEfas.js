@@ -105,7 +105,8 @@ $("#efaForm").validate({
       validator.focusInvalid();
     },
     submitHandler: function(form) {
-    	form.submit();
+    	alert("Datos Guardados");
+    	$("#efaForm").ajaxSubmit();
     }       
 }); 
 
@@ -116,20 +117,23 @@ $("#responsableForm").validate({
 			valueNotEquals:'-1',
 		}, 
 		sector:{
-    		validName:true,
     		required:true,
+			validName:true,
     	},		
 		appaterno:{
-    		validName:true,
     		required:true,
+			validName:true,
+			lettersonly:true,
     	},
     	apmaterno:{
-    		validName:true,
     		required:true,
+    		validName:true,
+    		lettersonly:true,
     	},
     	nombre:{
-    		validName:true,
     		required:true,
+    		validName:true,    		
+    		lettersonly:true,    		
     	}, 	
     	cargo:{
     		required:true,
@@ -139,6 +143,8 @@ $("#responsableForm").validate({
     	}, 	  
     	telefono:{
     		required:true,
+    		required:true,
+    		digits:true,
     	}, 	  
     	correo:{
     		required:true,
@@ -146,9 +152,11 @@ $("#responsableForm").validate({
     	}, 	    	
     	fax:{
 //    		required:true,
+    		digits:true,
     	}, 	
     	celular:{
     		required:true,
+    		digits:true,
     	}, 	    	
      	
     },
@@ -176,7 +184,8 @@ $("#responsableForm").validate({
       validator.focusInvalid();
     },
     submitHandler: function(form) {
-    	form.submit();
+    	alert("Datos Guardados");
+    	$("#responsableForm").ajaxSubmit();
     }       
 }); 
 

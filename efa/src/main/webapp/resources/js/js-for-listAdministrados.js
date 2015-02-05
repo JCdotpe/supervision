@@ -136,7 +136,8 @@ $("#administradosForm").validate({
       validator.focusInvalid();
     },
     submitHandler: function(form) {
-    	form.submit();
+    	alert("Se guardo el registro");
+    	$("#administradosForm").ajaxSubmit();
     }       
 }); 	
 
