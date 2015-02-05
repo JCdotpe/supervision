@@ -159,6 +159,7 @@ public class MatrizController {
 		List<MatrizActividadIndicador> mListActividadIndicador = new ArrayList<MatrizActividadIndicador>();
 		Actividad act = actividadService.getActividad(idactividad);
 		Efa efa = efaService.getEfa(act.getIdefa());
+		
 		for (int i = 0; i < ma.size(); i++) {
 			Matriz m = matrizservice.getMatriz(ma.get(i).getIdmatriz());
 			List<ComponenteMatriz> mlistComp = matrizservice.getComponente(ma.get(i).getIdmatriz());

@@ -1,8 +1,11 @@
 $(document).ready(function() {
+	
+	
+	
 	var idmatrizactividad ; 
 	var idfuncion;
 	var listArchivos = $("#listArchivos");
-	$(".btn-pop-matriz").click(function(){
+	$(document).on('click', ".btn-pop-matriz", function(e){
 		var codActividad = $(this).data('id');
 		var codNivel = $(this).data('level');
 		var listMatriz = $("#listMatriz");
@@ -70,16 +73,20 @@ $(document).ready(function() {
 		var idactividad_modal = $("#idactividad_modal").val();
 		var idMatriz = $(this).val();
 		if (v) {
+			$(".loadingMatrices").fadeIn("fast");
 			$.post(prefix+'/matriz/saveMatrizActividad',
 					{idactividad:idactividad_modal, idMatriz:idMatriz, estado:"1" },
 					function(json_data){
-						console.log("exito");
+						//console.log("exito");
+						$(".loadingMatrices").fadeOut("fast", function(){ $(this).css("display","none"); });
 					});
 		} else {
+			$(".loadingMatrices").fadeIn("fast");
 			$.post(prefix+'/matriz/saveMatrizActividad',
 					{idactividad:idactividad_modal, idMatriz:idMatriz, estado:"0" },
 					function(json_data){
-						console.log("exito");
+						//console.log("exito");
+						$(".loadingMatrices").fadeOut("fast");
 					});
 		}
 	});
