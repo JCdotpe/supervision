@@ -1,0 +1,5 @@
+package pe.gob.oefa.efa.dao;
+
+public interface ReporteDAO {
+
+}

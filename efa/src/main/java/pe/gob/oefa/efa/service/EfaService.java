@@ -3,8 +3,6 @@ package pe.gob.oefa.efa.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import pe.gob.oefa.efa.model.Efa;
 
 
@@ -13,7 +11,7 @@ public interface EfaService {
 	/*
 	 * CREATE and UPDATE 
 	 */
-	public void saveEfa(Efa efa, HttpSession session);
+	public void saveEfa(Efa efa);
 
 	/*
 	 * READ
@@ -25,6 +23,6 @@ public interface EfaService {
 	/*
 	 * DELETE
 	 */
-	public void deleteEfa(BigDecimal id, HttpSession session);
+	public void deleteEfa(BigDecimal id);
 
 }

@@ -1,21 +1,30 @@
 package pe.gob.oefa.efa.dao.impl;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import pe.gob.oefa.efa.dao.UbigeoDao;
 import pe.gob.oefa.efa.model.Departamento;
 import pe.gob.oefa.efa.model.Distrito;
 import pe.gob.oefa.efa.model.Provincia;
 import pe.gob.oefa.efa.model.Ubigeo;
+import pe.gob.oefa.efa.utils.ConnectionManager;
+import pe.gob.oefa.efa.utils.LabelValue;
 
 @Repository
 public class UbigeoDaoImpl implements UbigeoDao {
@@ -54,7 +63,39 @@ public class UbigeoDaoImpl implements UbigeoDao {
 
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 	public List<Departamento> obtenerDepartamentos() {
-		return getSession().createQuery("from Departamento").list();
+		//return getSession().createQuery("from Departamento").list();
+		List<Departamento> oListarDepartamento = new ArrayList<Departamento>();
+		CallableStatement callableStatement = null;
+	    Connection connection = null;
+	    ResultSet rs = null;
+	    try{
+	    	connection = ConnectionManager.getConnection();
+		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_DEPARTAMENTO(?); END;");
+		    stmt.registerOutParameter(1, OracleTypes.CURSOR); //REF CURSOR
+		    stmt.execute();
+		    rs = ((OracleCallableStatement)stmt).getCursor(1);
+		    Departamento oDepartamento = null;
+		    while (rs.next()) {
+		    	oDepartamento = new Departamento();
+		    	oDepartamento.setCodigo(rs.getString("ID_DEPARTAMENTO"));
+		    	oDepartamento.setNombre(rs.getString("NOM_DEPARTAMENTO"));
+		    	oListarDepartamento.add(oDepartamento);		    	
+	        }		  
+		    
+	    }catch (SQLException e) { e.printStackTrace(); }		
+		finally {
+			try{
+				if (callableStatement != null) {
+					callableStatement.close();
+				}
+		
+				if (connection != null) {
+					connection.close();
+				}
+			}catch (SQLException e) { e.printStackTrace(); }
+		}	
+	    
+	    return oListarDepartamento;
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)

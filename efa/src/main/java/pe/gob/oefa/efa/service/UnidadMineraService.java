@@ -3,8 +3,6 @@ package pe.gob.oefa.efa.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import pe.gob.oefa.efa.model.UnidadMinera;
 
 
@@ -13,7 +11,7 @@ public interface UnidadMineraService {
 	/*
 	 * CREATE and UPDATE
 	 */
-	public void saveUnidadMinera(UnidadMinera unidadMinera, HttpSession session); // create and update
+	public void saveUnidadMinera(UnidadMinera unidadMinera); // create and update
 
 	/*
 	 * READ
@@ -25,6 +23,6 @@ public interface UnidadMineraService {
 	/*
 	 * DELETE
 	 */
-	public void deleteUnidadMinera(BigDecimal id, HttpSession session);
-	public void deleteUnidadMineras_by_AdmID(BigDecimal id, HttpSession session);
+	public void deleteUnidadMinera(BigDecimal id);
+	public void deleteUnidadMineras_by_AdmID(BigDecimal id);
 }

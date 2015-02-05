@@ -1,0 +1,206 @@
+package pe.gob.oefa.efa.model;
+
+/**
+ * Created by hgonzales on 08/12/2014.
+ */
+public class ReporteActividad {
+
+    private String numero;
+    private String fechaInicio;
+    private String fechaFin;
+    private String estado;
+    private String descripcion;
+    private String nivelGobierno;
+    private String efa;
+    private String tipoSupervision;
+    private String temaSupervision;
+    private String supervisor;
+    private String supervisores;
+    private String analitica;
+    private String departamento;
+    private String provincia;
+    private String distrito;
+    private String componente;
+    private String subComponente;
+    private String indicador;
+    private String observacion;
+    private String supervisionEspecial;
+    private String hallazgosCriticos;
+    private String documento;
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getNivelGobierno() {
+        return nivelGobierno;
+    }
+
+    public void setNivelGobierno(String nivelGobierno) {
+        this.nivelGobierno = nivelGobierno;
+    }
+
+    public String getEfa() {
+        return efa;
+    }
+
+    public void setEfa(String efa) {
+        this.efa = efa;
+    }
+
+    public String getTipoSupervision() {
+        return tipoSupervision;
+    }
+
+    public void setTipoSupervision(String tipoSupervision) {
+        this.tipoSupervision = tipoSupervision;
+    }
+
+    public String getTemaSupervision() {
+        return temaSupervision;
+    }
+
+    public void setTemaSupervision(String temaSupervision) {
+        this.temaSupervision = temaSupervision;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getSupervisores() {
+        return supervisores;
+    }
+
+    public void setSupervisores(String supervisores) {
+        this.supervisores = supervisores;
+    }
+
+    public String getAnalitica() {
+        return analitica;
+    }
+
+    public void setAnalitica(String analitica) {
+        this.analitica = analitica;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+
+    public String getComponente() {
+        return componente;
+    }
+
+    public void setComponente(String componente) {
+        this.componente = componente;
+    }
+
+    public String getSubComponente() {
+        return subComponente;
+    }
+
+    public void setSubComponente(String subComponente) {
+        this.subComponente = subComponente;
+    }
+
+    public String getIndicador() {
+        return indicador;
+    }
+
+    public void setIndicador(String indicador) {
+        this.indicador = indicador;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public String getSupervisionEspecial() {
+        return supervisionEspecial;
+    }
+
+    public void setSupervisionEspecial(String supervisionEspecial) {
+        this.supervisionEspecial = supervisionEspecial;
+    }
+
+    public String getHallazgosCriticos() {
+        return hallazgosCriticos;
+    }
+
+    public void setHallazgosCriticos(String hallazgosCriticos) {
+        this.hallazgosCriticos = hallazgosCriticos;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+}

@@ -16,14 +16,6 @@
     </jsp:attribute>
     
     <jsp:body>
-			<c:if test="${ msgx == 0}">	
-				<p class="bg-danger">El supervisor ya fue agregado o revisar su fecha de contrato</p>
-			</c:if>	      
-			<c:if test="${ msgx == 1}">	
-				<p class="bg-success">Se asignó el supervisor a la actividad</p>
-			</c:if>	  
-			<c:if test="${ msgx == 2}">	
-			</c:if>	   	    
 		<!--<div id="bookDialog" style="display: none;">
 		</div>
 		-->
@@ -84,7 +76,7 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-			<!--<tfoot>
+			<tfoot>
 				<tr>
 					<td width="1%"></td>
 					<td width="4%"><input type="text" class="form-control" placeholder="DNI"></td>
@@ -96,7 +88,7 @@
 					<td width="8%"></td>
 					<td width="8%"></td>
 				</tr>
-			</tfoot>-->
+			</tfoot>
 		</table>
 		<br/>
 		<p class="green info-form">Supervisores Añadidos a la Actividad</p>

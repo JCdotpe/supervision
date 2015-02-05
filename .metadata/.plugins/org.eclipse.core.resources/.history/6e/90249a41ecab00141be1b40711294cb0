@@ -1,0 +1,16 @@
+package pe.gob.oefa.efa.dao;
+
+import java.util.List;
+
+import pe.gob.oefa.efa.form.ReporteForm;
+import pe.gob.oefa.efa.model.ComponenteMatriz;
+import pe.gob.oefa.efa.model.ReporteActividad;
+
+public interface ReporteDAO {
+
+	List<ReporteActividad> obtenerReporte(ReporteForm form);
+	
+	List<ComponenteMatriz> listarComponenteMatriz();
+	
+	//return getSession().createQuery("from Departamento").list();
+}

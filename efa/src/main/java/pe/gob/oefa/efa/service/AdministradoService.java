@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.Administrado;
 //import pe.gob.oefa.efa.model.ActividadResponsable;
@@ -16,7 +14,7 @@ import pe.gob.oefa.efa.utils.LabelValue;
 
 public interface AdministradoService {
 
-	public void saveAdministrado(Administrado administrado, HttpSession session); // create and update
+	public void saveAdministrado(Administrado administrado); // create and update
 	
 	/*
 	 * READ
@@ -28,5 +26,5 @@ public interface AdministradoService {
 	/*
 	 * DELETE
 */
-	public void deleteAdministrado(BigDecimal id, HttpSession session);
+	public void deleteAdministrado(BigDecimal id);
 }

@@ -9,8 +9,6 @@ import java.util.Map;
 import javax.servlet.ServletException;
 
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -51,18 +49,18 @@ public class SupervisorEmergenciaController {
 		 
 
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String getResponsablesdsa(@RequestParam("id") BigDecimal efaId,@ModelAttribute("responsable") SupervisorEmergencia supervisorEmergencia, HttpSession session) {
+	public String getResponsablesdsa(@RequestParam("id") BigDecimal efaId,@ModelAttribute("responsable") SupervisorEmergencia supervisorEmergencia) {
 		Supervisor supervisor = supervisorService.getSupervisor(efaId);
 		supervisorEmergencia.setSupervisor(supervisor);
-		supervisorEmergenciaService.saveSupervisorEmergencia(supervisorEmergencia,session);
+		supervisorEmergenciaService.saveSupervisorEmergencia(supervisorEmergencia);
 		return "redirect:/supervisor/supemergencia/" + efaId;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id, HttpSession session) {
+	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		supervisorEmergenciaService.deleteSupervisorEmergencia(id,session);
+		supervisorEmergenciaService.deleteSupervisorEmergencia(id);
 		selectItems.add(new LabelValue("success","1"));
 		return selectItems;
 	}		

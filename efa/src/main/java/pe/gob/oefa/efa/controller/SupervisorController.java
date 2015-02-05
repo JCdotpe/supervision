@@ -13,8 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -32,14 +30,12 @@ import pe.gob.oefa.efa.model.Padron;
 import pe.gob.oefa.efa.model.Supervisor;
 import pe.gob.oefa.efa.model.SupervisorEmergencia;
 import pe.gob.oefa.efa.model.SupervisorFile;
-import pe.gob.oefa.efa.service.AuditoriaService;
 import pe.gob.oefa.efa.service.PadronService;
 import pe.gob.oefa.efa.service.SupervisorEmergenciaService;
 import pe.gob.oefa.efa.service.SupervisorFileService;
 import pe.gob.oefa.efa.service.SupervisorService;
 import pe.gob.oefa.efa.service.UbigeoService;
 import pe.gob.oefa.efa.service.UtilService;
-import pe.gob.oefa.efa.utils.ConstantAuditoria;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 @Controller
@@ -48,9 +44,6 @@ public class SupervisorController {
 	
 	@Autowired
 	private UbigeoService ubigeoService;
-	
-	@Autowired
-	private AuditoriaService auditoriaService;
 	
 	@Autowired
 	private SupervisorService supervisorService;	
@@ -147,9 +140,9 @@ public class SupervisorController {
 		pad.setCoddep(supervisor.getDepartamento());
 		pad.setCodpro(supervisor.getProvincia());
 		pad.setCoddis(supervisor.getDistrito());
-		padronService.savePadron(pad,session);
+		padronService.savePadron(pad);
 		}
-		supervisorService.saveSupervisor(supervisor, session);
+		supervisorService.saveSupervisor(supervisor);
 		
 		String linkr = "redirect:/supervisor/";  
 		if(session.getAttribute("actEfa") != null)
@@ -161,17 +154,16 @@ public class SupervisorController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id, HttpSession session) {
+	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
 		List<SupervisorFile> sf = supervisorService.listFiles_by_ID(id);
 		List<SupervisorEmergencia> se = supervisorService.listEmergencias_by_ID(id);
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(sf.isEmpty() && se.isEmpty()){
-			supervisorService.deleteSupervisor(id, session);
+			supervisorService.deleteSupervisor(id);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","0"));
 		}
-		
 		return selectItems;
 	}		
 	

@@ -1,7 +1,13 @@
 package pe.gob.oefa.efa.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import pe.gob.oefa.efa.dao.ReporteDAO;
+import pe.gob.oefa.efa.dao.UbigeoDao;
 import pe.gob.oefa.efa.form.ReporteForm;
+import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.ReporteActividad;
 import pe.gob.oefa.efa.service.ReporteService;
 
@@ -14,16 +20,30 @@ import java.util.List;
 @Service
 public class ReporteServiceImpl implements ReporteService {
 
+	@Autowired
+	private ReporteDAO reporteDAO;
+	
+	
     public List<ReporteActividad> obtenerReporte(ReporteForm form) {
         List<ReporteActividad> lista = new ArrayList<ReporteActividad>();
-        ReporteActividad actividad;
+        lista = reporteDAO.obtenerReporte(form);
+        /*ReporteActividad actividad;
         for(int i = 0; i < 5; i++) {
             actividad = new ReporteActividad();
-            actividad.setDepartamento("departamento"+i);
+        	actividad.setDepartamento("departamento"+i);
             actividad.setProvincia("provincia"+i);
             actividad.setDistrito("distrito"+i);
             lista.add(actividad);
-        }
+        }*/
         return lista;
     }
+
+    @Transactional(readOnly = true)
+	public List<ComponenteMatriz> listarComponenteMatriz() {
+		List<ComponenteMatriz> lista = new ArrayList<ComponenteMatriz>();
+		lista = reporteDAO.listarComponenteMatriz();
+		return lista;
+	}
+
+
 }

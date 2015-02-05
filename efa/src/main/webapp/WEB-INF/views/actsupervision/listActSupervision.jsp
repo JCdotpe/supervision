@@ -80,16 +80,15 @@
 								<td>---</td>
 							</c:when>
 							<c:otherwise>
-								<td>							
-	                             <a href="#myModal" role="button" class="btn btn-efa-del btn-xs btn-pop-matriz" data-toggle="modal" data-level="${resp.NIVEL}" data-id="${resp.IDACTIVIDAD}"> <span class="glyphicon glyphicon-edit"></span>
-	                             </a>
-								</td>	 
 								<td>
 		                            <a href="/efa/ejeact/${resp.IDACTIVIDAD}"class="btn btn-efa btn-xs">
 		                                <span class="glyphicon glyphicon-edit"></span>
 		                            </a>
 								</td>
-                            
+								<td>							
+	                             <a href="#myModal" role="button" class="btn btn-efa-del btn-xs btn-pop-matriz" data-toggle="modal" data-level="${resp.NIVEL}" data-id="${resp.IDACTIVIDAD}"> <span class="glyphicon glyphicon-edit"></span>
+	                             </a>
+								</td>	                             
 	                           								
 							</c:otherwise>
 						</c:choose>
@@ -105,8 +104,7 @@
 	<form id="frm_matriz_add" method="post" accept-charset="UTF-8"
 	action="${actionUrlMatriz}">
 	
-	
-	<div class='loadingMatrices'>
+		<div class='loadingMatrices'>
     	<div class="progress" style="width: 400px; margin: auto;">
 		  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
 		  	<span style="color: black;font-weight: bold;">Cargando ...</span>

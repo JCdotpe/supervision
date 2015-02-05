@@ -10,10 +10,8 @@
     
     <jsp:attribute name="footer">
       <p id="copyright">OEFA</p>    
- 	<script type="text/javascript"
-		src='<c:url value="/web-resources/js/lib/jquery.form.js"/>'></script>   
- 	<script type="text/javascript"
-		src='<c:url value="/web-resources/js/js-for-listMatriz.js?1"/>'></script>   
+ 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?1"/>'></script>  
+ 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js"/>'></script>   
     </jsp:attribute>
     
     <jsp:body>
@@ -213,8 +211,11 @@
 	
 		<form id="frm_archive" style="padding-bottom: 40px" action="${actionUrlMatriz}" 
 			enctype="multipart/form-data" method="POST"  class="form-inline">
-			<label style="margin: 12px 35px 0px 0px; float: left;">Tipo de Archivo</label>
-		  	<select style="width: 390px;" name="tipo" class="txt input-small">
+			
+			<label style="margin: 12px 35px 0px 0px; float: left;">Tipo de Archivo</label>			
+			
+			<select style="width: 390px;" name="tipo" class="txt input-small">
+
 		  		<option value="">Seleccionar Tipo</option>
 		  		<option value="Memo">Memo</option>
 		  		<option value="Informe">Informe</option>
@@ -223,9 +224,11 @@
 		  	</select>
 		  	
 		  	<label style="float: left; margin-top: 12px; margin-right: 10px;">Nombre del Archivo:</label>
+		  	
 		  	<input style="width: 390px;" type="text" name="nombrearchivo" class="txt input-medium" placeholder="Nombre del Archivo">
 		  	
-		  	<label style="float: left; margin: 12px 10px 10px 0px;">Seleccionar Archivo:</label>
+			<label style="float: left; margin: 12px 10px 10px 0px;">Seleccionar Archivo:</label>		  	
+		  	
 		  	<input style="width: 390px;" type="file" name="archivo" class="txt input-medium" placeholder="Archivo">
 		  	
 		  	<label>Formato PDF y WORD <br />Peso max de 5Mb </label>
@@ -252,5 +255,5 @@
 	<div class="modal-footer">
   		<button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
 	</div>
+	
 </div>
-

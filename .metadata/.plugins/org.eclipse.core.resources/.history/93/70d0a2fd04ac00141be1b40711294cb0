@@ -1,0 +1,158 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
+<c:url var="actionUrl" value="/actividad/save" />
+
+<form:form id="actividadForm" commandName="actividad" method="post" accept-charset="UTF-8"
+	action="${actionUrl }" class="form-horizontal upperx" role="form">
+
+	<fieldset>
+	<!-- 	<legend></legend> -->
+
+<p class="green info-form">Programación de Actividades de Supervisión a EFA</p>
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Nivel de Gobierno<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+		<form:select id="nivel" path="nivel"  class="form-control">
+           <form:option value="-1" label="--- Seleccionar ---"  />
+           <form:options items="${listNivel}" itemValue="value" itemLabel="label"/>
+         </form:select>    
+        	<div class="help-block error"></div>
+        </div> 
+</div>
+
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Departamento<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+		<form:select id="departamento" path="departamento"  class="form-control">
+           <form:option value="-1" label="--- Seleccionar ---"  />
+           <form:options items="${listDep}" itemValue="value" itemLabel="label"/>
+         </form:select>
+          <form:input path="departamentodes" id="departamentodes" name="departamentodes" type="hidden" />
+          <div class="help-block error"></div>
+        </div>   
+        <label for="inputType" class="col-sm-1 control-label">Provincia<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+        	<form:select id="provincia" path="provincia"  class="form-control">	
+				<form:option value="-1" label="--- Seleccionar ---" />
+				 <form:options items="${listProv}" itemValue="value" itemLabel="label"/>
+	         </form:select>	       
+	         <form:input path="provinciades" id="provinciades" name="provinciades" type="hidden" /> 	
+        	<div class="help-block error"></div>	
+        </div>   
+        <label for="inputType" class="col-sm-1 control-label">Distrito<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+        	<form:select id="distrito" path="distrito"  class="form-control">	
+				<form:option value="-1" label="--- Seleccionar ---" />
+				 <form:options items="${listDis}" itemValue="value" itemLabel="label"/>
+	         </form:select>	           	
+	          <form:input path="distritodes" id="distritodes" name="distritodes" type="hidden" /> 	
+        	<div class="help-block error"></div>	
+        </div>                    
+</div>  
+
+
+
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Tipo<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+		<form:select id="tipo" path="tipo"  class="form-control">
+           <form:option value="-1" label="--- Seleccionar ---"  />
+           <form:options items="${listTipoAct}" itemValue="value" itemLabel="label"/>
+         </form:select>    
+        	<div class="help-block error"></div>
+        </div> 
+        <div class="col-sm-2">
+        <label for="inputType" class="control-label">Requiere Analítica</label>
+        	<form:checkbox name="analitica" value="true" path="analitica" id="analitica" class="form-control" />
+        	<div class="help-block error"></div>
+        </div>     
+        <div class="col-sm-1">
+  			<label for="inputType" class="col-sm-1 control-label">Suelo</label>	
+        	<form:checkbox  name="suelo" id="suelo" value="true" path="suelo" class="form-control" />
+        </div>      
+        <div class="col-sm-1 hideanalitica">
+  			<label for="inputType" class="col-sm-1 control-label">Aire</label>	
+        	<form:checkbox name="aire" id="aire" value="true" path="aire" class="form-control" />
+        </div>  
+        <div class="col-sm-1 hideanalitica">
+  			<label for="inputType" class="col-sm-1 control-label">Agua</label>	
+        	<form:checkbox name="agua" id="agua" value="true" path="agua" class="form-control" />
+        </div>   
+        <div class="col-sm-1 hideanalitica">
+  			<label for="inputType" class="col-sm-1 control-label">Efluentes</label>	
+        	<form:checkbox name="efluentes"  id="efluentes" value="true" path="efluentes" class="form-control" />
+        </div>                                    
+</div>
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">EFA<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+		<form:select id="idefa" path="idefa"  class="form-control">
+           <form:option value="-1" label="--- Seleccionar ---"  />
+           <form:options items="${efasn}" itemValue="id" itemLabel="nombre"/>
+         </form:select>       	
+        	<div class="help-block error"></div>
+        </div>          
+</div>
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Dirección</label>
+        <div class="col-sm-11">
+        	<input id="edireccion" readonly class="form-control"/>
+        	<div class="help-block error"></div>
+        </div>                  
+</div> 
+
+
+
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Nombre del Titular de la EFA</label>
+        <div class="col-sm-3">
+        	<input id="enombre" readonly class="form-control" />
+        	<div class="help-block error"></div>
+        </div>     
+        <label for="inputType"  class="col-sm-1 control-label">Web Institucional</label>
+        <div class="col-sm-3">
+        	<input id="ewebi" readonly class="form-control" />
+        	<div class="help-block error"></div>
+        </div>              
+</div>
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Descripción</label>
+        <div class="col-sm-11">
+        	<form:input name = "descripcion" path="descripcion" class="form-control" />
+        	<div class="help-block error"></div>
+        </div>                  
+</div> 
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Fecha Inicio<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+        	<form:input name = "fechaini" path="fechaini" class="form-control datepicker" />
+        	<div class="help-block error"></div>
+        </div>     
+        <label for="inputType"  class="col-sm-1 control-label">Fecha Fin<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+        	<form:input name = "fechafin" path="fechafin" class="form-control datepicker" />
+        	<div class="help-block error"></div>
+        </div>              
+</div>
+
+<div class="form-group">
+        <label for="inputType" class="col-sm-1 control-label">Hora Inicio<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+        	<form:input name = "horaini" path="horaini" class="form-control" />
+        	<div class="help-block error"></div>
+        </div>     
+        <label for="inputType"  class="col-sm-1 control-label">Hora Fin<span class="error"> (*)</span></label>
+        <div class="col-sm-3">
+        	<form:input name = "horafin" path="horafin" class="form-control" />
+        	<div class="help-block error"></div>
+        </div>              
+</div>
+
+	<form:input path="id" type="hidden" />
+	<button type="submit" class="btn btn-success">Agregar</button>
+
+	</fieldset>
+</form:form>
+<p class="error obligatorio" >(*) Campos Obligatorios</p>

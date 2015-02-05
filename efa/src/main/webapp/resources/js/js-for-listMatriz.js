@@ -1,7 +1,4 @@
 $(document).ready(function() {
-	
-	
-	
 	var idmatrizactividad ; 
 	var idfuncion;
 	var listArchivos = $("#listArchivos");
@@ -78,7 +75,7 @@ $(document).ready(function() {
 					{idactividad:idactividad_modal, idMatriz:idMatriz, estado:"1" },
 					function(json_data){
 						//console.log("exito");
-						$(".loadingMatrices").fadeOut("fast", function(){ $(this).css("display","none"); });
+						$(".loadingMatrices").fadeOut("fast", function(){ $(this).css("display","none"); });						
 					});
 		} else {
 			$(".loadingMatrices").fadeIn("fast");

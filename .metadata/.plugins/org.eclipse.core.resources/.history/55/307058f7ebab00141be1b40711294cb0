@@ -1,0 +1,127 @@
+package pe.gob.oefa.efa.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import pe.gob.oefa.efa.form.ReporteForm;
+import pe.gob.oefa.efa.model.*;
+import pe.gob.oefa.efa.service.*;
+import pe.gob.oefa.efa.utils.LabelValue;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by hgonzales on 06/12/2014.
+ */
+@Controller
+@RequestMapping("/reporte")
+@SessionAttributes({"reporteForm", "reporteActividad"})
+public class ReporteController {
+
+    @Autowired
+    private UbigeoService ubigeoService;
+    @Autowired
+    private UtilService utilService;
+    @Autowired
+    private SupervisorService supervisorService;
+    @Autowired
+    private EfaService efaService;
+    @Autowired
+    private ReporteService reporteService;
+    @Autowired
+    private ExcelExportService exportService;
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+    @RequestMapping(value = "/excel", method = RequestMethod.GET)
+    public void generarReporte(@ModelAttribute("reporteActividad") List<ReporteActividad> reporte, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=\"reporte_actividad.xls\"");
+        InputStream in = new FileInputStream(resourceLoader.getResource("classpath:efareport.xls").getFile());
+        OutputStream out = response.getOutputStream();
+        Map<String, List<ReporteActividad>> data = new HashMap<String, List<ReporteActividad>>();
+        data.put("actividades", reporte);
+        exportService.transformXLS(in, data, out);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String processReport(@ModelAttribute("reporteForm")ReporteForm form, ModelMap model) {
+        List<ReporteActividad> reporte = reporteService.obtenerReporte(form);
+        model.addAttribute("reporteActividad", reporte);
+        return "reporte/reporte";
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String loadReporte(ModelMap model) {
+        model.addAttribute("reporteForm", new ReporteForm());
+        return "reporte/reporte";
+    }
+
+    @ModelAttribute("departamentoList")
+    public List<Departamento> colocarDepartamentosEnContexto() {
+        return ubigeoService.obtenerDepartamentos();
+    }
+
+    @ModelAttribute("provinciaList")
+    public List<Provincia> colocarProvinciasEnContexto(@ModelAttribute("reporteForm") ReporteForm form) {
+        if (form.getDepartamento() == null) {
+            return Collections.emptyList();
+        }
+        return ubigeoService.obtenerProvincias(form.getDepartamento());
+    }
+
+    @ModelAttribute("distritoList")
+    public List<Distrito> colocarDistritosEnContexto(@ModelAttribute("reporteForm") ReporteForm form) {
+        if (form.getProvincia() == null) {
+            return Collections.emptyList();
+        }
+        return ubigeoService.obtenerDistritos(form.getDepartamento(), form.getProvincia());
+    }
+
+    @ModelAttribute("nivelesGobierno")
+    public List<LabelValue> colocarNivelesDeGobiernoEnContexto() {
+        return utilService.listNiveles_efa();
+    }
+
+    @ModelAttribute("efaList")
+    public List<Efa> colocarEfaEnContexto() {
+        return efaService.listEfas();
+    }
+
+    @ModelAttribute("tipoSupervicionList")
+    public List<LabelValue> colocarTipoSupervicionEnContexto() {
+        return utilService.listTipoActividad();
+    }
+
+    @ModelAttribute("supervisorList")
+    public List<Supervisor> colocarSupervisorEnContexto() {
+        return supervisorService.listSupervisores();
+    }
+
+    @ModelAttribute("estadoActividadList")
+    public List<LabelValue> colocarEstadoDeActividadEnContexto() {
+        return utilService.listEstadoActividad();
+    }
+    
+    
+    @ModelAttribute("estadoActividadList")
+    public List<ComponenteMatriz> colocarComponenteMatrizEnContexto() {
+        return utilService.listEstadoActividad();
+    }
+    
+    
+}

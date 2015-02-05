@@ -1,6 +1,7 @@
 package pe.gob.oefa.efa.service;
 
 import pe.gob.oefa.efa.form.ReporteForm;
+import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.ReporteActividad;
 
 import java.util.List;
@@ -11,4 +12,8 @@ import java.util.List;
 public interface ReporteService {
 
     List<ReporteActividad> obtenerReporte(ReporteForm form);
+    
+    List<ComponenteMatriz> listarComponenteMatriz();
+    
+    
 }

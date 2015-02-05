@@ -7,8 +7,6 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +17,6 @@ import pe.gob.oefa.efa.model.Actividad;
 
 import pe.gob.oefa.efa.model.MatrizActividad;
 import pe.gob.oefa.efa.service.ActividadService;
-import pe.gob.oefa.efa.service.AuditoriaService;
-import pe.gob.oefa.efa.utils.ConstantAuditoria;
 
 
 @Service
@@ -28,16 +24,10 @@ public class ActividadServiceImpl implements ActividadService {
 	
 	@Autowired
 	private ActividadDao actividadDao;
-	@Autowired
-	private AuditoriaService auditoriaService;
 	
 	@Transactional
-	public void saveActividad(Actividad actividad, HttpSession session) {
+	public void saveActividad(Actividad actividad) {
 		 actividadDao.saveActividad(actividad);
-		 
-		 auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				 actividad.getId() != null ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
-							ConstantAuditoria.Table_Supervicion_Efa_Actividad, actividad.getId() != null ? actividad.getId().toString() : "");
 	}
 
 	@Transactional(readOnly = true)
@@ -56,27 +46,19 @@ public class ActividadServiceImpl implements ActividadService {
 //	}	
 	
 	@Transactional
-	public void deleteActividad(BigDecimal id, HttpSession session) {
+	public void deleteActividad(BigDecimal id) {
 		actividadDao.deleteActividad(id);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				ConstantAuditoria.Acc_Eliminar, ConstantAuditoria.Table_Supervicion_Efa_Actividad, id.toString());
 	}
 	
 	@Transactional
-	public void deleteActResponsable(BigDecimal actid, BigDecimal resid, HttpSession session) {
+	public void deleteActResponsable(BigDecimal actid, BigDecimal resid) {
 		actividadDao.deleteActResponsable(actid, resid);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				ConstantAuditoria.Acc_Eliminar, ConstantAuditoria.Table_Supervicion_Efa_Actividad_Responsable, actid.toString());
 	}
 	
 	@Transactional
-	public void deleteActSupervisor(BigDecimal actid, BigDecimal supid, HttpSession session) {
+	public void deleteActSupervisor(BigDecimal actid, BigDecimal supid) {
 		actividadDao.deleteActSupervisor(actid, supid);
 		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				ConstantAuditoria.Acc_Eliminar, ConstantAuditoria.Table_Supervicion_Efa_Actividad_Supervisor, actid.toString());
 	}
 	
 	@Transactional(readOnly = true)
@@ -130,13 +112,8 @@ public class ActividadServiceImpl implements ActividadService {
 	}
 	
 	@Transactional
-	public void saveActividadMatriz(MatrizActividad matrizactividad, HttpSession session) {
+	public void saveActividadMatriz(MatrizActividad matrizactividad) {
 		 actividadDao.saveActividadMatriz(matrizactividad);
-		 
-		 auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				 matrizactividad.getIdmatrizactividad() != null ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
-							ConstantAuditoria.Table_Supervicion_MatrizActividad, matrizactividad.getIdmatrizactividad() != null ? matrizactividad.getIdmatrizactividad().toString() : "");
-	   
 	}	
 	
 

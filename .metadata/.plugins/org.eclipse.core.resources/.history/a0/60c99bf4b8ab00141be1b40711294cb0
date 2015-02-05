@@ -1,0 +1,114 @@
+package pe.gob.oefa.efa.dao.impl;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import pe.gob.oefa.efa.dao.UbigeoDao;
+import pe.gob.oefa.efa.model.Departamento;
+import pe.gob.oefa.efa.model.Distrito;
+import pe.gob.oefa.efa.model.Provincia;
+import pe.gob.oefa.efa.model.Ubigeo;
+import pe.gob.oefa.efa.utils.ConnectionManagerVPN;
+import pe.gob.oefa.efa.utils.LabelValue;
+
+@Repository
+public class UbigeoDaoImpl implements UbigeoDao {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@SuppressWarnings("unchecked")
+	public List<Ubigeo> listDep() {
+		//return getSession().createCriteria(Ubigeo.class).list();
+		return getSession().createQuery("from Ubigeo where ID_DISTRITO=0 and ID_PROVINCIA=0 and COD_DEPARTAMENTO!='00' and COD_DEPARTAMENTO!='99' and ID_DEPARTAMENTO NOT IN(0,26,27) ORDER BY DES_DISTRITO").list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Ubigeo> listProv(Long depId) {
+		return getSession().createQuery("from Ubigeo where ID_PROVINCIA!=0 and ID_DISTRITO=0 and COD_DEPARTAMENTO=:parameter1 ORDER BY DES_DISTRITO").setParameter("parameter1", depId).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Ubigeo> listDist(Long depId, Long provId) {
+		return getSession().createQuery("from Ubigeo where ID_DISTRITO!=0 and COD_DEPARTAMENTO=:parameter1 and COD_PROVINCIA=:parameter2 ORDER BY DES_DISTRITO").setParameter("parameter1", depId).setParameter("parameter2", provId).list();
+	}
+
+
+	private Session getSession() {
+		Session sess = getSessionFactory().getCurrentSession();
+		if (sess == null) {
+			sess = getSessionFactory().openSession();
+		}
+		return sess;
+	}
+
+	private SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public List<Departamento> obtenerDepartamentos() {
+		//return getSession().createQuery("from Departamento").list();
+		List<Departamento> oListarDepartamento = new ArrayList<Departamento>();
+		CallableStatement callableStatement = null;
+	    Connection connection = null;
+	    ResultSet rs = null;
+	    try{
+	    	connection = ConnectionManagerVPN.getConnection();
+		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_DEPARTAMENTO(?); END;");
+		    stmt.registerOutParameter(1, OracleTypes.CURSOR); //REF CURSOR
+		    stmt.execute();
+		    rs = ((OracleCallableStatement)stmt).getCursor(1);
+		    Departamento oDepartamento = null;
+		    while (rs.next()) {
+		    	oDepartamento = new Departamento();
+		    	oDepartamento.setCodigo(rs.getString(""));
+		    	selectItems.add(new LabelValue(rs.getString("NOM_DEPARTAMENTO"),rs.getString("ID_DEPARTAMENTO")));
+	        }		  
+		    
+	    }catch (SQLException e) { e.printStackTrace(); }		
+		finally {
+			try{
+				if (callableStatement != null) {
+					callableStatement.close();
+				}
+		
+				if (connection != null) {
+					connection.close();
+				}
+			}catch (SQLException e) { e.printStackTrace(); }
+
+		}	
+	    
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public List<Provincia> obtenerProvincias(String ccdd) {
+		Query query = getSession().createQuery("from Provincia p where p.id.ccdd = :ccdd");
+		query.setParameter("ccdd", ccdd);
+		return query.list();
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public List<Distrito> obtenerDistritos(String ccdd, String ccpp) {
+		Query query = getSession().createQuery("from Distrito p where p.id.ccdd = :ccdd and p.id.ccpp = :ccpp");
+		query.setParameter("ccdd", ccdd);
+		query.setParameter("ccpp", ccpp);
+		return query.list();
+	}
+}

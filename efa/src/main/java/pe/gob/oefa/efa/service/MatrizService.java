@@ -3,8 +3,6 @@ package pe.gob.oefa.efa.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.FuncionesComponente;
@@ -18,6 +16,7 @@ import pe.gob.oefa.efa.utils.LabelValue;
 public interface MatrizService {
 
 	public List<LabelValue> listMatrices(int codNivel, BigDecimal idEfa);
+	
 	public  List<MatrizActividad> listByActividad(BigDecimal codActividad);
 	public Matriz getMatriz(int idmatriz);
 	public MatrizActividad getMatrizAct(int idmatrizact);
@@ -25,21 +24,19 @@ public interface MatrizService {
 	public List<FuncionesComponente> getFunciones(int idcomponente);
 	public List<IndicadoresFuncion> getIndicadores(int idfuncion);
 	public List<MatrizActividad> getMatrizActividad(int codActividad, int codMatriz);
-	
-	public void addMatrizActividadFuncion(MatrizActividadFuncion maf, HttpSession session);
-	
-	public List<MatrizActividadFuncion> getListMatrizFuncion(int idmatrizactividad, int idfuncion);
-	
-	public void addArchiveFuncion(ArchivoFunciones af, HttpSession session);
-	
+	public void addMatrizActividadFuncion(MatrizActividadFuncion maf);
+	public List<MatrizActividadFuncion> getListMatrizFuncion(
+			int idmatrizactividad, int idfuncion);
+	public void addArchiveFuncion(ArchivoFunciones af);
 	public List<ArchivoFunciones> listArchives(int idmatrizactividadfunciones);
-	public void addMatrizactividadindicador(MatrizActividadIndicador mai, HttpSession session);
-	
-	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma, HttpSession session);
-	
-	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(BigDecimal idmatrizactividad, String estado);
-	public List<MatrizActividad> getbyMatrizActividad(int codActividad, int codMatriz);
-	public void updateMatrizActividad(MatrizActividad ma, HttpSession session);
-	public List<MatrizActividadIndicador> getIndicadoresActividad(int idmatrizactividadfunciones);
-	public void deleteArchive(int idArchive, HttpSession session);
+	public void addMatrizactividadindicador(MatrizActividadIndicador mai);
+	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma);
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(
+			BigDecimal idmatrizactividad, String estado);
+	public List<MatrizActividad> getbyMatrizActividad(int codActividad,
+			int codMatriz);
+	public void updateMatrizActividad(MatrizActividad ma);
+	public List<MatrizActividadIndicador> getIndicadoresActividad(
+			int idmatrizactividadfunciones);
+	public void deleteArchive(int idArchive);
 }

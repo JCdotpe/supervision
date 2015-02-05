@@ -1,0 +1,14 @@
+package pe.gob.oefa.efa.service;
+
+import pe.gob.oefa.efa.form.ReporteForm;
+import pe.gob.oefa.efa.model.ReporteActividad;
+
+import java.util.List;
+
+/**
+ * Created by hgonzales on 09/12/2014.
+ */
+public interface ReporteService {
+
+    List<ReporteActividad> obtenerReporte(ReporteForm form);
+}

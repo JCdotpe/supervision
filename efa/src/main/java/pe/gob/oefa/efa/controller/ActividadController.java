@@ -14,8 +14,6 @@ import java.util.Set;
 import javax.servlet.ServletException;
 
 
-import javax.servlet.http.HttpSession;
-
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +52,7 @@ public class ActividadController {
 	private UbigeoService ubigeoService;
 	
 	@Autowired
-	private ActividadService actividadService;
+	private ActividadService actividadService ;
 	
 	@Autowired
 	private EfaService efaService;	
@@ -108,7 +106,7 @@ public class ActividadController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveSupervisor(@ModelAttribute("actividad") Actividad actividad,
-			BindingResult result, HttpSession session) {
+			BindingResult result) {
 		//edicion
 		if(actividad.getId() != null){
 			Actividad preact = actividadService.getActividad(actividad.getId());
@@ -125,19 +123,19 @@ public class ActividadController {
 		}else{
 			actividad.setEstado("0");
 		}
-		actividadService.saveActividad(actividad,session);
+		actividadService.saveActividad(actividad);
 		return "redirect:listActividades";
 	}
 	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id, HttpSession session) {
+	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id) {
 		Actividad act = actividadService.getActividad(id);
 		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(act.getSupervisores().size() == 0 || act.getResponsables().size() == 0){
-			actividadService.deleteActividad(id,session);
+			actividadService.deleteActividad(id);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","0"));
@@ -148,31 +146,20 @@ public class ActividadController {
 	
 	
 	@RequestMapping("/contactos/{supId}")
-	public String getContactos(@PathVariable BigDecimal supId, Map<String, Object> map, HttpSession session) {	
+	public String getContactos(@PathVariable BigDecimal supId, Map<String, Object> map) {
 		Actividad act = actividadService.getActividad(supId);
-		int xd = 0;
-		if(session.getAttribute("msg") != null){
-			String asd = session.getAttribute("msg").toString();
-				xd = Integer.parseInt(asd);
-		}else{
-			xd = 2;
-		}
-		session.removeAttribute("msg");
-		map.put("msgx",xd);
 		map.put("respSector",utilService.listSector_contacto());
 		map.put("respTipos",utilService.listTipos_contacto());
 		map.put("respList", responsableService.listResponsables_by_ID(act.getIdefa()));
 		map.put("efa", efaService.getEfa(act.getIdefa()));
 		map.put("act",act);
 		map.put("listActres", act.getResponsables());
-		session.removeAttribute("msg");
 		return "/actividad/listActividadesContactos";
 	}		
 
 	
 	@RequestMapping("/addcon/{actid}/{resid}")
-	public String saveActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid, HttpSession session) {
-		
+	public String saveActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid) {
 		Actividad act = actividadService.getActividad(actid);
 		Set<Responsable> responsables = act.getResponsables();
 		
@@ -184,35 +171,25 @@ public class ActividadController {
 			if(a.equals(resid) )
 				flag = true;
 		}
-		int msg = 0;
+		
 		if(!flag){
-			msg = 1;
 			responsables.add(res);	
 		}
-		session.setAttribute("msg", msg);
 		act.setResponsables(responsables);
-		actividadService.saveActividad(act,session);	
+		actividadService.saveActividad(act);	
 		
 		return "redirect:/actividad/contactos/" + actid ;
 	}		
 
 	@RequestMapping("/delcon/{actid}/{resid}")
-	public String delActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid, HttpSession session) {
-		actividadService.deleteActResponsable(actid, resid,session);
+	public String delActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid) {
+		actividadService.deleteActResponsable(actid, resid);
 		return "redirect:/actividad/contactos/" + actid ;
 	}			
 	
 	@RequestMapping("/supervisores/{supId}")
-	public String getSupervisores(@PathVariable BigDecimal supId, Map<String, Object> map, HttpSession session) {
-		int xd = 0;
-		if(session.getAttribute("msg") != null){
-			String asd = session.getAttribute("msg").toString();
-				xd = Integer.parseInt(asd);
-		}else{
-			xd = 2;
-		}
-		session.removeAttribute("msg");
-		map.put("msgx",xd);
+	public String getSupervisores(@PathVariable BigDecimal supId, Map<String, Object> map) {
+
 		Actividad act = actividadService.getActividad(supId);
 		map.put("listMcontrato",utilService.listMcontrato());	
 		map.put("listSexo",utilService.listSexo());
@@ -223,8 +200,7 @@ public class ActividadController {
 	}	
 	
 	@RequestMapping("/addsup/{actid}/{supid}")
-	public String saveActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid, HttpSession session) {
-		
+	public String saveActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid) {
 		Actividad act = actividadService.getActividad(actid);
 		Set<Supervisor> supervisores = act.getSupervisores();
 		Supervisor sup = supervisorService.getSupervisor(supid);
@@ -238,34 +214,33 @@ public class ActividadController {
 			if(a.equals(supid) )
 				flag = true;
 		}
-		int msg = 0;
+		
 		if(!flag && date.compareTo(sup.getFinLaboral()) < 0 ){
-			msg = 1;
 			supervisores.add(sup);
 		}		
-		session.setAttribute("msg", msg);
+		
 		act.setSupervisores(supervisores);
-		actividadService.saveActividad(act,session);
+		actividadService.saveActividad(act);
 		return "redirect:/actividad/supervisores/" + actid ;
 	}		
 
 	@RequestMapping("/delsup/{actid}/{supid}")
-	public String delActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid, HttpSession session) {
+	public String delActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid) {
 		Actividad act = actividadService.getActividad(actid);
 		if(act.getIdsupres().equals(supid) ){
 			act.setIdsupres(null);
-			actividadService.saveActividad(act,session);
+			actividadService.saveActividad(act);
 		}
-		actividadService.deleteActSupervisor(actid, supid,session);
+		actividadService.deleteActSupervisor(actid, supid);
 		return "redirect:/actividad/supervisores/" + actid ;
 	}		
 	
 	@RequestMapping(value = "/setsup", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody	
-	public Map<String, String> setSup(@RequestParam("idact") BigDecimal idact, @RequestParam("idsupres") BigDecimal idsupres, Map<String, Object> map, HttpSession session) {
+	public Map<String, String> setSup(@RequestParam("idact") BigDecimal idact, @RequestParam("idsupres") BigDecimal idsupres, Map<String, Object> map) {
 		Actividad act = actividadService.getActividad(idact);
 		act.setIdsupres(idsupres);
-		actividadService.saveActividad(act,session);
+		actividadService.saveActividad(act);
 		Map<String, String> selectItems =   new HashMap<String, String>();
 		selectItems.put("success","1");
 		return selectItems;

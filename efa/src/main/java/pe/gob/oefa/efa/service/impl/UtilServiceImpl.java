@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pe.gob.oefa.efa.service.UtilService;
 import pe.gob.oefa.efa.utils.ConnectionManager;
-import pe.gob.oefa.efa.utils.ConnectionManagerVPN;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 @Service
@@ -36,10 +35,10 @@ public class UtilServiceImpl implements UtilService {
 	@Transactional(readOnly=true) 
 	public List<LabelValue> listSector_contacto() {
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		selectItems.add(new LabelValue("MINERÍA","1"));
+		selectItems.add(new LabelValue("MINERÃƒï¿½A","1"));
 		selectItems.add(new LabelValue("ELECTRICIDAD","2"));
 		selectItems.add(new LabelValue("HIDROCARBUROS","3"));
-		selectItems.add(new LabelValue("PESQUERÍA","4"));
+		selectItems.add(new LabelValue("PESQUERÃƒï¿½A","4"));
 		selectItems.add(new LabelValue("INDUSTRIA","5"));
 		return selectItems;
 	}	
@@ -138,7 +137,7 @@ public class UtilServiceImpl implements UtilService {
 
 	public List<LabelValue> listEstadoEjecucion() {
 	    List<LabelValue> selectItems = new ArrayList<LabelValue>();
-	    selectItems.add(new LabelValue("En revisión","1"));
+	    selectItems.add(new LabelValue("En revisiÃƒÂ³n","1"));
 	    selectItems.add(new LabelValue("Observado","2"));
 	    selectItems.add(new LabelValue("Cerrado","3"));
 	    return selectItems;
@@ -146,7 +145,7 @@ public class UtilServiceImpl implements UtilService {
 	public List<LabelValue> listTipos_Persona() {
 	    List<LabelValue> selectItems = new ArrayList<LabelValue>();
 	    selectItems.add(new LabelValue("Natural","1"));
-	    selectItems.add(new LabelValue("Jurídica","2"));
+	    selectItems.add(new LabelValue("JurÃƒÂ­dica","2"));
 	    return selectItems;
 	}
 	public List<LabelValue> listTipos_Documento() {
@@ -268,7 +267,7 @@ public class UtilServiceImpl implements UtilService {
 
 	public List<LabelValue> listTipos_DerechoM() {
 	    List<LabelValue> selectItems = new ArrayList<LabelValue>();
-	    selectItems.add(new LabelValue("Concesión Minera","1"));
+	    selectItems.add(new LabelValue("ConcesiÃƒÂ³n Minera","1"));
 	    selectItems.add(new LabelValue("U.E.A.","2"));
 	    selectItems.add(new LabelValue("Otro derecho minero","3"));
 	    selectItems.add(new LabelValue("Fuera de un derecho minero","4"));
@@ -290,7 +289,7 @@ public class UtilServiceImpl implements UtilService {
 		    Connection connection = null;
 		    ResultSet rs = null;
 		    try{
-		    	connection = ConnectionManagerVPN.getConnection();
+		    	connection = ConnectionManager.getConnection();
 			    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_CUENCA(?); END;");
 			    stmt.registerOutParameter(1, OracleTypes.CURSOR); //REF CURSOR
 			    stmt.execute();
@@ -319,9 +318,9 @@ public class UtilServiceImpl implements UtilService {
 
 	public List<LabelValue> listTipos_ejecfile() {
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		selectItems.add(new LabelValue("Informe de Supervisión","1"));
-		selectItems.add(new LabelValue("Acta de Supervisión","2"));
-		selectItems.add(new LabelValue("Matriz de Supervisión","3"));
+		selectItems.add(new LabelValue("Informe de SupervisiÃ³n","1"));
+		selectItems.add(new LabelValue("Acta de SupervisiÃ³n","2"));
+		selectItems.add(new LabelValue("Matriz de SupervisiÃ³n","3"));
 		selectItems.add(new LabelValue("Informe-Denuncia","4"));
 		return selectItems;
 	}

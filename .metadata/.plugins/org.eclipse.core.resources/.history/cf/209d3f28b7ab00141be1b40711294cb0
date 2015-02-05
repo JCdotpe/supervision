@@ -1,0 +1,74 @@
+package pe.gob.oefa.efa.dao.impl;
+
+import java.util.List;
+
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import pe.gob.oefa.efa.dao.UbigeoDao;
+import pe.gob.oefa.efa.model.Departamento;
+import pe.gob.oefa.efa.model.Distrito;
+import pe.gob.oefa.efa.model.Provincia;
+import pe.gob.oefa.efa.model.Ubigeo;
+
+@Repository
+public class UbigeoDaoImpl implements UbigeoDao {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@SuppressWarnings("unchecked")
+	public List<Ubigeo> listDep() {
+		//return getSession().createCriteria(Ubigeo.class).list();
+		return getSession().createQuery("from Ubigeo where ID_DISTRITO=0 and ID_PROVINCIA=0 and COD_DEPARTAMENTO!='00' and COD_DEPARTAMENTO!='99' and ID_DEPARTAMENTO NOT IN(0,26,27) ORDER BY DES_DISTRITO").list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Ubigeo> listProv(Long depId) {
+		return getSession().createQuery("from Ubigeo where ID_PROVINCIA!=0 and ID_DISTRITO=0 and COD_DEPARTAMENTO=:parameter1 ORDER BY DES_DISTRITO").setParameter("parameter1", depId).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Ubigeo> listDist(Long depId, Long provId) {
+		return getSession().createQuery("from Ubigeo where ID_DISTRITO!=0 and COD_DEPARTAMENTO=:parameter1 and COD_PROVINCIA=:parameter2 ORDER BY DES_DISTRITO").setParameter("parameter1", depId).setParameter("parameter2", provId).list();
+	}
+
+
+	private Session getSession() {
+		Session sess = getSessionFactory().getCurrentSession();
+		if (sess == null) {
+			sess = getSessionFactory().openSession();
+		}
+		return sess;
+	}
+
+	private SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public List<Departamento> obtenerDepartamentos() {
+		return getSession().createQuery("from Departamento").list();
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public List<Provincia> obtenerProvincias(String ccdd) {
+		Query query = getSession().createQuery("from Provincia p where p.id.ccdd = :ccdd");
+		query.setParameter("ccdd", ccdd);
+		return query.list();
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+	public List<Distrito> obtenerDistritos(String ccdd, String ccpp) {
+		Query query = getSession().createQuery("from Distrito p where p.id.ccdd = :ccdd and p.id.ccpp = :ccpp");
+		query.setParameter("ccdd", ccdd);
+		query.setParameter("ccpp", ccpp);
+		return query.list();
+	}
+}

@@ -7,7 +7,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import pe.gob.oefa.efa.form.ReporteForm;
 import pe.gob.oefa.efa.model.*;
 import pe.gob.oefa.efa.service.*;
@@ -15,6 +18,7 @@ import pe.gob.oefa.efa.utils.LabelValue;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -116,4 +120,15 @@ public class ReporteController {
     public List<LabelValue> colocarEstadoDeActividadEnContexto() {
         return utilService.listEstadoActividad();
     }
+    
+    
+    @ModelAttribute("componenteMatrizList")
+    public List<ComponenteMatriz> colocarComponenteMatrizEnContexto() {
+        return reporteService.listarComponenteMatriz();
+    }
+    
+    
+    
+    
+    
 }

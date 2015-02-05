@@ -1,0 +1,56 @@
+package pe.gob.oefa.efa.dao.impl;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import oracle.jdbc.OracleTypes;
+import pe.gob.oefa.efa.dao.ReporteDAO;
+import pe.gob.oefa.efa.model.Denuncia;
+import pe.gob.oefa.efa.model.ReporteActividad;
+import pe.gob.oefa.efa.utils.ConnectionManager;
+
+public class ReporteDAOImpl implements ReporteDAO {
+
+	public List<ReporteActividad> obtenerReporte() {
+		List<ReporteActividad> oListarReporteActividades = new ArrayList<ReporteActividad>();
+		CallableStatement callableStatement = null;
+        Connection connection = null;
+        try {
+        	  String storeProcedure = "{CALL SIGEFA.SP_GET_ACTIVIDADES()}";
+              connection = ConnectionManager.getConnection();
+              callableStatement = connection.prepareCall(storeProcedure);
+              
+              callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+              callableStatement.execute();
+              
+              ResultSet rs = (ResultSet)callableStatement.getObject(1);
+              ReporteActividad oReporteActividad = null;
+              while(rs.next()) {
+            	  oReporteActividad = new ReporteActividad();
+            	  oReporteActividad.setNumero(rs.getString("NROACTIVIDAD"));
+            	  oReporteActividad.setFechaInicio(rs.getString(""));
+            	  oListarReporteActividades.add(oReporteActividad);
+              }
+              
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (callableStatement != null) {
+                    callableStatement.close();
+                }
+
+                if (connection != null) {
+                    connection.close();
+                }
+            }catch (SQLException e) { e.printStackTrace(); }
+        }
+        
+		return null;
+	}
+
+}

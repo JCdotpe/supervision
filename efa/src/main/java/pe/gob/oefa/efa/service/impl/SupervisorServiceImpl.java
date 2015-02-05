@@ -10,7 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
+
+
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,30 +27,19 @@ import pe.gob.oefa.efa.model.Responsable;
 import pe.gob.oefa.efa.model.Supervisor;
 import pe.gob.oefa.efa.model.SupervisorEmergencia;
 import pe.gob.oefa.efa.model.SupervisorFile;
-import pe.gob.oefa.efa.service.AuditoriaService;
 import pe.gob.oefa.efa.service.SupervisorService;
 import pe.gob.oefa.efa.utils.ConnectionManager;
-import pe.gob.oefa.efa.utils.ConnectionManagerVPN;
 import pe.gob.oefa.efa.utils.LabelValue;
-
-import pe.gob.oefa.efa.utils.ConstantAuditoria;
-
 
 @Service
 public class SupervisorServiceImpl implements SupervisorService {
 	
 	@Autowired
 	private SupervisorDao supervisorDao;
-	@Autowired
-	private AuditoriaService auditoriaService;
 	
 	@Transactional
-	public void saveSupervisor(Supervisor supervisor, HttpSession session) {
+	public void saveSupervisor(Supervisor supervisor) {
 		supervisorDao.saveSupervisor(supervisor);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				supervisor.getId() != null ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
-						ConstantAuditoria.Table_Supervicion_Efa_Supervisor, supervisor.getId() != null ? supervisor.getId().toString() : "");
 	}
 
 	@Transactional(readOnly = true)
@@ -66,11 +60,8 @@ public class SupervisorServiceImpl implements SupervisorService {
 		return supervisorDao.listEmergencias_by_ID(id);
 	}		
 	@Transactional
-	public void deleteSupervisor(BigDecimal id, HttpSession session) {
+	public void deleteSupervisor(BigDecimal id) {
 		supervisorDao.deleteSupervisor(id);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				ConstantAuditoria.Acc_Eliminar, ConstantAuditoria.Table_Supervicion_Efa_Supervisor, id.toString());
 	}
 	
 	@Transactional
@@ -81,7 +72,6 @@ public class SupervisorServiceImpl implements SupervisorService {
 		Map<String, String> selectItems =   new HashMap<String, String>();
 		try {
 			
-//		connection = ConnectionManagerVPN.getConnection();	.
 		connection = ConnectionManager.getConnection();	
 		String getDBUSERByUserIdSql = "{CALL PADRONES.SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";
 //		String getDBUSERByUserIdSql = "{CALL SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";

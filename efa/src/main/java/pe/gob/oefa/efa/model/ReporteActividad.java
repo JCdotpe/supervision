@@ -27,6 +27,7 @@ public class ReporteActividad {
     private String supervisionEspecial;
     private String hallazgosCriticos;
     private String documento;
+    
 
     public String getNumero() {
         return numero;
@@ -203,4 +204,5 @@ public class ReporteActividad {
     public void setDocumento(String documento) {
         this.documento = documento;
     }
+	
 }

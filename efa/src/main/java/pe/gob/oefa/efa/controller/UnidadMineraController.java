@@ -93,7 +93,7 @@ public class UnidadMineraController {
 	public String getResponsablesdsa(@RequestParam("id") BigDecimal admId,@ModelAttribute("unidadm") UnidadMinera unidadMinera, HttpSession session) {
 		Administrado adm = administradoService.getAdministrado(admId);
 		unidadMinera.setAdministrado(adm);
-		unidadMineraService.saveUnidadMinera(unidadMinera,session);
+		unidadMineraService.saveUnidadMinera(unidadMinera);
 		String linkr = "redirect:/administrados/um/" + admId;  
 					
 		return linkr;
@@ -101,11 +101,11 @@ public class UnidadMineraController {
 		
 	@RequestMapping(value = "/deleteum", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id, HttpSession session) {
+	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id) {
 		UnidadMinera unidadMinera = unidadMineraService.getUnidadMinera(id);
 		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		unidadMineraService.deleteUnidadMinera(id,session);;
+		unidadMineraService.deleteUnidadMinera(id);;
 		selectItems.add(new LabelValue("success","1"));
 		return selectItems;
 	}			

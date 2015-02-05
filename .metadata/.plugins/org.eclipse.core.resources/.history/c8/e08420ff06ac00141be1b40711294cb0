@@ -1,0 +1,172 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: hgonzales
+  Date: 06/12/2014
+  Time: 03:35 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:url var="actionUrl" value="${pageContext.request.contextPath}/sinada"/>
+
+<form:form modelAttribute="reporteForm" cssClass="form-horizontal upperx" acceptCharset="UTF-8">
+    <fieldset>
+        <p class="green info-form">Criterio de B&uacute;squeda</p>
+
+        <div class="form-group">
+            <label for="nivelGobiernoId" class="col-sm-1 control-label">Nivel de Gobierno</label>
+            <div class="col-sm-2">
+                <form:select path="nivelGobierno" id="nivelGobiernoId" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${nivelesGobierno}" itemLabel="label" itemValue="value"/>
+                </form:select>
+            </div>
+            <label for="efaId" class="col-sm-1 control-label">EFA</label>
+            <div class="col-sm-2">
+                <form:select path="efa" id="efaId" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${efaList}" itemLabel="nombre" itemValue="id"/>
+                </form:select>
+            </div>
+            <label for="tipoSupervisionId" class="col-sm-1 control-label">Tipo de Supervisi&oacute;n</label>
+            <div class="col-sm-2">
+                <form:select path="tipoSupervision" id="tipoSupervisionId" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${tipoSupervicionList}" itemLabel="label" itemValue="value"/>
+                </form:select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <form:label path="actividad" cssClass="col-sm-1 control-label">Descripci&oacute;n de la Actividad</form:label>
+            <div class="col-sm-2">
+                <form:input path="actividad" cssClass="form-control"/>
+            </div>
+            <label for="supervisorId" class="col-sm-1 control-label">Supervisor</label>
+            <div class="col-sm-2">
+                <form:select path="supervisor" id="supervisorId" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${supervisorList}" itemLabel="nombre" itemValue="id"/>
+                </form:select>
+            </div>
+            <label for="estadoActividadId" class="col-sm-1 control-label">Estado de la Actividad</label>
+            <div class="col-sm-2">
+                <form:select path="estadoActividad" id="estadoActividadId" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${estadoActividadList}" itemLabel="label" itemValue="value"/>
+                </form:select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="departamentoId" class="col-sm-1 control-label">Departamento</label>
+            <div class="col-sm-2">
+                <form:select path="departamento" id="departamento" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${departamentoList}" itemLabel="nombre" itemValue="codigo"/>
+                </form:select>
+            </div>
+            <label for="provinciaId" class="col-sm-1 control-label">Provincia</label>
+            <div class="col-sm-2">
+                <form:select path="provincia" id="provincia" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${provinciaList}" itemLabel="nombre" itemValue="id.codigo"/>
+                </form:select>
+            </div>
+            <label for="distritoId" class="col-sm-1 control-label">Distrito</label>
+            <div class="col-sm-2">
+                <form:select path="distrito" id="distrito" cssClass="form-control">
+                    <form:option value="">--- Seleccione ---</form:option>
+                    <form:options items="${distritoList}" itemLabel="nombre" itemValue="id.codigo"/>
+                </form:select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <form:label path="matriz" cssClass="col-sm-1 control-label">Incluir datos de Matriz</form:label>
+            <div class="col-sm-2">
+                <form:checkbox path="matriz" id="idCheckIMatriz" cssClass="form-control checkbox-inline" value="yyyy"/>
+            </div>
+            <div id="idComponeteVisible">
+            	<label for="componenteId" class="col-sm-1 control-label">Componente</label>
+	            <div class="col-sm-2">
+	                <form:select path="componente" id="componenteId" cssClass="form-control">
+	                    <form:option value="">--- Seleccione ---</form:option>
+	                    <form:options items="${componenteMatrizList}" itemLabel="descripcioncomponente" itemValue="idcomponente"/>
+	                </form:select>
+	            </div>
+            </div>
+            
+            <div id="idSubComponeteVisible">
+	            <label for="subComponenteId" class="col-sm-1 control-label">Sub Componente</label>
+	            <div class="col-sm-2">
+	                <form:select path="subComponente" id="subComponenteId" cssClass="form-control">
+	                    <form:option value="">--- Seleccione ---</form:option>
+	                </form:select>
+	            </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <form:label path="inicioSupervision" cssClass="col-sm-1 control-label">Inicio Supervisi&oacute;n</form:label>
+            <div class="col-sm-2">
+                <form:input path="inicioSupervision" cssClass="form-control datepicker"/>
+            </div>
+            <form:label path="finSupervision" cssClass="col-sm-1 control-label">Fin Supervisi&oacute;n</form:label>
+            <div class="col-sm-2">
+                <form:input path="finSupervision" cssClass="form-control datepicker"/>
+            </div>
+        </div>
+
+        <br/>
+        <button type="submit" class="btn btn-success">Consultar</button>
+        <button type="reset" class="btn btn-success">Cancelar</button>
+        <a href="excel" class="btn btn-success">Exportar a Excel</a>
+
+    </fieldset>
+</form:form>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+    	
+    	$('#idComponeteVisible').css('display','none');
+    	$('#idSubComponeteVisible').css('display','none');
+    	
+        var defaultOption = "<option value=''>--- Seleccione ---</option>";
+        $("#departamentoId").change(function() {
+            var options = defaultOption;
+            $.getJSON("../ubigeo/provincia", {ccdd:$(this).val()}, function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    options += '<option value="' + data[i].id.codigo + '">' + data[i].nombre + '</option>';
+                }
+                $("#provinciaId").html(options);
+                $("#distritoId").html(defaultOption);
+            });
+        });
+        $("#provinciaId").change(function() {
+            var options = defaultOption;
+            $.getJSON("../ubigeo/distrito", {ccdd:$("#departamentoId").val(), ccpp:$(this).val()}, function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    options += '<option value="' + data[i].id.codigo + '">' + data[i].nombre + '</option>';
+                }
+                $("#distritoId").html(options);
+            });
+        });
+        
+        
+        
+        $('#idCheckIMatriz').change(function(){
+        	debugger;
+        	 var valor = $('#idCheckIMatriz :checked').val();
+        	 if(valor==true){
+        		 $('#idComponeteVisible').css('display','block'); 
+        		 $('#idSubComponeteVisible').css('display','block');
+        	 }else{
+        		 $('#idComponeteVisible').css('display','none'); 
+        		 $('#idSubComponeteVisible').css('display','none');
+        	 }
+        });
+        
+    });
+</script>

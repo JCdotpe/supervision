@@ -27,15 +27,12 @@ $("#actividadForm").validate({
     		required:true,
     	}, 	   	
     	fechafin:{
-    		greaterThan: "#fechaini",
     		required:true,
     	}, 	   	
     	horaini:{
-    		time:"asd",
     		required:true,
     	}, 	   	
     	horafin:{
-    		time:"asd",
     		required:true,
     	}, 	 	
   	

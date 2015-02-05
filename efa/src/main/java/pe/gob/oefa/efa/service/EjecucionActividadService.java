@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import pe.gob.oefa.efa.model.EjecucionActividad;
 
 public interface EjecucionActividadService {
@@ -13,7 +11,7 @@ public interface EjecucionActividadService {
 	/*
 	 * CREATE and UPDATE
 	 */
-	public void saveEjecucionActividad(EjecucionActividad ejecucionActividad,HttpSession session); // create and update
+	public void saveEjecucionActividad(EjecucionActividad ejecucionActividad); // create and update
 	
 	/*
 	 * READ
