@@ -52,20 +52,19 @@ public class EjecucionFileController {
 	    public String save(@RequestParam("id") BigDecimal actId, @RequestParam("file") MultipartFile file,
 	    		@RequestParam("tipo") String tipo,@RequestParam("nombre") String nombre, Model map) throws IllegalStateException, IOException {
 		
-		new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
-		String saveDirectory = "C:/Desarrollo_App/SISEFA/";  
-//			String saveDirectory = "c:/upload-efa/ejecucion/";    
+	 new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
+	 String saveDirectory = "C:/Desarrollo_App/SISEFA/";     
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();
 	                
 	                String filexname = utilService.createNewFileName(fileName);
 	                
-	                String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|doc|docx))$)";		
+	                String IMAGE_PATTERN = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp|doc|docx|pdf))$)";		
 	                Pattern pattern = Pattern.compile(IMAGE_PATTERN);
 	                Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
 	                
 	                if (file.getSize() > max || file.getSize() == 0) {
-	                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
+	                	JOptionPane.showMessageDialog(null, "El tama?o del archivo no es el permitido", "Error",
                                 JOptionPane.ERROR_MESSAGE);
 	                }else{            
 		                if(matcher.matches()){
@@ -78,7 +77,7 @@ public class EjecucionFileController {
 			                ejecucionFile.setTipo(tipo);
 			                ejecucionFileService.saveEjecucionFile(ejecucionFile);
 		                }else{
-		                	JOptionPane.showMessageDialog(null, "La extensión del archivo no esta permitida", "Error",
+		                	JOptionPane.showMessageDialog(null, "La extensi?n del archivo no esta permitida", "Error",
 	                                JOptionPane.ERROR_MESSAGE);
 		                }
 	                }
