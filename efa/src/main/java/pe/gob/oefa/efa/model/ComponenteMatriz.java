@@ -17,9 +17,10 @@ public class ComponenteMatriz implements java.io.Serializable{
 	private String item;
 	private String subitem;
 	private String descripcionsubitem;
+	private String completado;
 	
 	public ComponenteMatriz() {
-		
+		this.completado = "NO";
 	}
 	
 	public ComponenteMatriz(int idcomponente,
@@ -89,6 +90,14 @@ public class ComponenteMatriz implements java.io.Serializable{
 	}
 	public void setDescripcionsubitem(String descripcionsubitem) {
 		this.descripcionsubitem = descripcionsubitem;
+	}
+	
+	@Column(name = "COMPLETADO")
+	public String getCompletado() {
+		return completado;
+	}
+	public void setCompletado(String completadoItem) {
+		this.completado = completadoItem;
 	}
 	
 	

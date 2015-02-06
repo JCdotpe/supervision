@@ -59,7 +59,7 @@
 						  				<div class="col_td col_descripcion">Descripción</div>
 						  				<div class="col_td col_item">Sub Item</div>
 						  				<div class="col_td col_descripcion">Descripción</div>
-						  				<div class="col_td col_verificable">Verificable</div>
+						  				<div class="col_td col_verificable">Completado</div>
 						  			</div>
 					  			</th>
 				  			</tr>
@@ -75,7 +75,16 @@
 											<div class="col_td col_descripcion">${componente.descripcioncomponente}</div>
 											<div class="col_td col_item"><center>${componente.subitem}</center></div>
 											<div class="col_td col_descripcion">${componente.descripcionsubitem}</div>
-											<div class="col_td col_verificable"></div>
+											<div style="text-align: center;" class="col_td col_verificable">
+											
+											<c:if test="${componente.completado != null}">
+												${componente.completado}
+											</c:if>
+											<c:if test="${componente.completado == null}">
+												NO
+											</c:if>
+											
+											</div>
 							  			</div>
 						  			
 					  					<div class="block_td block_td_bot">

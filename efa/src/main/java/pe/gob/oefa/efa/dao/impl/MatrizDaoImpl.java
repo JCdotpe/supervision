@@ -1,6 +1,12 @@
 package pe.gob.oefa.efa.dao.impl;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -12,6 +18,7 @@ import pe.gob.oefa.efa.dao.MatrizDao;
 import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
+import pe.gob.oefa.efa.model.EjecucionActividad;
 import pe.gob.oefa.efa.model.FuncionesComponente;
 import pe.gob.oefa.efa.model.IndicadoresFuncion;
 import pe.gob.oefa.efa.model.Matriz;
@@ -21,6 +28,7 @@ import pe.gob.oefa.efa.model.MatrizActividadIndicador;
 import pe.gob.oefa.efa.service.MatrizService;
 import pe.gob.oefa.efa.service.impl.ActividadServiceImpl;
 import pe.gob.oefa.efa.service.impl.MatrizServiceImpl;
+import pe.gob.oefa.efa.utils.ConnectionManager;
 
 @Repository
 public class MatrizDaoImpl implements MatrizDao {
@@ -59,11 +67,58 @@ public class MatrizDaoImpl implements MatrizDao {
 		return (MatrizActividad) getSession().get(MatrizActividad.class, id);
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public List<ComponenteMatriz> getComponente(int idmatriz) {
-		// TODO Auto-generated method stub
+		
 		return getSession().createQuery("from ComponenteMatriz where IDMATRIZ=:parameter1")
 				.setParameter("parameter1", idmatriz).list();
+	}
+	
+	public List<ComponenteMatriz> getComponente(int idmatriz, BigDecimal idactividad) {
+		
+		Connection connection = null;
+	    ResultSet rs = null;
+	    PreparedStatement pstatement = null;		
+	    List<ComponenteMatriz> lstComponenteMatriz = new ArrayList<ComponenteMatriz>();
+	    
+	    try{
+	    	connection = ConnectionManager.getConnection();
+	    	String queryString = "SELECT CM.IDCOMPONENTE,CM.DESCRIPCIONCOMPONENTE,CM.ESTADOCOMPONENTE,CM.IDMATRIZ,CM.IDMATRIZ,CM.ITEM,CM.SUBITEM,CM.DESCRIPCIONSUBITEM, MAC.COMPLETADO FROM COMPONENTE_MATRIZ CM LEFT JOIN MATRIZ_ACTIVIDAD_COMPONENTE MAC ON MAC.IDMATRIZ=CM.IDMATRIZ  AND MAC.IDACTIVIDAD = ?  AND MAC.IDCOMPONENTE=CM.IDCOMPONENTE WHERE CM.IDMATRIZ = ?";
+	    	pstatement = connection.prepareStatement(queryString);
+	    	 pstatement.setString(1, idactividad.toString());
+	    	 pstatement.setString(2, String.valueOf(idmatriz));
+	    	 rs = pstatement.executeQuery();
+		    while (rs.next()) {
+		    	ComponenteMatriz cmz = new ComponenteMatriz();
+		    	cmz.setIdcomponente(Integer.parseInt(rs.getString("IDCOMPONENTE")));
+		    	cmz.setDescripcioncomponente(rs.getString("DESCRIPCIONCOMPONENTE"));
+		    	cmz.setEstadocomponente(rs.getString("ESTADOCOMPONENTE"));
+		    	cmz.setIdmatriz(Integer.parseInt(rs.getString("IDMATRIZ")));
+		    	cmz.setItem(rs.getString("ITEM"));
+		    	cmz.setSubitem(rs.getString("SUBITEM"));
+		    	cmz.setDescripcionsubitem(rs.getString("DESCRIPCIONSUBITEM"));
+		    	cmz.setCompletado(rs.getString("COMPLETADO"));
+		    	lstComponenteMatriz.add(cmz);
+	        }
+	    }catch (Exception e) { e.printStackTrace(); }		
+		finally {
+			try{
+				if (pstatement != null) {
+					pstatement.close();
+				}
+		
+				if (connection != null) {
+					connection.close();
+				}
+			}catch (SQLException e) { e.printStackTrace(); }
+
+		}
+		
+		return lstComponenteMatriz;
+		
+		/*return getSession().createQuery("from ComponenteMatriz where IDMATRIZ=:parameter1")
+				.setParameter("parameter1", idmatriz).list();*/
 	}
 
 	@SuppressWarnings("unchecked")

@@ -96,6 +96,12 @@ public class MatrizServiceImpl implements MatrizService{
 		// TODO Auto-generated method stub
 		return matrizdao.getComponente(idmatriz);
 	}
+	
+	@Transactional
+	public List<ComponenteMatriz> getComponente(int idmatriz, BigDecimal idactividad) {
+		// TODO Auto-generated method stub
+		return matrizdao.getComponente(idmatriz, idactividad);
+	}
 
 	@Transactional
 	public List<FuncionesComponente> getFunciones(int idcomponente) {

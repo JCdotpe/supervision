@@ -21,6 +21,8 @@ public interface MatrizDao {
 	public MatrizActividad getMatrizAct(int idmatrizact);
 
 	public List<ComponenteMatriz> getComponente(int idmatriz);
+	
+	public List<ComponenteMatriz> getComponente(int idmatriz, BigDecimal idactividad);
 
 	public List<FuncionesComponente> getFunciones(int idcomponente);
 

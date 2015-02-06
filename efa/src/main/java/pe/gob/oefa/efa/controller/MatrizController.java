@@ -161,7 +161,7 @@ public class MatrizController {
 		
 		for (int i = 0; i < ma.size(); i++) {
 			Matriz m = matrizservice.getMatriz(ma.get(i).getIdmatriz());
-			List<ComponenteMatriz> mlistComp = matrizservice.getComponente(ma.get(i).getIdmatriz());
+			List<ComponenteMatriz> mlistComp = matrizservice.getComponente(ma.get(i).getIdmatriz(), idactividad);
 			List<MatrizActividadFuncion> mlaf = matrizservice.getListMatrizFuncionByIdMa(ma.get(i).getIdmatrizactividad(), "-1");
 			mlist.add(m);
 			for (int j = 0; j < mlistComp.size(); j++) {
@@ -255,7 +255,7 @@ public class MatrizController {
                 Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
                 
                 if (file.getSize() > max || file.getSize() == 0) {
-                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
+                	JOptionPane.showMessageDialog(null, "El tamaï¿½o del archivo no es el permitido", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }else{            
 	                if(matcher.matches()){

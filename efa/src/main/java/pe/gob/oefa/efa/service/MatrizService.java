@@ -21,6 +21,7 @@ public interface MatrizService {
 	public Matriz getMatriz(int idmatriz);
 	public MatrizActividad getMatrizAct(int idmatrizact);
 	public List<ComponenteMatriz> getComponente(int idmatriz);
+	public List<ComponenteMatriz> getComponente(int idmatriz, BigDecimal idactividad);
 	public List<FuncionesComponente> getFunciones(int idcomponente);
 	public List<IndicadoresFuncion> getIndicadores(int idfuncion);
 	public List<MatrizActividad> getMatrizActividad(int codActividad, int codMatriz);
