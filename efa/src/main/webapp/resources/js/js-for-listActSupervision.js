@@ -1,4 +1,13 @@
 $(document).ready(function() {
+	
+
+	
+//	$("#actsupervisionForm #fechaInicioDate").val("");
+//	$("#actsupervisionForm #fechaFinDate").val(""); sel-act-efa
+	
+	$("#actsupervisionForm .con-act-efa").val("");
+	$("#actsupervisionForm .sel-act-efa").prop('selectedIndex', 0);
+
 
 $("#actividadForm").validate({
     rules: {  
@@ -27,8 +36,7 @@ $("#actividadForm").validate({
     		required:true,
     	}, 	   	
     	fechafin:{
-    		required:true,
-    		 greaterThan: "#fechaini", 
+    		required:true
     	}, 	   	
     	horaini:{
     		required:true,

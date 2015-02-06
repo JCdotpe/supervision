@@ -27,6 +27,27 @@ function ini_table(){
 }
 
 
+$(function() {
+	$('#fechaInicioDate, #fechaFinDate').datepicker();
+	  $('#fechaInicioDate, #fechaFinDate').datepicker('option', {
+	    beforeShow: customRange,
+	    dateFormat: 'dd/mm/yy' 
+	  });
+	});
+
+	function customRange(input) {
+//		console.log(input);
+	  if (input.id == 'fechaFinDate') {
+	    return {
+	      minDate: $('#fechaInicioDate').datepicker("getDate")
+	    };
+	  } else if (input.id == 'fechaInicioDate') {
+	    return {
+	      maxDate: $('#fechaFinDate').datepicker("getDate")
+	    };
+	  }
+	}
+
 
 //Disable function
 jQuery.fn.extend({
@@ -138,17 +159,17 @@ $.validator.addMethod("lettersonly", function (value, element) {
 	   return this.optional(element) || /^[a-zA-Zñáéíóú ]+$/i.test(value);
 	}, "Caracteres no permitidos");
 
-$.validator.addMethod("greaterThan", 
-		function(value, element, params) {
-
-		    if (!/Invalid|NaN/.test(new Date(value))) {
-		        return new Date(value) > new Date($(params).val());
-		    }
-
-		    return isNaN(value) && isNaN($(params).val()) 
-		        || (Number(value) > Number($(params).val())); 
-		},'Debe ser mayor a fecha de inicio.');
-
+//$.validator.addMethod("greaterThan", 
+//		function(value, element, params) {
+//
+//		    if (!/Invalid|NaN/.test(new Date(value))) {
+//		        return new Date(value) > new Date($(params).val());
+//		    }
+//
+//		    return isNaN(value) && isNaN($(params).val()) 
+//		        || (Number(value) > Number($(params).val())); 
+//		},'Debe ser mayor a fecha de inicio.');
+//
 
 ini_table();
 

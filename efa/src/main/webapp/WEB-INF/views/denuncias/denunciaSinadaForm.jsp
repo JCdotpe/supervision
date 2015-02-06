@@ -69,13 +69,13 @@
         <div class="form-group">
             <form:label path="fechaInicioDenuncia" cssClass="col-sm-1 control-label">Fecha de denuncia(inicio)</form:label>
             <div class="col-sm-3">
-                <form:input cssClass="form-control datepicker" path="fechaInicioDenuncia" />
+                <form:input cssClass="form-control datepicker" path="fechaInicioDenuncia" id="fechaInicioDate" readonly="true"/>
                 <form:errors cssClass="help-block error" path="fechaInicioDenuncia" />
             </div>
             <div class="col-sm-1"></div>
             <form:label path="fechaFinDenuncia" cssClass="col-sm-1 control-label">Fecha de denuncia(fin)</form:label>
             <div class="col-sm-3">
-                <form:input cssClass="form-control datepicker" path="fechaFinDenuncia" />
+                <form:input cssClass="form-control datepicker" path="fechaFinDenuncia" id="fechaFinDate" readonly="true"/>
                 <form:errors cssClass="help-block error" path="fechaFinDenuncia" />
             </div>
         </div>

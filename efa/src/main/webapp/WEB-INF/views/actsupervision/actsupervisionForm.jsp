@@ -16,12 +16,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Fecha inicio Ejecución Supervisión</label>
         <div class="col-sm-3">
-        	<input name = "fechaini"  class="form-control datepicker" value="${fechaini }" />
+        	<input name="fechaini"  class="form-control datepicker con-act-efa" id="fechaInicioDate" readonly="true" value="${fechaini }"   />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Fecha Fin Ejecución Supervisión</label>
         <div class="col-sm-3">
-        	<input name = "fechafin" class="form-control datepicker" value="${fechafin }"/>
+        	<input name="fechafin" class="form-control datepicker con-act-efa" id="fechaFinDate" readonly="true" value="${fechafin }"  />
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -29,12 +29,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">EFA</label>
         <div class="col-sm-3">
-        	<input name="nombrefa" class="form-control" value="${nombrefa }"/>
+        	<input name="nombrefa" class="form-control con-act-efa" value="${nombrefa }"/>
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Supervisor Responsable</label>
         <div class="col-sm-3">
-        	<input name="nombresup" class="form-control" value="${nombresup }"/>
+        	<input name="nombresup" class="form-control con-act-efa" value="${nombresup }"/>
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -42,7 +42,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Nivel de Gobierno</label>
         <div class="col-sm-3">
-		<select name="nivel"  class="form-control">
+		<select name="nivel"  class="form-control sel-act-efa">
 		  <option value="0" >--- TODOS ---</option>
 			<c:forEach var="nivel" items="${listNivel}" varStatus="i">
 						<c:if test="${nivel.value == xnivel}">
@@ -65,12 +65,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Código Act. Programada</label>
         <div class="col-sm-3">
-        	<input name="codact" class="form-control" />
+        	<input name="codact" class="form-control con-act-efa" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Estado</label>
         <div class="col-sm-3">
-		<select name="estado"  class="form-control">
+		<select name="estado"  class="form-control sel-act-efa">
 			<c:forEach var="estado" items="${listEstadoAct}" varStatus="i">
 						<c:if test="${estado.value == xestado}">
 					  		  <option selected value="${estado.value}"/> ${estado.label}</option>
@@ -88,7 +88,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Estado Matriz(Completo)</label>
         <div class="col-sm-3">
-		<select name="estadomatriz"  class="form-control">
+		<select name="estadomatriz"  class="form-control sel-act-efa">
 		  <option value="0" >--- TODOS ---</option>
 			<c:forEach var="em" items="${listEstadoMatriz}" varStatus="i">
 						<c:if test="${em.value == xestadomatriz}">
@@ -103,7 +103,7 @@
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Estado del Informe</label>
         <div class="col-sm-3">
-		<select name="estadoejec"  class="form-control">
+		<select name="estadoejec"  class="form-control sel-act-efa">
 		  <option value="0" >--- TODOS ---</option>
 			<c:forEach var="ej" items="${listEstadoEjecucion}" varStatus="i">
 						<c:if test="${ej.value == xestadoejec}">
@@ -121,7 +121,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Sector</label>
         <div class="col-sm-3">
-        	<input name="sector" class="form-control"/>
+        	<input name="sector" class="form-control con-act-efa"/>
         	<div class="help-block error"></div>
         </div>               
 </div>
@@ -130,7 +130,7 @@
 
 
 
-	<button type="submit" class="btn btn-success">Consultar</button>
+	<button type="submit" class="btn btn-success" id="btnConsultarActSupervision">Consultar</button>
 
 	</fieldset>
 </form>

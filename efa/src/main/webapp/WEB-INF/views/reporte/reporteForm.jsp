@@ -112,11 +112,11 @@
         <div class="form-group">
             <form:label path="inicioSupervision" cssClass="col-sm-1 control-label">Inicio Supervisi&oacute;n</form:label>
             <div class="col-sm-2">
-                <form:input path="inicioSupervision" cssClass="form-control datepicker"/>
+                <form:input path="inicioSupervision" cssClass="form-control datepicker" id="fechaInicioDate" readonly="true"/>
             </div>
             <form:label path="finSupervision" cssClass="col-sm-1 control-label">Fin Supervisi&oacute;n</form:label>
             <div class="col-sm-2">
-                <form:input path="finSupervision" cssClass="form-control datepicker"/>
+                <form:input path="finSupervision" cssClass="form-control datepicker" id="fechaFinDate" readonly="true"/>
             </div>
         </div>
 

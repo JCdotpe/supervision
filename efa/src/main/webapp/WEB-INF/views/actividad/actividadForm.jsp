@@ -127,12 +127,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Fecha Inicio<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "fechaini" path="fechaini" class="form-control datepicker" />
+        	<form:input name = "fechaini" path="fechaini" class="form-control datepicker "  id="fechaInicioDate" readonly="true"/>
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Fecha Fin<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "fechafin" path="fechafin" class="form-control datepicker" />
+        	<form:input name = "fechafin" path="fechafin" class="form-control datepicker "  id="fechaFinDate" readonly="true" />
         	<div class="help-block error"></div>
         </div>              
 </div>

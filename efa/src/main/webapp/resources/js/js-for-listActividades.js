@@ -130,6 +130,8 @@ $("#btnsetini").click(function() {
 });
 
 
+
+
 function deleteAct(id) {
 	var result = confirm("Desea eliminar la actividad?");
 		if (result==true) {
