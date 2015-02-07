@@ -67,16 +67,16 @@
 						</td>		
 						<td><c:out value="${sup.nombre}" /></td>
 						<c:choose>	
-							<c:when test="${usuario.codPerfil eq '2'}">				
+							<c:when test="${usuario.codPerfil eq '4'}">				
 							<td><a><c:out value="${sup.archivo}" /></a></td>
 							</c:when>
 							<c:otherwise>
-							<td><a href="file:///C:/Desarrollo_App/SISEFA/${sup.archivo}" target="_blank"><c:out value="${sup.archivo}" /></a></td>
+							<td><a href="file:///C:/Desarrollo_App/SISEFA/ejecucion/${sup.archivo}" target="_blank"><c:out value="${sup.archivo}" /></a></td>
 							</c:otherwise>
 						</c:choose>
 						
 						<c:choose>	
-							<c:when test="${usuario.codPerfil eq '2'}">				
+							<c:when test="${usuario.codPerfil eq '4'}">				
 						  <td><nobr>
 								<a class="btn btn-efa-del btn-xs"> <span class="glyphicon glyphicon-remove"></span>Eliminar</a>
 							</nobr></td>

@@ -48,7 +48,7 @@ public class SupervisorFileController {
 	    public String save(@RequestParam("id") BigDecimal ciId, @RequestParam("file") MultipartFile file,
 	    		@RequestParam("tipo") String tipo, Model map) throws IllegalStateException, IOException {
 	        
-			new File("C:/Desarrollo_App/SISEFA/supervisor/supervisor/").mkdirs();	
+			new File("C:/Desarrollo_App/SISEFA/supervisor/").mkdirs();	
 			String saveDirectory = "C:/Desarrollo_App/SISEFA/supervisor/";     
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();

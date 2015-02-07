@@ -13,7 +13,7 @@
 
 <c:set var="desha1" value="false"/>
 <c:set var="desha2" value="false"/>
-<c:set var="desha3" value="false"/>
+<c:set var="desha3" value=""/>
 
 <c:if test="${usuario.codPerfil eq '7'}">
 	<c:set var="desha1" value="true"/>
@@ -24,7 +24,7 @@
 <c:if test="${usuario.codPerfil eq '4'}">
 	<c:set var="desha1" value="true"/>
 	<c:set var="desha2" value="true"/>
-	<c:set var="desha3" value="true"/>
+	<c:set var="desha3" value="disabled='true'"/>
 </c:if>
 
 <div class="form-group">
@@ -62,13 +62,23 @@
         
         <label for="inputType" class="col-sm-1 control-label">Observación<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="observacion" id="observacion" class="form-control" disabled="${deshabilitado}"/>
+        	<form:input path="observacion" id="observacion" class="form-control" disabled="${desha1}"/>
         	<div class="help-block error"></div>
         </div>          
 </div>
 	<form:input path="idejecucion" type="hidden" />
-	<button type="submit" class="btn btn-success" disabled="${desha3}">Guardar</button>
+	<button type="submit" id="btnGuardar" class="btn btn-success" ${desha3}>Guardar</button>
 
 	</fieldset>
 </form:form>
 <p class="error obligatorio" >(*) Campos Obligatorios</p>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#btnGuardar').click(function(e){
+		e.preventDefault();
+		var frmef = $('#ejeactForm');
+		var disabled = frmef.find(':input:disabled').removeAttr('disabled');
+		frmef.submit();
+	});
+});
+</script>

@@ -7,16 +7,14 @@
 <c:url var="admUrl" value="/administrados/" />
 <t:simple>
     <jsp:attribute name="header">
-	<script type="text/javascript"
-		src='<c:url value="/web-resources/js/lib/jquery-1.10.2.js"/>'></script>    
+    
     </jsp:attribute>
     
-    <jsp:attribute name="footer"> 
+    <jsp:attribute name="footer">
       <p id="copyright">OEFA</p>
-         
  	<script type="text/javascript"
 		src='<c:url value="/web-resources/js/js-for-listEjecActividad.js"/>'></script>     
-    </jsp:attribute> 
+    </jsp:attribute>
     
     <jsp:body>
 		<!--<div id="bookDialog" style="display: none;">
@@ -32,9 +30,10 @@
 		<div>
 		<%@ include file="ejecucionFileForm.jsp"%>
 		</div>
+
 		<div>
 			<%@ include file="ejecucionActForm.jsp"%>
-		</div>	 
+		</div>	
 
 	
         

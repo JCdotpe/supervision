@@ -3,9 +3,11 @@
 <c:url var="actionUrl" value="/ejecarchivo/savefile?id=${actId}" />
 
 <c:set var="desha0" value="false"/>
+<c:set var="btnDesha0" value=""/>
 
-<c:if test="${usuario.codPerfil eq '2'}">
+<c:if test="${usuario.codPerfil eq '4'}">
 	<c:set var="desha0" value="true"/>
+	<c:set var="btnDesha0" value="disabled='true'"/>
 </c:if>
 
 	<form:form method="post" action="${actionUrl}" id="formEjecFile"
@@ -31,16 +33,25 @@
 	</div>
 	    <table id="fileTable">    
 	        <tr>
-	            <td><input name="file" type="file" class="archivos" disabled="${desha0}"/></td>
+	            <td><input name="file" type="file" class="archivos" ${btnDesha0}/></td>
 	             
 	        </tr>
 	           <tr>
 	        <td><b>Extensiones permitidas:</b> JPG | PNG | GIF | PDF | DOC | DOCX</td>
 	         </tr>
 	    </table>
-	    <br/>	<button type="submit" class="btn btn-success" disabled="${desha0}">Subir Archivo</button>
+	    <br/>	<button id="btnSubirArchivo" type="submit" class="btn btn-success" ${btnDesha0}>Subir Archivo</button>
 	</form:form>
-		
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 var frm = $('#formEjecFile');
+		 $('#btnSubirArchivo').click(function(e){
+			 e.preventDefault();
+			 var disabled = frm.find(':input:disabled').removeAttr('disabled');
+			 frm.submit();
+		 });
+	});
+	</script>	
 		
 			<br />
 		
@@ -71,24 +82,22 @@
 							<td><a><c:out value="${sup.archivo}" /></a></td>
 							</c:when>
 							<c:otherwise>
-							<td><a href="file:///C:/Desarrollo_App/SISEFA/${sup.archivo}" target="_blank"><c:out value="${sup.archivo}" /></a></td>
+							<td><a href="file:///C:/Desarrollo_App/SISEFA/ejecucion/${sup.archivo}" target="_blank"><c:out value="${sup.archivo}" /></a></td>
 							</c:otherwise>
 						</c:choose>
 						
+						<td>
+						<nobr>
 						<c:choose>	
-							<c:when test="${usuario.codPerfil eq '4'}">				
-						  <td><nobr>
-								<a class="btn btn-efa-del btn-xs"> <span class="glyphicon glyphicon-remove"></span>Eliminar</a>
-							</nobr></td>
-
+							<c:when test="${usuario.codPerfil eq '4' || usuario.codPerfil eq '8'}">				
+							  	<a class="btn btn-efa-del btn-xs"> <span class="glyphicon glyphicon-remove"></span>Eliminar</a>
 							</c:when>
 							<c:otherwise>
-						  <td><nobr>
-						  																					
-								<a class="btn btn-efa-del btn-xs" onclick="deleteEjecfile(${sup.idejecfile})"> <span class="glyphicon glyphicon-remove"></span>Eliminar</a>
-							</nobr></td>
+							  	<a class="btn btn-efa-del btn-xs" onclick="deleteEjecfile(${sup.idejecfile})"> <span class="glyphicon glyphicon-remove"></span>Eliminar</a>
 							</c:otherwise>
 						</c:choose>
+						</nobr>
+						</td>
 						
 						
 					</tr>

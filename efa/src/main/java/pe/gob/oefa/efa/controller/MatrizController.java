@@ -244,7 +244,8 @@ public class MatrizController {
 		if (!file.isEmpty()) {
 			try {
 
-				String saveDirectory = "C:/Desarrollo_App/SISEFA/";
+				new File("C:/Desarrollo_App/SISEFA/matriz/").mkdirs();
+				String saveDirectory = "C:/Desarrollo_App/SISEFA/ejecucion/matriz/";
 				Integer max = 5 * 1024 * 1024; // 10MB
                 String fileName = file.getOriginalFilename();
                 
@@ -255,7 +256,7 @@ public class MatrizController {
                 Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
                 
                 if (file.getSize() > max || file.getSize() == 0) {
-                	JOptionPane.showMessageDialog(null, "El tamaï¿½o del archivo no es el permitido", "Error",
+                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }else{            
 	                if(matcher.matches()){
@@ -271,7 +272,7 @@ public class MatrizController {
 						matrizservice.addArchiveFuncion(af);
 	                }
 	                else{
-	                	JOptionPane.showMessageDialog(null, "La extension del archivo no esta permitida.", "Error",
+	                	JOptionPane.showMessageDialog(null, "La extensión del archivo no esta permitida.", "Error",
                                 JOptionPane.ERROR_MESSAGE);
 	                }
 	           }

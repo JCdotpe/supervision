@@ -17,18 +17,6 @@
     </jsp:attribute>
     
     <jsp:body>
-    
-			<c:if test="${ msgx == 0}">	
-				<p class="bg-danger">El contacto ya fue agregado</p>
-			</c:if>	  
-			<c:if test="${ msgx == 1}">	
-				<p class="bg-success">Se asignó el contacto a la actividad</p>
-			</c:if>	  			
-			<c:if test="${ msgx == 2}">	
-			</c:if>	   			 
-    
-    
-    
 		<!--<div id="bookDialog" style="display: none;">
 		</div>
 		-->
