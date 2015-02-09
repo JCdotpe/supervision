@@ -7,8 +7,7 @@
 <c:url var="admUrl" value="/administrados/" />
 <t:simple>
     <jsp:attribute name="header">
-	<script type="text/javascript"
-		src='<c:url value="/web-resources/js/lib/jquery-1.10.2.js"/>'></script>    
+    	<script type="text/javascript" src='<c:url value="/web-resources/js/lib/jquery-1.10.2.js"/>'></script>
     </jsp:attribute>
     
     <jsp:attribute name="footer"> 

@@ -12,7 +12,7 @@
 </c:if>
 <c:if test="${usuario.codPerfil ne '2' && usuario.codPerfil ne '7'}">
 	<c:set var="selDesha0" value="disabled='true'"/>
-</c>
+</c:if>
 
 	<form:form method="post" action="${actionUrl}" id="formEjecFile"
 	     commandName="ejecfile" enctype="multipart/form-data">
