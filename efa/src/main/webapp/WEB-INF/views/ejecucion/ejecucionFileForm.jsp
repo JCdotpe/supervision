@@ -4,11 +4,15 @@
 
 <c:set var="desha0" value="false"/>
 <c:set var="btnDesha0" value=""/>
+<c:set var="selDesha0" value=""/>
 
 <c:if test="${usuario.codPerfil eq '4'}">
 	<c:set var="desha0" value="true"/>
 	<c:set var="btnDesha0" value="disabled='true'"/>
 </c:if>
+<c:if test="${usuario.codPerfil ne '2' && usuario.codPerfil ne '7'}">
+	<c:set var="selDesha0" value="disabled='true'"/>
+</c>
 
 	<form:form method="post" action="${actionUrl}" id="formEjecFile"
 	     commandName="ejecfile" enctype="multipart/form-data">
@@ -18,7 +22,7 @@
 	<div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Tipo</label>
         <div class="col-sm-3">
-			<select id="tipo" name="tipo" class="form-control" disabled="${desha0}">
+			<select id="tipo" name="tipo" class="form-control" ${selDesha0}>
 				<c:forEach items="${listTiposejecfile}" var="sp">
 				        <option value="${sp.value}">${sp.label}</option>
 				    </c:forEach>					          
