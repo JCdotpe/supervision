@@ -36,9 +36,9 @@ $(document).ready(function() {
 	    	sector:{
 	    		valueNotEquals:'-1',
 	    	},
-//	    	actividad:{
-//	    		valueNotEquals:'-1',
-//	    	},
+	    	actividad:{
+	    		valueNotEquals:'-1',
+	    	},
 	
 	    	tipodm:{
 	    		valueNotEquals:'-1',
@@ -46,6 +46,7 @@ $(document).ready(function() {
 	    	nombredm:{
 	    		validName:true,
 	    		required:true,
+	    		minlength: 3
 	    	},    	
 	    	codinacc:{
 	    		required:true,
@@ -60,10 +61,11 @@ $(document).ready(function() {
 	    		valueNotEquals:'-1',
 	    	}, 	  
 	    	cuenca:{
-	    		required:true,
+	    		valueNotEquals:'-1',
 	    	}, 		    	
 	    	direccion:{
 	    		required:true,
+	    		minlength: 6
 	    	}, 	    	
 	    	estado:{
 	    		valueNotEquals:'-1',
@@ -71,19 +73,23 @@ $(document).ready(function() {
 
 	    	norte:{
 	    		required:true,
+	    		minlength: 3
 	    	}, 	  
 	    	este:{
 	    		required:true,
+	    		minlength: 3
 	    	},    	
 	    	zona:{
 	    		valueNotEquals:'-1',
 	    	},   
 	    	direccionunidad:{
 	    		required:true,
+	    		minlength: 3
 	    	}, 	  
 	    	nombreunidad:{
 	    		validName:true,
 	    		required:true,
+	    		minlength: 3
 	    	}, 	    		
 	    },
 

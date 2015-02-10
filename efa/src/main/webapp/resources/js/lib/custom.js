@@ -17,6 +17,7 @@ function ini_table(){
 	    "sInfoEmpty": "Mostrando 0 to 0 of 0 records",
 	    "sInfoFiltered": "(Filtrado de _MAX_ registros en total)",                 
 	    "sSearch": "Buscar:", 
+	    "columnDefs": [ { "targets": 0, "orderable": false } ],  
 	    "oPaginate": {
 	        "sNext": "Siguiente", 
 	        "sPrevious": "Anterior"

@@ -6,93 +6,91 @@ function resetDialog(form) {
 
 
 $(document).ready(function() {
+	
 
 $("#supervisorForm").validate({
     rules: {  
 		dni:{
     		required:true,
     		digits:true,
+    		minlength: 8
     	},
     	appPaterno:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	},
     	appMaterno:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	
     	nombre:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	    	
     	sexo:{
-    		required:true,
+    		required:true
     	}, 	  
     	fechaNac:{
-    		required:true,
+    		required:true
     	}, 	
     	telefono:{
     		digits:true,
     		required:true,
+    		minlength: 6
     	}, 	  
     	direccion:{
     		required:true,
+    		minlength: 5
     	}, 	    	
     
     	departamento:{
-    		valueNotEquals:'-1',
+    		valueNotEquals:'-1'
     	},    	
     	provincia:{
-    		valueNotEquals:'-1',
+    		valueNotEquals:'-1'
     	},      
     	distrito:{
-    		valueNotEquals:'-1',
+    		valueNotEquals:'-1'
     	}, 
     	
     	estadoCivil:{
-    		valueNotEquals:'-1',
+    		valueNotEquals:'-1'
     	}, 	  
     	profesion:{
     		required:true,
+    		minlength: 2
     	}, 	
     	correo:{
     		//required:true,
-    		email:true,
+    		email:true
     	}, 	
     	
-    	iniLaboral:{
-//    		required:true,
-    	}, 	   	
-    	finLaboral:{
-   		   greaterThan: "#iniLaboral", 
-    	}, 	   	
+   	
     	modalidad:{
-    		valueNotEquals:'-1',
+    		valueNotEquals:'-1'
     	}, 	   	
-    	nroContrato:{
-//    		required:true,
-    	}, 	
+
     	remuneracion:{
-    		digits:true,
+    		digits:true
     	}, 	   	
     	cargo:{
-    		valueNotEquals:'-1',
+    		valueNotEquals:'-1'
     	}, 	    	
     	correoIns:{
     		email:true,
     		required:true,
+    		minlength: 3
     	}, 	   	
     	
     	cuentaBco:{
-    		maxlength: 50,
-//    		required:true,
-    	}, 	
-    	otroBco:{
-//    		required:true,
-    	}, 	   	
+    		maxlength: 50
+    	}, 		   	
     	otroBcoNro:{
-    		maxlength: 50,
-    	}, 	    	
+    		maxlength: 50
+    	} 	    	
   	
     },
 

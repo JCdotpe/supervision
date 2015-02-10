@@ -113,17 +113,17 @@
 </div>  
 <p class="green info-form">Coordenadas(UTM wgs84)</p>
 <div class="form-group">
-        <label for="inputType" class="col-sm-1 control-label">Norte<span class="error"></span></label>
+        <label for="inputType" class="col-sm-1 control-label">Norte<span class="error"> (*)</span></label>
         <div class="col-sm-3">
         	<form:input path="norte"  maxlength="255" id="norte" class="form-control"/>
         	<div class="help-block error"></div>
         </div>      
-        <label for="inputType" class="col-sm-1 control-label">Este<span class="error"></span></label>
+        <label for="inputType" class="col-sm-1 control-label">Este<span class="error"> (*)</span></label>
         <div class="col-sm-3">
         	<form:input path="este"  maxlength="255" id="este" class="form-control"/>
         	<div class="help-block error"></div>
         </div>   
-        <label for="inputType" class="col-sm-1 control-label">Zona Geográfica<span class="error"></span></label>
+        <label for="inputType" class="col-sm-1 control-label">Zona Geográfica<span class="error"> (*)</span></label>
         <div class="col-sm-3">
 		<form:select id="zona" path="zona"  class="form-control">
            <form:option value="-1" label="--- Seleccionar ---"  />
@@ -134,12 +134,12 @@
               
 </div>  
 <div class="form-group">
-        <label for="inputType" class="col-sm-1 control-label">Dirección Unidad<span class="error"></span></label>
+        <label for="inputType" class="col-sm-1 control-label">Dirección Unidad<span class="error"> (*)</span></label>
         <div class="col-sm-3">
         	<form:input path="direccionunidad"  maxlength="255" id="direccionunidad" class="form-control"/>
         	<div class="help-block error"></div>
         </div>      
-        <label for="inputType" class="col-sm-1 control-label">Nombre Unidad<span class="error"></span></label>
+        <label for="inputType" class="col-sm-1 control-label">Nombre Unidad<span class="error"> (*)</span></label>
         <div class="col-sm-3">
         	<form:input path="nombreunidad"  maxlength="255" id="nombreunidad" class="form-control"/>
         	<div class="help-block error"></div>
@@ -150,7 +150,7 @@
 		<button type="submit" class="btn btn-success">Guardar</button>
 		</c:if>			
 		<c:if test="${empty edit}">	
-		<button type="submit" class="btn btn-success">Agregar</button>
+		<button type="submit" class="btn btn-success">Guardar</button>
 		</c:if>			
 
 	</fieldset>

@@ -93,12 +93,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Teléfono<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-			<form:input path="telefono" maxlength="255" id="telefono" class="form-control"/>
+			<form:input path="telefono" maxlength="25" id="telefono" class="form-control"/>
 			<div class="help-block error"></div>
         </div>   
         <label for="inputType" class="col-sm-1 control-label">Fax</label>
         <div class="col-sm-3">
-        	<form:input path="fax" maxlength="255" id="fax" class="form-control"/>
+        	<form:input path="fax" maxlength="25" id="fax" class="form-control"/>
         	<div class="help-block error"></div>
         </div>   
         <label for="inputType" class="col-sm-1 control-label">Correo<span class="error"> (*)</span></label>
@@ -115,13 +115,13 @@
         </div>   
          <label for="inputType" class="col-sm-1 control-label">Celular<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="celular" maxlength="255" id="celular" class="form-control"/>
+        	<form:input path="celular" maxlength="25" id="celular" class="form-control"/>
         	<div class="help-block error"></div>
         </div>                          
 </div>  
 
 	<form:input path="id" type="hidden" />
-	<button type="submit" class="btn btn-success">Agregar</button>
+	<button type="submit" class="btn btn-success">Guardar</button>
 
 	</fieldset>
 </form:form>

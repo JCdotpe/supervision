@@ -64,21 +64,26 @@ $("#administradosForm").validate({
     	numerodoc:{
     		digits:true,
     		required:true,
+    		minlength: 8
     	},    	
     	nombres:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	  
     	appaterno:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	    	
     	apmaterno:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	       	
     	direccion:{
     		required:true,
+    		minlength: 6
     	}, 	    	
     	departamento:{
     		valueNotEquals:'-1',
@@ -90,7 +95,9 @@ $("#administradosForm").validate({
     		valueNotEquals:'-1',
     	}, 
     	telefono:{
+    		digits:true,
     		required:true,
+    		minlength: 6
     	}, 	  
     	reptipodoc:{
     		valueNotEquals:'-1',
@@ -98,18 +105,22 @@ $("#administradosForm").validate({
     	repnumdoc:{
     		digits:true,
     		required:true,
+    		minlength: 8
     	},   
     	repnombres:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	  
     	repappaterno:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	    	
     	repapmaterno:{
     		validName:true,
     		required:true,
+    		minlength: 2
     	}, 	     	
     },
 

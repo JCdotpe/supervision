@@ -24,7 +24,7 @@
         
         <label for="inputType" class="col-sm-1 control-label">Sector Área<span class="error"> (*)</span></label>
          <div class="col-sm-3">
-         <form:input path="sector" id="sector" class="form-control"/>
+         <form:input path="sector" maxlength="255" id="sector" class="form-control"/>
 		<!--  	<form:select id="sector" path="sector" class="form-control">
 	           <form:option value="-1" label="--- Seleccionar ---" />
 	           <form:options items="${listSectores}" itemValue="value" itemLabel="label"/>
@@ -35,17 +35,17 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Apellido Paterno<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="appaterno" id="appaterno" class="form-control"/>
+        	<form:input maxlength="255" path="appaterno" id="appaterno" class="form-control"/>
         	<div class="help-block error"></div>
         </div>   
         <label for="inputType" class="col-sm-1 control-label">Apellido Materno<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="apmaterno" id="apmaterno" class="form-control"/>
+        	<form:input maxlength="255" path="apmaterno" id="apmaterno" class="form-control"/>
         	<div class="help-block error"></div>
         </div>   
         <label for="inputType" class="col-sm-1 control-label">Nombre<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="nombre" id="nombre" class="form-control"/>
+        	<form:input maxlength="255" path="nombre" id="nombre" class="form-control"/>
         	<div class="help-block error"></div>
         </div>                    
 </div>        
@@ -53,12 +53,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Cargo<span class="error"> (*)</span></label>
         <div class="col-sm-7">
-        	<form:input path="cargo" id="cargo" class="form-control"/>
+        	<form:input maxlength="255" path="cargo" id="cargo" class="form-control"/>
         	<div class="help-block error"></div>
         </div>        
         <label for="inputType" readonly class="col-sm-1 control-label">Fecha Designación</label>
         <div class="col-sm-3">
-        	<form:input path="fecha" id="fecha" class="form-control datepicker"/>
+        	<form:input path="fecha" id="fecha" class="form-control datepicker" readonly="true"/>
         	<div class="help-block error"></div>
         </div>                         
 </div>    
@@ -66,7 +66,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Domicilio Legal<span class="error"> (*)</span></label>
         <div class="col-sm-7">
-        	<form:input path="direccion" id="direccion" class="form-control"/>
+        	<form:input maxlength="255" path="direccion" id="direccion" class="form-control"/>
         	<div class="help-block error"></div>
         </div>           
          <label for="inputType" class="col-sm-1 control-label">Celular<span class="error"> (*)</span></label>

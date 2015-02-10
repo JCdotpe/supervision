@@ -17,33 +17,33 @@
         <div class="form-group">
             <form:label path="codigoSinada" cssClass="col-sm-1 control-label">C&oacute;digo SINADA</form:label>
             <div class="col-sm-3">
-                <form:input cssClass="form-control" path="codigoSinada" />
+                <form:input maxlength="12" cssClass="form-control" path="codigoSinada" />
                 <form:errors cssClass="help-block error" path="codigoSinada" />
             </div>
         </div>
         <div class="form-group">
             <form:label path="nombreDenunciante" cssClass="col-sm-1 control-label">Nombre del denunciante</form:label>
             <div class="col-sm-3">
-                <form:input cssClass="form-control" path="nombreDenunciante" />
+                <form:input maxlength="255" cssClass="form-control" path="nombreDenunciante" />
                 <form:errors cssClass="help-block error" path="nombreDenunciante" />
             </div>
             <div class="col-sm-1"></div>
             <form:label path="nombreDenunciado" cssClass="col-sm-1 control-label">Nombre del denunciado</form:label>
             <div class="col-sm-3">
-                <form:input cssClass="form-control" path="nombreDenunciado" />
+                <form:input maxlength="255" cssClass="form-control" path="nombreDenunciado" />
                 <form:errors cssClass="help-block error" path="nombreDenunciado" />
             </div>
         </div>
         <div class="form-group">
             <form:label path="razonSocialDenunciante" cssClass="col-sm-1 control-label">Raz&oacute;n Social del denunciante</form:label>
             <div class="col-sm-3">
-                <form:input cssClass="form-control" path="razonSocialDenunciante" />
+                <form:input maxlength="255" cssClass="form-control" path="razonSocialDenunciante" />
                 <form:errors cssClass="help-block error" path="razonSocialDenunciante" />
             </div>
             <div class="col-sm-1"></div>
             <form:label path="razonSocialDenunciado" cssClass="col-sm-1 control-label">Raz&oacute;n Social del denunciado</form:label>
             <div class="col-sm-3">
-                <form:input cssClass="form-control" path="razonSocialDenunciado" />
+                <form:input maxlength="255" cssClass="form-control" path="razonSocialDenunciado" />
                 <form:errors cssClass="help-block error" path="razonSocialDenunciado" />
             </div>
         </div>
@@ -108,14 +108,14 @@
         <div class="form-group">
             <form:label path="descripcion" cssClass="col-sm-1 control-label">Texto en descripci&oacute;n</form:label>
             <div class="col-sm-8">
-                <form:input cssClass="form-control" path="descripcion" />
+                <form:input maxlength="255" cssClass="form-control" path="descripcion" />
                 <form:errors cssClass="help-block error" path="descripcion" />
             </div>
         </div>
         <div class="form-group">
             <form:label path="institucion" cssClass="col-sm-1 control-label">Instituci&oacute;n competente</form:label>
             <div class="col-sm-8">
-                <form:input cssClass="form-control" path="institucion" />
+                <form:input maxlength="255" cssClass="form-control" path="institucion" />
                 <form:errors cssClass="help-block error" path="institucion" />
             </div>
         </div>

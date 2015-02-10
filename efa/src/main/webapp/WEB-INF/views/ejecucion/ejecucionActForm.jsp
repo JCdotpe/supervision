@@ -30,7 +30,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Fecha de Ejecución Supervisión<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "fechaejec" path="fechaejec" class="form-control datepicker" disabled="${desha2}" />
+        	<form:input name = "fechaejec" path="fechaejec" class="form-control datepicker" disabled="${desha2}" readonly="true"/>
         	<div class="help-block error"></div>
         </div>       
         <div class="col-sm-2">
@@ -48,12 +48,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Fecha<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "fecha" path="fecha" class="form-control datepicker" disabled="${desha1}"/>
+        	<form:input name = "fecha" path="fecha" class="form-control datepicker" disabled="${desha1}" readonly="true"/>
         	<div class="help-block error"></div>
         </div>    
         <label for="inputType" class="col-sm-1 control-label">Estado<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:select id="estado" path="estado"  class="form-control" disabled="${desha1}">	
+        	<form:select id="estado" name="estado" path="estado" class="form-control" disabled="${desha1}">	
 				<form:option value="-1" label="--- Seleccionar ---" />
 				 <form:options items="${listUMestado}" itemValue="value" itemLabel="label"/>
 	         </form:select>	   
@@ -62,7 +62,7 @@
         
         <label for="inputType" class="col-sm-1 control-label">Observación<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="observacion" id="observacion" class="form-control" disabled="${desha1}"/>
+        	<form:input maxlenght="255" path="observacion" id="observacion" class="form-control" disabled="${desha1}"/>
         	<div class="help-block error"></div>
         </div>          
 </div>
@@ -74,11 +74,61 @@
 <p class="error obligatorio" >(*) Campos Obligatorios</p>
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#btnGuardar').click(function(e){
-		e.preventDefault();
-		var frmef = $('#ejeactForm');
-		var disabled = frmef.find(':input:disabled').removeAttr('disabled');
-		frmef.submit();
+	
+	$("#ejeactForm").validate({
+	    rules: {  
+	    	fechaejec:{
+	    		required:true,
+	    	},	
+	    	fecha:{
+	    		required:true,
+	    	},		
+	    	observacion:{
+	    		required:true,
+	    	},		    	
+	    	estado:{
+	    		valueNotEquals:'-1',
+	    	},  	    	
+	  	
+	    },
+
+	    messages: {   
+		//FIN MESSAGES
+	    },
+	    errorPlacement: function(error, element) {
+	        $(element).next().after(error);
+	    },
+	    invalidHandler: function(form, validator) {
+	      var errors = validator.numberOfInvalids();
+	      if (errors) {
+	        var message = errors == 1
+	          ? 'Por favor corrige estos errores:\n'
+	          : 'Por favor corrige los ' + errors + ' errores.\n';
+	        var errors = "";
+	        if (validator.errorList.length > 0) {
+	            for (x=0;x<validator.errorList.length;x++) {
+	                errors += "\n\u25CF " + validator.errorList[x].message;
+	            }
+	        }
+	        alert(message + errors);
+	      }
+	      validator.focusInvalid();
+	    },
+	    submitHandler: function(form) {
+	    	alert("Datos Guardados");
+	    	var frmef = $('#ejeactForm');
+	    	var disabled = frmef.find(':input:disabled').removeAttr('disabled');
+	    	$("#ejeactForm").ajaxSubmit();
+	    }  	
 	});
+	
+// 	$('#btnGuardar').click(function(e){
+// 		e.preventDefault();
+// 		var frmef = $('#ejeactForm');
+// 		var disabled = frmef.find(':input:disabled').removeAttr('disabled');
+// 		frmef.submit();
+// 	});
+	
+	
 });
 </script>

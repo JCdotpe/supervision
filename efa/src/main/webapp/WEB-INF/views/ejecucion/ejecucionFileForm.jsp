@@ -31,7 +31,7 @@
         </div>      
          <label for="inputType" class="col-sm-1 control-label">Nombre<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="nombre" id="nombre" class="form-control" disabled="${desha0}"/>
+        	<form:input maxlength="255" path="nombre" id="nombre" class="form-control" disabled="${desha0}"/>
         	<div class="help-block error"></div>
         </div>         
 	</div>
@@ -62,7 +62,7 @@
 <table class="table datatable uppertext" id="tblSupervisor">
 			<thead>
 				<tr>
-					<th width="4%"></th>
+					<th class="no-sort" width="4%"></th>
 					<th width="12%">Tipo</th>
 					<th width="12%">Nombre</th>
 					<th width="12%">Archivo</th>

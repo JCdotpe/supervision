@@ -113,7 +113,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Teléfono<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="telefono" maxlength="255" id="telefono" class="form-control"/>
+        	<form:input path="telefono" maxlength="25" id="telefono" class="form-control"/>
         	<div class="help-block error"></div>
         </div>   
 </div>  
@@ -129,7 +129,7 @@
         </div>   
         <label for="inputType" class="col-sm-1 control-label">Número de Documento<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="repnumdoc" maxlength="40" id="repnumdoc" class="form-control"/>
+        	<form:input path="repnumdoc" maxlength="12" id="repnumdoc" class="form-control"/>
         	<div class="help-block error"></div>
         </div>       
 </div>
@@ -156,7 +156,7 @@
 		<button type="submit" class="btn btn-success">Guardar</button>
 		</c:if>			
 		<c:if test="${empty edit}">	
-		<button type="submit" class="btn btn-success">Agregar</button>
+		<button type="submit" class="btn btn-success">Guardar</button>
 		</c:if>			
 	</fieldset>
 </form:form>

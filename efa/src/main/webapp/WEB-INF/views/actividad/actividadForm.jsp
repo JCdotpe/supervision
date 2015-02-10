@@ -98,7 +98,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Dirección</label>
         <div class="col-sm-11">
-        	<input id="edireccion" readonly class="form-control"/>
+        	<input maxlength="255" id="edireccion" readonly class="form-control"/>
         	<div class="help-block error"></div>
         </div>                  
 </div> 
@@ -108,19 +108,19 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Nombre del Titular de la EFA</label>
         <div class="col-sm-3">
-        	<input id="enombre" readonly class="form-control" />
+        	<input maxlength="255" id="enombre" readonly class="form-control" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Web Institucional</label>
         <div class="col-sm-3">
-        	<input id="ewebi" readonly class="form-control" />
+        	<input maxlength="255" id="ewebi" readonly class="form-control" />
         	<div class="help-block error"></div>
         </div>              
 </div>
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Descripción</label>
         <div class="col-sm-11">
-        	<form:input name = "descripcion" path="descripcion" class="form-control" />
+        	<form:input maxlength="255" name="descripcion" path="descripcion" class="form-control" />
         	<div class="help-block error"></div>
         </div>                  
 </div> 
@@ -140,18 +140,18 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Hora Inicio<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "horaini" path="horaini" class="form-control" />
+        	<form:input maxlength="5" name="horaini" path="horaini" class="form-control" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Hora Fin<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input name = "horafin" path="horafin" class="form-control" />
+        	<form:input maxlength="5" name="horafin" path="horafin" class="form-control" />
         	<div class="help-block error"></div>
         </div>              
 </div>
 
 	<form:input path="id" type="hidden" />
-	<button type="submit" class="btn btn-success">Agregar</button>
+	<button type="submit" class="btn btn-success">Guardar</button>
 
 	</fieldset>
 </form:form>

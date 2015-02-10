@@ -7,8 +7,10 @@ import java.util.List;
 
 
 
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,8 +31,7 @@ public class EjecucionFileDaoImpl implements EjecucionFileDao {
 
 	@SuppressWarnings("unchecked")
 	public List<EjecucionFile> listEjecucionFile() {
-
-		return getSession().createCriteria(EjecucionFile.class).list();
+		return getSession().createCriteria(EjecucionFile.class).addOrder(Order.asc("IDEJECFILE")).list();
 	}
 
 	public EjecucionFile getEjecucionFile(BigDecimal id) {

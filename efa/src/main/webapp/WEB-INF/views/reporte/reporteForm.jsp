@@ -41,7 +41,7 @@
         <div class="form-group">
             <form:label path="actividad" cssClass="col-sm-1 control-label">Descripci&oacute;n de la Actividad</form:label>
             <div class="col-sm-2">
-                <form:input path="actividad" cssClass="form-control"/>
+                <form:input maxlength="255" path="actividad" cssClass="form-control"/>
             </div>
             <label for="supervisorId" class="col-sm-1 control-label">Supervisor</label>
             <div class="col-sm-2">

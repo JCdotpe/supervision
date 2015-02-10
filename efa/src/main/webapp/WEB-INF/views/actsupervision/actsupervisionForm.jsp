@@ -29,12 +29,12 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">EFA</label>
         <div class="col-sm-3">
-        	<input name="nombrefa" class="form-control con-act-efa" value="${nombrefa }"/>
+        	<input maxlength="255" name="nombrefa" class="form-control con-act-efa" value="${nombrefa }"/>
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Supervisor Responsable</label>
         <div class="col-sm-3">
-        	<input name="nombresup" class="form-control con-act-efa" value="${nombresup }"/>
+        	<input maxlength="255" name="nombresup" class="form-control con-act-efa" value="${nombresup }"/>
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -57,7 +57,7 @@
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Informe</label>
         <div class="col-sm-3">
-        	<input name="informe" class="form-control" />
+        	<input maxlength="255" name="informe" class="form-control" />
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -65,7 +65,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Código Act. Programada</label>
         <div class="col-sm-3">
-        	<input name="codact" class="form-control con-act-efa" />
+        	<input maxlength="20" name="codact" class="form-control con-act-efa" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType"  class="col-sm-1 control-label">Estado</label>
@@ -121,7 +121,7 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Sector</label>
         <div class="col-sm-3">
-        	<input name="sector" class="form-control con-act-efa"/>
+        	<input maxlength="255" name="sector" class="form-control con-act-efa"/>
         	<div class="help-block error"></div>
         </div>               
 </div>
