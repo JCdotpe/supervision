@@ -48,7 +48,7 @@
          </div>       
         <label for="inputType" class="col-sm-1 control-label">Número Documento<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input path="numerodoc" maxlength="40" id="numerodoc" class="form-control"/>
+        	<form:input path="numerodoc" maxlength="12" id="numerodoc" class="form-control"/>
         	<div class="help-block error"></div>
         </div>       
 </div>

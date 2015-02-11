@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OrderBy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -122,7 +123,8 @@ public class EjecucionActividad implements java.io.Serializable {
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
-	@OneToMany(mappedBy = "ejecucionActividad",fetch = FetchType.EAGER, cascade = CascadeType.ALL)  	
+	@OneToMany(mappedBy = "ejecucionActividad",fetch = FetchType.EAGER, cascade = CascadeType.ALL)  
+	@OrderBy(clause = "IDEJECFILE DESC")
 	public Set<EjecucionFile> getEjecfiles() {
 		return ejecfiles;
 	}

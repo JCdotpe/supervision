@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,7 @@ public class SupervisorDaoImpl implements SupervisorDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<SupervisorFile> listFiles_by_ID(BigDecimal id) {
-
-		return getSession().createQuery("from SupervisorFile where IDSUPERVISOR=:parameter1").setParameter("parameter1", id).list();
+		return getSession().createQuery("from SupervisorFile where IDSUPERVISOR=:parameter1 order by id desc").setParameter("parameter1", id).list();
 	}		
 
 	@SuppressWarnings("unchecked")

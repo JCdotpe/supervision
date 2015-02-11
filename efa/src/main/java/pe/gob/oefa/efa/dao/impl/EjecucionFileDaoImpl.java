@@ -31,7 +31,7 @@ public class EjecucionFileDaoImpl implements EjecucionFileDao {
 
 	@SuppressWarnings("unchecked")
 	public List<EjecucionFile> listEjecucionFile() {
-		return getSession().createCriteria(EjecucionFile.class).addOrder(Order.asc("IDEJECFILE")).list();
+		return getSession().createCriteria(EjecucionFile.class).list();
 	}
 
 	public EjecucionFile getEjecucionFile(BigDecimal id) {
