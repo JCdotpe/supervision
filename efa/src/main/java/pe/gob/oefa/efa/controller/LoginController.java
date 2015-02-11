@@ -41,6 +41,7 @@ public class LoginController {
 				
 			}else{
 				
+				map.addAttribute("msj", "Su sesión ha expirado.");
 				map.addAttribute("loginForm", new LoginForm());
 				return "login";
 			}
