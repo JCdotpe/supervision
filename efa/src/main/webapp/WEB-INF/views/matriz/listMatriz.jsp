@@ -10,8 +10,10 @@
     
     <jsp:attribute name="footer">
       <p id="copyright">OEFA</p>    
- 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?1"/>'></script>  
- 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js"/>'></script>   
+    
+    <script type="text/javascript" src='<c:url value="/web-resources/js/lib/jquery.form.js"/>'></script>   
+ 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?1"/>'></script>   
+ 
     </jsp:attribute>
     
     <jsp:body>
