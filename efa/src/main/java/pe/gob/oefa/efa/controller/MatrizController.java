@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 
+import javax.servlet.jsp.PageContext;
 import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import pe.gob.oefa.efa.dao.ActividadDao;
@@ -244,8 +247,13 @@ public class MatrizController {
 		if (!file.isEmpty()) {
 			try {
 
-				new File("C:/Desarrollo_App/SISEFA/matriz/").mkdirs();
-				String saveDirectory = "C:/Desarrollo_App/SISEFA/ejecucion/matriz/";
+				String path = this.getClass().getResource("").getPath();
+				String[] pathArray = path.split("/WEB-INF/classes/");
+				System.out.println(pathArray[0]);
+				String basePath = pathArray[0]+"/Desarrollo_App/SISEFA/matriz/";
+				new File(basePath).mkdirs();
+				
+				String saveDirectory = basePath;
 				Integer max = 5 * 1024 * 1024; // 10MB
                 String fileName = file.getOriginalFilename();
                 
@@ -256,7 +264,7 @@ public class MatrizController {
                 Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
                 
                 if (file.getSize() > max || file.getSize() == 0) {
-                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
+                	JOptionPane.showMessageDialog(null, "El tamaï¿½o del archivo no es el permitido", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }else{            
 	                if(matcher.matches()){
@@ -272,7 +280,7 @@ public class MatrizController {
 						matrizservice.addArchiveFuncion(af);
 	                }
 	                else{
-	                	JOptionPane.showMessageDialog(null, "La extensión del archivo no esta permitida.", "Error",
+	                	JOptionPane.showMessageDialog(null, "La extensiï¿½n del archivo no esta permitida.", "Error",
                                 JOptionPane.ERROR_MESSAGE);
 	                }
 	           }
