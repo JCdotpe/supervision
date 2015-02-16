@@ -97,6 +97,10 @@ $(document).ready(function() {
 	  	$(this).tab('show');
 	});
 	$(".btn_save_funcion").click(function(e){
+		e.preventDefault();
+		
+		actual = $(this);
+		
 		var pos = $(this).data("pos");
 		idmatrizactividad = $(this).data("matrizactividad");
 		idfuncion = $(this).data("funcion");
@@ -110,7 +114,30 @@ $(document).ready(function() {
 					{idmatrizactividad:idmatrizactividad, idfuncion:idfuncion}, 
 					function(json_data){
 						if (json_data > 0) {
-							$('#frm_funcion_' + pos).submit();
+							
+							actual.attr("disabled","disabled");
+							actual.html("Guardando ...");
+							
+							frmPostFuncionIndicador = $('#frm_funcion_' + pos);
+							
+							$.ajax({
+							      url: frmPostFuncionIndicador.attr("action"), // script url to send
+							      method: 'POST', // method of sending
+							      data: frmPostFuncionIndicador.serialize(),  
+							      dataType:'json',
+							      success: function(response) {
+							          console.log(response);
+							          
+							          if (response == false) {
+							        	  window.location.reload();
+							          }
+							          actual.removeAttr("disabled");
+							          actual.html("Guardar");
+							      }
+							    });
+							
+							
+							//$('#frm_funcion_' + pos).submit();
 						}
 						else{
 							alert("Debe agregar al menos un archivo para este indicador.");
@@ -153,6 +180,10 @@ $(document).ready(function() {
 		$.post(prefix + '/matriz/getArchivesFuncion',
 				{idmatrizactividad:idmatrizactividad, idfuncion:idfuncion}, 
 				function(json_data){
+			
+			$("#frm_archive").find("label.error").remove();
+			$("#frm_archive").find(".error").removeClass("error");
+					
 			listArchivos.html("");
 			$.each(json_data, function(i, data){
 				addListArchive(data, disabled);
@@ -160,14 +191,39 @@ $(document).ready(function() {
 		});
 	}
 	
+	// MODAL DE SUBIR ARCHIVO ------
+	
+	$('#frm_archive').validate({
+        rules: {
+            uploadedfile: {
+                required: true,
+                accept: "application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            },
+        },
+        messages: {
+            uploadedfile: "El Archivo debe ser un PDF o DOC(X)",
+        },
+        highlight: function (element) {
+        	$(element).parent().addClass("error");
+        },
+        success: function (element) {
+        	$(element).parent().removeClass("error");
+        }
+    });
+	
+	
 	$('#frm_archive').ajaxForm({
         dataType:  'json', 
         beforeSubmit : showRequest, 
         success:   processJson 
     });
     function showRequest(){
-    	listArchivos.html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
-    	$("#frm_archive .txt").val("");
+    	if ($('#frm_archive').valid()) {
+    		listArchivos.html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
+        	$("#frm_archive .txt").val("");
+    	} else {
+    		return false;
+    	}
     }
     function processJson(json_data) {
     	listArchivos.html("");

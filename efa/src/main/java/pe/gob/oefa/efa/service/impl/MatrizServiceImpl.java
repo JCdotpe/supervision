@@ -12,7 +12,6 @@ import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
 import org.apache.commons.beanutils.converters.BigDecimalConverter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +24,7 @@ import pe.gob.oefa.efa.model.FuncionesComponente;
 import pe.gob.oefa.efa.model.IndicadoresFuncion;
 import pe.gob.oefa.efa.model.Matriz;
 import pe.gob.oefa.efa.model.MatrizActividad;
+import pe.gob.oefa.efa.model.MatrizActividadComponente;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
 import pe.gob.oefa.efa.service.MatrizService;
@@ -150,6 +150,14 @@ public class MatrizServiceImpl implements MatrizService{
 		// TODO Auto-generated method stub
 		matrizdao.addMatrizactividadindicador(mai);
 	}
+	
+	public void cleanMatrizactividadindicador(int idmatrizactividadfuncion) {
+		matrizdao.cleanMatrizactividadindicador(idmatrizactividadfuncion);
+	}
+	
+	public void addMatrizActividadComponente(MatrizActividadComponente mac) {
+		matrizdao.addMatrizActividadComponente(mac);
+	}
 
 	@Transactional
 	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma) {
@@ -163,6 +171,11 @@ public class MatrizServiceImpl implements MatrizService{
 		return matrizdao.getMatrizAct(idmatrizact);
 	}
 
+	@Transactional
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions) {
+		return matrizdao.getListMatrizFuncionByIdMa(idfuntions);
+	}
+	
 	@Transactional
 	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(
 			BigDecimal idmatrizactividad, String estado) {

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import pe.gob.oefa.efa.model.FuncionesComponente;
 import pe.gob.oefa.efa.model.IndicadoresFuncion;
 import pe.gob.oefa.efa.model.Matriz;
 import pe.gob.oefa.efa.model.MatrizActividad;
+import pe.gob.oefa.efa.model.MatrizActividadComponente;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
 import pe.gob.oefa.efa.service.MatrizService;
@@ -166,6 +168,65 @@ public class MatrizDaoImpl implements MatrizDao {
 				.setParameter("parameter1", idmatrizactividadfunciones).list();
 	}
 
+	public void addMatrizActividadComponente(MatrizActividadComponente mac) {
+		
+		Connection connection = null;
+	    PreparedStatement pstatement = null;		
+	    
+	    connection = ConnectionManager.getConnection();
+    	
+    	try {
+	    	String queryString = "INSERT INTO MATRIZ_ACTIVIDAD_COMPONENTE (IDMATRIZ, IDACTIVIDAD, IDCOMPONENTE, COMPLETADO) VALUES (?,?,?,?)";
+	    	pstatement = connection.prepareStatement(queryString);
+	    	pstatement.setInt(1, mac.getIdmatriz());
+	    	pstatement.setInt(2, mac.getIdactividad());
+	    	pstatement.setInt(3, mac.getIdcomponente());
+	    	pstatement.setString(4, mac.getCompletado());
+	    	
+	    	pstatement.executeQuery();
+    	} catch (Exception e) { e.printStackTrace(); }		
+		finally {
+			try{
+				if (pstatement != null) {
+					pstatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			}catch (SQLException e) { e.printStackTrace(); }
+
+		}
+
+	}
+	
+	public void cleanMatrizactividadindicador(int idmatrizactividadfuncion) {
+		//Eliminando idmatrizactividadfunciones de la tabla para insertar lo nuevo
+		Connection connection = null;
+	    PreparedStatement pstatement = null;		
+	    
+	    int idactividadfuncion = idmatrizactividadfuncion;
+	    
+    	connection = ConnectionManager.getConnection();
+    	
+    	try {
+	    	String queryString = "DELETE FROM MATRIZ_ACTIVIDAD_INDICADOR MAI WHERE MAI.IDMATRIZACTIVIDADFUNCIONES = ?";
+	    	pstatement = connection.prepareStatement(queryString);
+	    	pstatement.setInt(1, idactividadfuncion);
+	    	pstatement.executeQuery();
+    	} catch (Exception e) { e.printStackTrace(); }		
+		finally {
+			try{
+				if (pstatement != null) {
+					pstatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			}catch (SQLException e) { e.printStackTrace(); }
+
+		}
+	}
+	
 	public void addMatrizactividadindicador(MatrizActividadIndicador mai) {
 		// TODO Auto-generated method stub
 		getSession().merge(mai);
@@ -189,6 +250,17 @@ public class MatrizDaoImpl implements MatrizDao {
 					.setParameter("parameter1", idmatrizactividad).setParameter("parameter2", estado).list();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions) {
+		// TODO Auto-generated method stub
+		
+		String query = "from MatrizActividadFuncion where IDFUNCION IN ("+idfuntions+")";
+		
+		return getSession().createQuery(query).list();
+	}
+	
+	
 
 	@SuppressWarnings("unchecked")
 	public List<MatrizActividad> getbyMatrizActividad(int codActividad,

@@ -9,6 +9,7 @@ import pe.gob.oefa.efa.model.FuncionesComponente;
 import pe.gob.oefa.efa.model.IndicadoresFuncion;
 import pe.gob.oefa.efa.model.Matriz;
 import pe.gob.oefa.efa.model.MatrizActividad;
+import pe.gob.oefa.efa.model.MatrizActividadComponente;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
 
@@ -40,11 +41,17 @@ public interface MatrizDao {
 	public List<ArchivoFunciones> listArchives(int idmatrizactividadfunciones);
 
 	public void addMatrizactividadindicador(MatrizActividadIndicador mai);
+	
+	public void cleanMatrizactividadindicador(int idmatrizactividadfuncion);
 
+	public void addMatrizActividadComponente(MatrizActividadComponente mac);
+	
 	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma);
 
 	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(
 			BigDecimal idmatrizactividad, String estado);
+	
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions);
 
 	public List<MatrizActividad> getbyMatrizActividad(int codActividad,
 			int codMatriz);

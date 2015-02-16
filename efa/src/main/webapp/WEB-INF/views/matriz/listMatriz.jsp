@@ -12,7 +12,9 @@
       <p id="copyright">OEFA</p>    
     
     <script type="text/javascript" src='<c:url value="/web-resources/js/lib/jquery.form.js"/>'></script>   
+ 	<script type="text/javascript" src='<c:url value="/web-resources/js/lib/additional-methods.min.js"/>'></script>
  	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?1"/>'></script>   
+ 	
  
     </jsp:attribute>
     
@@ -136,7 +138,7 @@
 																																<c:set var="disabled" value="disabled"/>
 															  																</c:if>
 															  															</c:forEach>
-																  														<td valign="top"><input ${checked} ${disabled} type="checkbox" class="chk_indicador" value="${indicadores.idindicador}" name="chk_indicador" /></td>
+																  														<td valign="top"><input ${checked} type="checkbox" class="chk_indicador" value="${indicadores.idindicador}" name="chk_indicador" /></td>
 															  														</c:when>
 															  														<c:otherwise>
 															  															<td valign="top"><input type="checkbox" class="chk_indicador" value="${indicadores.idindicador}" name="chk_indicador" /></td>
@@ -148,13 +150,7 @@
 													  											</table>
 													  										</td>
 													  										<td width="15%">
-													  											<c:if test="${actividadfuncion.observaciones == null}"> 											
-														  											<textarea class="txtaObservacion" name="txtaObservacion"></textarea>
-												  												</c:if>
-													  											
-													  											<c:if test="${actividadfuncion.observaciones != ''}"> 											
-														  											${actividadfuncion.observaciones}
-												  												</c:if>
+													  											<textarea class="txtaObservacion" name="txtaObservacion">${actividadfuncion.observaciones}</textarea>
 													  										</td>
 													  										<td width="15%">${funciones.baselegal}</td>
 													  										<td width="10%">${funciones.verificable}</td>
@@ -167,9 +163,11 @@
 														  										</c:if>
 													  										</td>
 													  										<td width="10%">
-												  												<c:if test="${actividadfuncion.estadomatrizactividadfunciones == '0'}"> 											
+												  											<c:if test="${componente.completado == null}">  											
 														  											<input type="hidden" name="idmatrizactividad" value="${matrizactividad.idmatrizactividad}">
 														  											<input type="hidden" name="idfuncion" value="${funciones.idfuncion}">
+														  											<input type="hidden" name="idcomponente" value="${componente.idcomponente}">
+														  											
 														  											<a href="#myModal" data-disabled="false" role="button" data-toggle="modal" data-titulo="${funciones.descripcionfuncion}"
 														  												data-matrizactividad="${matrizactividad.idmatrizactividad}" 
 														  												data-funcion="${funciones.idfuncion}" class="btn btnArchive">Archivos</a>
@@ -178,8 +176,8 @@
 														  												data-pos="${loopCounter3.count}"
 														  												data-matrizactividad="${matrizactividad.idmatrizactividad}" 
 														  												data-funcion="${funciones.idfuncion}">Guardar</a>
-												  												</c:if>
-												  												<c:if test="${actividadfuncion.estadomatrizactividadfunciones != '0'}"> 
+												  											</c:if>
+												  												<c:if test="${componente.completado != null}"> 
 														  											<a href="#myModal" role="button" data-disabled="true" data-toggle="modal" 
 														  												data-matrizactividad="${matrizactividad.idmatrizactividad}" 
 														  												data-funcion="${funciones.idfuncion}" class="btn btnArchive">Archivos</a>
@@ -222,27 +220,35 @@
 	
 		<form id="frm_archive" style="padding-bottom: 40px" action="${actionUrlMatriz}" 
 			enctype="multipart/form-data" method="POST"  class="form-inline">
-			
-			<label style="margin: 12px 35px 0px 0px; float: left;">Tipo de Archivo</label>			
-			
-			<select style="width: 390px;" name="tipo" class="txt input-small">
 
-		  		<option value="">Seleccionar Tipo</option>
-		  		<option value="Memo">Memo</option>
-		  		<option value="Informe">Informe</option>
-		  		<option value="Oficio">Oficio</option>
-		  		<option value="Otro">Otro</option>
-		  	</select>
+			<div>
+				<label style="margin: 12px 35px 0px 0px; float: left;">Tipo de Archivo</label>
+				<div style="display: inline-block;">
+					<select style="width: 390px;" name="tipo" class="txt input-small required">
+				  		<option value="">Seleccionar Tipo</option>
+				  		<option value="Memo">Memo</option>
+				  		<option value="Informe">Informe</option>
+				  		<option value="Oficio">Oficio</option>
+				  		<option value="Otro">Otro</option>
+				  	</select>
+				</div>
+			</div>
+			<div>
+				<label style="float: left; margin-top: 12px; margin-right: 10px;">Nombre del Archivo:</label>
+				<div>
+					<input style="width: 390px;" type="text" name="nombrearchivo" class="txt input-medium required" placeholder="Nombre del Archivo">
+				</div>
+			</div>
+			<div>
+		  		<label style="float: left; margin: 12px 10px 10px 0px;">Seleccionar Archivo:</label>
+		  		<div>
+		  			<input accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="width: 390px;" type="file" name="archivo" id="archivo" class="txt input-medium required" placeholder="Archivo">
+		  			<span>(Formato PDF y WORD, Peso max de 5Mb)</span>
+		  		</div>
+		  		
+		  	</div>
 		  	
-		  	<label style="float: left; margin-top: 12px; margin-right: 10px;">Nombre del Archivo:</label>
 		  	
-		  	<input style="width: 390px;" type="text" name="nombrearchivo" class="txt input-medium" placeholder="Nombre del Archivo">
-		  	
-			<label style="float: left; margin: 12px 10px 10px 0px;">Seleccionar Archivo:</label>		  	
-		  	
-		  	<input style="width: 390px;" type="file" name="archivo" class="txt input-medium" placeholder="Archivo">
-		  	
-		  	<label>Formato PDF y WORD <br />Peso max de 5Mb </label>
 		  	<input type="hidden" name="idmatrizactividad" id="idmatrizactividad" value="" />
 		  	<input type="hidden" name="idfuncion" id="idfuncion" value="" />
 		  	<br />

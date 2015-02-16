@@ -40,6 +40,7 @@ import pe.gob.oefa.efa.model.FuncionesComponente;
 import pe.gob.oefa.efa.model.IndicadoresFuncion;
 import pe.gob.oefa.efa.model.Matriz;
 import pe.gob.oefa.efa.model.MatrizActividad;
+import pe.gob.oefa.efa.model.MatrizActividadComponente;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
 import pe.gob.oefa.efa.service.ActividadService;
@@ -67,23 +68,32 @@ public class MatrizController {
 	private UtilService utilService;
 	
 	
-	@RequestMapping(value = "/addIndicadoresbyFuncion", method = RequestMethod.POST)
-	public String addIndicadoresbyFuncion(HttpServletRequest request, Map<String, Object> map) {
+	@RequestMapping(value = "/addIndicadoresbyFuncion", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public Boolean addIndicadoresbyFuncion(HttpServletRequest request, Map<String, Object> map) {
 		String[] chk_indicador = request.getParameterValues("chk_indicador");
 		int idmatrizactividad = Integer.parseInt(request.getParameter("idmatrizactividad"));
 		int idfuncion = Integer.parseInt(request.getParameter("idfuncion"));
 		String txtaObservacion  = request.getParameter("txtaObservacion");
+		int idcomponente = Integer.parseInt(request.getParameter("idcomponente"));
+		
 		MatrizActividadFuncion ma = new MatrizActividadFuncion();
 		
 		List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
 		MatrizActividadFuncion maf = listMaf.get(0);
 		
+		// Actualiza el estado de la función
 		ma.setIdmatrizactividadfunciones(maf.getIdmatrizactividadfunciones());
 		ma.setEstadomatrizactividadfunciones("1");
 		ma.setIdfuncion(maf.getIdfuncion());
 		ma.setIdmatrizactividad(maf.getIdmatrizactividad());
 		ma.setObservaciones(txtaObservacion);
 		matrizservice.saveMatrizActividadFuncion(ma);
+		
+		// Limpiar Indicadores
+		matrizservice.cleanMatrizactividadindicador(maf.getIdmatrizactividadfunciones());
+		
+		// Insertar Nuevos indicadores
 		for(int i =0; i<chk_indicador.length; i++){
 			MatrizActividadIndicador mai = new MatrizActividadIndicador();
 			mai.setIdmatrizactividadfunciones(maf.getIdmatrizactividadfunciones());
@@ -92,16 +102,54 @@ public class MatrizController {
 		}
 		MatrizActividad mactividad = matrizservice.getMatrizAct(maf.getIdmatrizactividad());
 
+
 		List<ComponenteMatriz> mlistComp = matrizservice.getComponente(mactividad.getIdmatriz());
 		List<FuncionesComponente> lFunciones = new ArrayList<FuncionesComponente>();
+		
+		List<FuncionesComponente> lFuncionesComponente = new ArrayList<FuncionesComponente>();
+		
 		for (int i = 0; i < mlistComp.size(); i++) {
 			List<FuncionesComponente> lf = matrizservice.getFunciones(mlistComp.get(i).getIdcomponente());
 			for (int j = 0; j < lf.size(); j++) {
 				FuncionesComponente fc = lf.get(j);
 				lFunciones.add(fc);
+				
+				if (fc.getIdcomponente() == idcomponente) {
+					lFuncionesComponente.add(fc);
+				}
 			}
 		}
 
+		// Verificar si un componente fue completado
+		String idfunciones = "";
+		for (int i = 0; i < lFuncionesComponente.size(); i++) {
+			idfunciones+=lFuncionesComponente.get(i).getIdfuncion()+",";
+		}
+		idfunciones = idfunciones.substring(0, idfunciones.length()-1);
+		List<MatrizActividadFuncion> mlafc = matrizservice.getListMatrizFuncionByIdMa(idfunciones);
+		
+		
+		int nfuncionesCompleted = 0;
+		for (int i = 0; i < mlafc.size(); i++) {
+			if (mlafc.get(i).getEstadomatrizactividadfunciones().trim().compareToIgnoreCase("1") == 0) {
+				nfuncionesCompleted++;
+			}
+		}
+		
+		System.out.println(nfuncionesCompleted);
+		System.out.println(mlafc.size());
+		
+		if (nfuncionesCompleted == mlafc.size()) {
+			//insert para completado de componente
+			MatrizActividadComponente mac = new MatrizActividadComponente();
+			mac.setIdmatriz(mactividad.getIdmatriz());
+			mac.setIdactividad(mactividad.getIdactividad());
+			mac.setIdcomponente(idcomponente);
+			mac.setCompletado("SI");
+			matrizservice.addMatrizActividadComponente(mac);
+		}
+		
+		// Para verificar que toda la matriz ah sido completada
 		List<MatrizActividadFuncion> mlaf = matrizservice.getListMatrizFuncionByIdMa(mactividad.getIdmatrizactividad(), "1");		
 		if (lFunciones.size() == mlaf.size()) {
 			mactividad.setIdactividad(mactividad.getIdactividad());
@@ -110,7 +158,14 @@ public class MatrizController {
 			actividadService.saveActividadMatriz(mactividad);
 		}
 		
-		return "redirect:get/" + mactividad.getIdactividad();
+		//return "redirect:get/" + mactividad.getIdactividad();
+		
+		if (nfuncionesCompleted == mlafc.size()) {
+			return false;
+		} else {
+			return true;
+		}
+		
 	}
 	
 	@RequestMapping(value = { "/saveMatrizActividad" }, method = RequestMethod.POST)
