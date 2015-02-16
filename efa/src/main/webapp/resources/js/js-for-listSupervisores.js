@@ -176,11 +176,39 @@ function consultadni() {
 						i_dis("#nombre");
 						$("#sexo").val(json.CODSEX);
 						i_dis("#sexo");
+						
+						var fJson = json.FECNAC;
+						var fechaNac = [];
+						fechaNac['yyyy'] = fJson.substring(0,4);
+						fechaNac['mm'] = fJson.substring(4,6);
+						fechaNac['dd'] = fJson.substring(6,8);
+						$("#fechaNac").val(fechaNac['dd']+'/'+fechaNac['mm']+'/'+fechaNac['yyyy']);
+						//i_dis("#fechaNac");
+						
+						$("#departamento").val(json.CODDEP).trigger('change');
+						//i_dis("#departamento");
+						var setProv = setInterval(function(){
+							if ( $("#provincia > option").length >1 ){
+								$("#provincia").val(json.CODPRO).trigger('change');
+								clearInterval(setProv);
+							}
+							console.log('running');
+						},1000);
+						//i_dis("#provincia");
+						var setDist = setInterval(function(){
+							if ( $("#distrito > option").length >1 ){
+								$("#distrito").val(json.CODDIS);
+								clearInterval(setDist);
+							}
+							console.log('running dist');
+						},1500);						
+						//i_dis("#distrito");							
 					}else{
 						i_en("#appPaterno");
 						i_en("#appMaterno");
 						i_en("#nombre");
 						i_en("#sexo");
+						i_en("#fechaNac");
 						alert("No se encontraron datos.");
 					}
 					$("#consultadni").disable(false);
