@@ -73,8 +73,8 @@ public class SupervisorServiceImpl implements SupervisorService {
 		try {
 			
 		connection = ConnectionManager.getConnection();	
-		String getDBUSERByUserIdSql = "{CALL PADRONES.SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";
-//		String getDBUSERByUserIdSql = "{CALL SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?)}";
+		String getDBUSERByUserIdSql = "{CALL PADRONES.SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?,?)}";
+//		String getDBUSERByUserIdSql = "{CALL SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?,?)}";
 		callableStatement = connection.prepareCall(getDBUSERByUserIdSql);
 
 		callableStatement.setString(1, dni);
@@ -85,7 +85,8 @@ public class SupervisorServiceImpl implements SupervisorService {
 		callableStatement.registerOutParameter(6, java.sql.Types.VARCHAR);
 		callableStatement.registerOutParameter(7, java.sql.Types.VARCHAR);
 		callableStatement.registerOutParameter(8, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(9, java.sql.Types.INTEGER);
+		callableStatement.registerOutParameter(9, java.sql.Types.VARCHAR);
+		callableStatement.registerOutParameter(10, java.sql.Types.INTEGER);		
 
 		// execute store procedure
 		callableStatement.executeUpdate();
@@ -94,11 +95,13 @@ public class SupervisorServiceImpl implements SupervisorService {
 	    selectItems.put("APEPAT",callableStatement.getString(2));
 	    selectItems.put("APEMAT",callableStatement.getString(3));
 	    selectItems.put("NOMBRE",callableStatement.getString(4));
-	    selectItems.put("CODSEX",callableStatement.getString(5));
-	    selectItems.put("CODDEP",callableStatement.getString(6));
-	    selectItems.put("CODPRO",callableStatement.getString(7));
-	    selectItems.put("CODDIS",callableStatement.getString(8));
-	    selectItems.put("RESULTADO",callableStatement.getString(9));
+	    selectItems.put("FECNAC",callableStatement.getString(5));
+	    
+	    selectItems.put("CODSEX",callableStatement.getString(6));	    
+	    selectItems.put("CODDEP",callableStatement.getString(7));
+	    selectItems.put("CODPRO",callableStatement.getString(8));
+	    selectItems.put("CODDIS",callableStatement.getString(9));
+	    selectItems.put("RESULTADO",callableStatement.getString(10));
 	
 
 		} catch (SQLException e) { e.printStackTrace(); }		
