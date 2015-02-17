@@ -33,6 +33,9 @@ public class Efa implements java.io.Serializable {
 	private String webi;
 	private String celular;
 	private Set<Responsable> responsables = new HashSet<Responsable>(0);
+	
+	private String flgactivo;
+	
 	public Efa() {
 	}
 
@@ -201,5 +204,16 @@ public class Efa implements java.io.Serializable {
 	public void setResponsables(Set<Responsable> responsables) {
 		this.responsables = responsables;
 	}
+	
+	@Column
+	public String getFlgactivo() {
+		return flgactivo;
+	}
+
+	public void setFlgactivo(String flgactivo) {
+		this.flgactivo = flgactivo;
+	}
+	
+	
 
 }

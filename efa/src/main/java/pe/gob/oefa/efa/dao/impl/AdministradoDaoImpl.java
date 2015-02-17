@@ -48,7 +48,7 @@ public class AdministradoDaoImpl implements AdministradoDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Administrado> listAdministrados() {
-		return getSession().createQuery("from Administrado").list();
+		return getSession().createQuery("from Administrado where flgactivo='1'").list();
 //		return getSession().createCriteria(Actividad.class).list();
 	}
 
@@ -62,7 +62,9 @@ public class AdministradoDaoImpl implements AdministradoDao {
 		Administrado administrado = getAdministrado(id);
 
 		if (null != administrado) {
-			getSession().delete(administrado);
+			administrado.setFlgactivo("0");
+			getSession().update(administrado);
+			//getSession().delete(administrado);
 		}
 
 	}

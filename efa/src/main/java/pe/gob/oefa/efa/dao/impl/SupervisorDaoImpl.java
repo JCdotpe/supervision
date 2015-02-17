@@ -30,7 +30,8 @@ public class SupervisorDaoImpl implements SupervisorDao {
 	@SuppressWarnings("unchecked")
 	public List<Supervisor> listSupervisores() {
 
-		return getSession().createCriteria(Supervisor.class).list();
+		//return getSession().createCriteria(Supervisor.class).list();
+		return getSession().createQuery("from Supervisor where flgactivo='1'").list();
 	}
 
 	public Supervisor getSupervisor(BigDecimal id) {
@@ -39,7 +40,8 @@ public class SupervisorDaoImpl implements SupervisorDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<SupervisorFile> listFiles_by_ID(BigDecimal id) {
-		return getSession().createQuery("from SupervisorFile where IDSUPERVISOR=:parameter1 order by id desc").setParameter("parameter1", id).list();
+
+		return getSession().createQuery("from SupervisorFile where IDSUPERVISOR=:parameter1").setParameter("parameter1", id).list();
 	}		
 
 	@SuppressWarnings("unchecked")
@@ -53,7 +55,9 @@ public class SupervisorDaoImpl implements SupervisorDao {
 		Supervisor supervisor = getSupervisor(id);
 
 		if (null != supervisor) {
-			getSession().delete(supervisor);
+			supervisor.setFlgactivo("0");
+			getSession().update(supervisor);
+			//getSession().delete(supervisor);
 		}
 
 	}

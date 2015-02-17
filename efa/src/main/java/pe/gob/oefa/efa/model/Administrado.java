@@ -42,6 +42,8 @@ public class Administrado implements java.io.Serializable {
 	private String repapmaterno;
 	private Set<UnidadMinera> unidadesm = new HashSet<UnidadMinera>(0);
 	
+	private String flgactivo;
+	
 	public Administrado() {
 	}
 
@@ -269,5 +271,16 @@ public class Administrado implements java.io.Serializable {
 	public void setUnidadesm(Set<UnidadMinera> unidadesm) {
 		this.unidadesm = unidadesm;
 	}
+	
+	@Column
+	public String getFlgactivo() {
+		return flgactivo;
+	}
+
+	public void setFlgactivo(String flgactivo) {
+		this.flgactivo = flgactivo;
+	}
+	
+	
 
 }

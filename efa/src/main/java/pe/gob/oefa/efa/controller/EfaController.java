@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pe.gob.oefa.efa.model.Efa;
 import pe.gob.oefa.efa.model.Responsable;
 import pe.gob.oefa.efa.model.Ubigeo;
+import pe.gob.oefa.efa.seguridad.Usuario;
 import pe.gob.oefa.efa.service.EfaService;
 import pe.gob.oefa.efa.service.ResponsableService;
 import pe.gob.oefa.efa.service.UbigeoService;
@@ -101,8 +102,12 @@ public class EfaController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveEfa(@ModelAttribute("efa") Efa efa, BindingResult result, HttpSession session) {
-		efaService.saveEfa(efa);
+	public String saveEfa(@ModelAttribute("efa") Efa efa, BindingResult result, HttpSession session) {	
+		Usuario usuario = (Usuario)session.getAttribute("usuario"); //jav request.getSession(true).getAttribute("usuario");
+		efa.setFlgactivo("1");
+		//efa.setIdtipoAccion("01");
+		//efa.setUsuario(usuario.getUsuario());
+		efaService.saveEfa(efa,session);
 		return "redirect:listEfas";
 	}
 
@@ -114,11 +119,11 @@ public class EfaController {
 
 	@RequestMapping(value = "/pdelete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
-		List<Responsable> asd = responsableService.listResponsables_by_ID(id);
+	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id,HttpSession session) {
+		List<Responsable> asd = responsableService.listResponsables_by_ID(id,session);
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(asd.isEmpty()){
-			efaService.deleteEfa(id);
+			efaService.deleteEfa(id,session);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","0"));
@@ -131,7 +136,7 @@ public class EfaController {
 	@RequestMapping({"/detail/{efaId}"})
 	public String getResponsables(@PathVariable BigDecimal efaId, Map<String, Object> map, HttpSession session) {
 		session.removeAttribute("actEfa");
-		map.put("respList", responsableService.listResponsables_by_ID(efaId));
+		map.put("respList", responsableService.listResponsables_by_ID(efaId,session));
 		Efa efa = efaService.getEfa(efaId);
 		map.put("responsable", new Responsable());
 		map.put("efa", efa);
@@ -143,7 +148,7 @@ public class EfaController {
 	public String getResponsables(@PathVariable BigDecimal efaId,@PathVariable BigDecimal actId, Map<String, Object> map, HttpSession session) {
 		session.setAttribute("actEfa", actId);
 		map.put("actlink", actId);
-		map.put("respList", responsableService.listResponsables_by_ID(efaId));
+		map.put("respList", responsableService.listResponsables_by_ID(efaId,session));
 		Efa efa = efaService.getEfa(efaId);
 		map.put("responsable", new Responsable());
 		map.put("efa", efa);

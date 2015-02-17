@@ -36,6 +36,7 @@ import pe.gob.oefa.efa.model.Responsable;
 import pe.gob.oefa.efa.model.Supervisor;
 import pe.gob.oefa.efa.model.SupervisorEmergencia;
 import pe.gob.oefa.efa.model.SupervisorFile;
+import pe.gob.oefa.efa.seguridad.Usuario;
 import pe.gob.oefa.efa.service.ActividadService;
 import pe.gob.oefa.efa.service.EfaService;
 import pe.gob.oefa.efa.service.ResponsableService;
@@ -54,7 +55,7 @@ public class ActividadController {
 	private UbigeoService ubigeoService;
 	
 	@Autowired
-	private ActividadService actividadService;
+	private ActividadService actividadService ;
 	
 	@Autowired
 	private EfaService efaService;	
@@ -84,10 +85,11 @@ public class ActividadController {
 	}		
 	
 	@RequestMapping(value = { "/", "/listActividades" })
-	public String listSupervisores(Map<String, Object> map) {
+	public String listSupervisores(Map<String, Object> map,HttpSession session) {
+		Usuario usuario = (Usuario)session.getAttribute("usuario"); //jav request.getSession(true).getAttribute("usuario");
 		map.put("efas",efaService.listEfas());					;
 		map.put("actividad", new Actividad());
-		map.put("actList", actividadService.listActividades());
+		map.put("actList", actividadService.listActividades(usuario.getUsuario(),usuario.getPerfil()));
 		return "/actividad/listActividades";
 	}
 	
@@ -108,7 +110,8 @@ public class ActividadController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveSupervisor(@ModelAttribute("actividad") Actividad actividad,
-			BindingResult result) {
+			BindingResult result,HttpSession session) {
+		Usuario usuario = (Usuario)session.getAttribute("usuario"); //jav request.getSession(true).getAttribute("usuario");
 		//edicion
 		if(actividad.getId() != null){
 			Actividad preact = actividadService.getActividad(actividad.getId());
@@ -125,19 +128,21 @@ public class ActividadController {
 		}else{
 			actividad.setEstado("0");
 		}
-		actividadService.saveActividad(actividad);
+		actividad.setUsuario(usuario.getUsuario());
+		actividad.setPerfil(usuario.getPerfil());
+		actividadService.saveActividad(actividad,session);
 		return "redirect:listActividades";
 	}
 	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id) {
+	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id,HttpSession session) {
 		Actividad act = actividadService.getActividad(id);
 		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(act.getSupervisores().size() == 0 || act.getResponsables().size() == 0){
-			actividadService.deleteActividad(id);
+			actividadService.deleteActividad(id,session);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","0"));
@@ -161,7 +166,7 @@ public class ActividadController {
 		map.put("msgx",xd);
 		map.put("respSector",utilService.listSector_contacto());
 		map.put("respTipos",utilService.listTipos_contacto());
-		map.put("respList", responsableService.listResponsables_by_ID(act.getIdefa()));
+		map.put("respList", responsableService.listResponsables_by_ID(act.getIdefa(),session));
 		map.put("efa", efaService.getEfa(act.getIdefa()));
 		map.put("act",act);
 		map.put("listActres", act.getResponsables());
@@ -176,7 +181,7 @@ public class ActividadController {
 		Actividad act = actividadService.getActividad(actid);
 		Set<Responsable> responsables = act.getResponsables();
 		
-		Responsable res = responsableService.getResponsable(resid);
+		Responsable res = responsableService.getResponsable(resid,session);
 	
 		Boolean flag = false;
 		for(Responsable r : responsables){
@@ -191,14 +196,14 @@ public class ActividadController {
 		}
 		session.setAttribute("msg", msg);
 		act.setResponsables(responsables);
-		actividadService.saveActividad(act);	
+		actividadService.saveActividad(act,session);	
 		
 		return "redirect:/actividad/contactos/" + actid ;
 	}		
 
 	@RequestMapping("/delcon/{actid}/{resid}")
-	public String delActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid) {
-		actividadService.deleteActResponsable(actid, resid);
+	public String delActContactos(@PathVariable("actid") BigDecimal actid, @PathVariable("resid") BigDecimal resid,HttpSession session) {
+		actividadService.deleteActResponsable(actid, resid,session);
 		return "redirect:/actividad/contactos/" + actid ;
 	}			
 	
@@ -245,27 +250,27 @@ public class ActividadController {
 		}		
 		session.setAttribute("msg", msg);
 		act.setSupervisores(supervisores);
-		actividadService.saveActividad(act);
+		actividadService.saveActividad(act,session);
 		return "redirect:/actividad/supervisores/" + actid ;
 	}		
 
 	@RequestMapping("/delsup/{actid}/{supid}")
-	public String delActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid) {
+	public String delActSupervisores(@PathVariable("actid") BigDecimal actid, @PathVariable("supid") BigDecimal supid, HttpSession session) {
 		Actividad act = actividadService.getActividad(actid);
 		if(act.getIdsupres().equals(supid) ){
 			act.setIdsupres(null);
-			actividadService.saveActividad(act);
+			actividadService.saveActividad(act,session);
 		}
-		actividadService.deleteActSupervisor(actid, supid);
+		actividadService.deleteActSupervisor(actid, supid,session);
 		return "redirect:/actividad/supervisores/" + actid ;
 	}		
 	
 	@RequestMapping(value = "/setsup", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody	
-	public Map<String, String> setSup(@RequestParam("idact") BigDecimal idact, @RequestParam("idsupres") BigDecimal idsupres, Map<String, Object> map) {
+	public Map<String, String> setSup(@RequestParam("idact") BigDecimal idact, @RequestParam("idsupres") BigDecimal idsupres, Map<String, Object> map,HttpSession session) {
 		Actividad act = actividadService.getActividad(idact);
 		act.setIdsupres(idsupres);
-		actividadService.saveActividad(act);
+		actividadService.saveActividad(act,session);
 		Map<String, String> selectItems =   new HashMap<String, String>();
 		selectItems.put("success","1");
 		return selectItems;

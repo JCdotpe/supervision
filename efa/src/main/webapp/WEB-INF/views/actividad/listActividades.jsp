@@ -36,6 +36,8 @@
 					<th width="12%">Efa</th>
 					<th width="8%">Fecha Inicio</th>
 					<th width="8%">Fecha Fin</th>
+					<th width="8%">Usuario</th>
+					<th width="8%">Perfil</th>
 					<th width="12%"></th>
 				</tr>
 			</thead>
@@ -68,7 +70,11 @@
 						<fmt:formatDate value="${resp.fechaini}" pattern="dd/MM/yyyy" var="newfechaini" />
 						<td><c:out value="${newfechaini}" /></td>
 						<fmt:formatDate value="${resp.fechafin}" pattern="dd/MM/yyyy" var="newfechafin" />
-						<td><c:out value="${newfechafin}" /></td>				
+						<td><c:out value="${newfechafin}" /></td>		
+						
+						<td><c:out value="${resp.usuario}"/></td>
+						<td><c:out value="${resp.perfil}"/></td>
+								
 						<td><nobr>
 							<c:if test="${empty resp.codactividad}">
 								<a class="btn btn-efa btn-xs"
