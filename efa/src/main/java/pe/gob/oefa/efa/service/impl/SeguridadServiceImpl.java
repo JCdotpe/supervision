@@ -22,11 +22,11 @@ public class SeguridadServiceImpl implements SeguridadService{
 	private static String urlServicioUsuario = "";
 	private static String urlServicioPerfil = "";
 	static{
-		urlServicioUsuario = "http://190.117.200.210:8025/ServicioUsuario.svc";
-		urlServicioPerfil = "http://190.117.200.210:8025/ServicioPerfil.svc";
+//		urlServicioUsuario = "http://190.117.200.210:8025/ServicioUsuario.svc";
+//		urlServicioPerfil = "http://190.117.200.210:8025/ServicioPerfil.svc";
 		
-//		urlServicioUsuario = "http://10.0.0.48:8585/ServicioUsuario.svc";
-//		urlServicioPerfil = "http://10.0.0.48:8585/ServicioPerfil.svc";
+		urlServicioUsuario = "http://10.0.0.48:8585/ServicioUsuario.svc";
+		urlServicioPerfil = "http://10.0.0.48:8585/ServicioPerfil.svc";
 	}
 	
 	public Integer modoUsuario(Usuario usuario) throws Exception{
