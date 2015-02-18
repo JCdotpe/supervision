@@ -9,6 +9,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import pe.gob.oefa.efa.utils.ConnectionManager;
+import pe.gob.oefa.efa.utils.LabelValue;
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -113,7 +119,7 @@ public class ActividadServiceImpl implements ActividadService {
 	public void setEstadoAct(BigDecimal idact, String estado) {
 		Actividad actividad = actividadDao.getActividad(idact);
 		if(actividad.getEstado().compareTo("0") == 0){
-			String cod = ("000000" + idact.toString()).substring(idact.toString().length());
+			/*String cod = ("000000" + idact.toString()).substring(idact.toString().length());
 			int year = Calendar.getInstance().get(Calendar.YEAR);
 				switch ( Integer.parseInt(actividad.getNivel())) {
 				case 1:
@@ -127,11 +133,50 @@ public class ActividadServiceImpl implements ActividadService {
 					break;				
 				default:
 					break;
-				}	
+				}*/
+				
+				
+		        CallableStatement callableStatement = null;
+		        Connection connection = null;			
+				
+				try{
+		    	connection = ConnectionManager.getConnection();
+			    
+			    
+			    String storeProcedure = "{ CALL supervision.get_codactividad(?,?) }";
+			    
+		        connection = ConnectionManager.getConnection();
+		      
+		        callableStatement = connection.prepareCall(storeProcedure);	    
+			    
+		        callableStatement.setBigDecimal(1, idact);
+		        callableStatement.registerOutParameter(2, java.sql.Types.VARCHAR);
+			  
+		        callableStatement.execute();
+		        
+
+
+				} catch (SQLException e) { e.printStackTrace(); }		
+				finally {
+					try{
+						if (callableStatement != null) {
+							callableStatement.close();
+						}
+				
+						if (connection != null) {
+							connection.close();
+						}
+					}catch (SQLException e) { e.printStackTrace(); }
+
+				}				
+				
+				
+				
+				
 		}
 	
-		actividad.setEstado(estado);
-		actividadDao.saveActividad(actividad);
+		//actividad.setEstado(estado);
+		//actividadDao.saveActividad(actividad);
 
 	}
 	
