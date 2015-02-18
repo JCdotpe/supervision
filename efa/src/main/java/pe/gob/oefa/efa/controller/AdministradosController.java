@@ -147,19 +147,20 @@ public class AdministradosController {
 			//sup
 			administrado.setUnidadesm(preadm.getUnidadesm());
 		}
-		administradoService.saveAdministrado(administrado);;
+		administrado.setFlgactivo("1");
+		administradoService.saveAdministrado(administrado,session);;
 		return "redirect:listAdministrados";
 	}
 	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id) {
+	public List<LabelValue> pdeleteAct(@RequestParam("id") BigDecimal id,HttpSession session) {
 		Administrado adm = administradoService.getAdministrado(id);
 		
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(adm.getUnidadesm().size() == 0){
-			administradoService.deleteAdministrado(id);
+			administradoService.deleteAdministrado(id,session);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","2"));

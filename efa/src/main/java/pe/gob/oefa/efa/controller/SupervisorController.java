@@ -140,9 +140,10 @@ public class SupervisorController {
 		pad.setCoddep(supervisor.getDepartamento());
 		pad.setCodpro(supervisor.getProvincia());
 		pad.setCoddis(supervisor.getDistrito());
-		padronService.savePadron(pad);
+		padronService.savePadron(pad,session);
 		}
-		supervisorService.saveSupervisor(supervisor);
+		supervisor.setFlgactivo("1");
+		supervisorService.saveSupervisor(supervisor,session);
 		
 		String linkr = "redirect:/supervisor/";  
 		if(session.getAttribute("actEfa") != null)
@@ -154,12 +155,12 @@ public class SupervisorController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
+	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id,HttpSession session) {
 		List<SupervisorFile> sf = supervisorService.listFiles_by_ID(id);
 		List<SupervisorEmergencia> se = supervisorService.listEmergencias_by_ID(id);
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
 		if(sf.isEmpty() && se.isEmpty()){
-			supervisorService.deleteSupervisor(id);
+			supervisorService.deleteSupervisor(id,session);
 			selectItems.add(new LabelValue("success","1"));
 		}else{
 			selectItems.add(new LabelValue("success","0"));

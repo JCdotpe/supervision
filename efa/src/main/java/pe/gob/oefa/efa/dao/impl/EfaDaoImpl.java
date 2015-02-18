@@ -50,7 +50,8 @@ public class EfaDaoImpl implements EfaDao {
 	@SuppressWarnings("unchecked")
 	public List<Efa> listEfas() {
 
-		return getSession().createCriteria(Efa.class).list();
+		//return getSession().createCriteria(Efa.class).list();
+		return getSession().createQuery("from Efa where flgactivo='1'").list();
 	}
 
 	public Efa getEfa(BigDecimal id) {
@@ -63,7 +64,9 @@ public class EfaDaoImpl implements EfaDao {
 		Efa efa = getEfa(id);
 
 		if (null != efa) {
-			getSession().delete(efa);
+			efa.setFlgactivo("0");
+			getSession().update(efa);
+			//getSession().delete(efa);
 		}
 
 	}

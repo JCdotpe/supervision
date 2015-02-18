@@ -43,8 +43,13 @@ public class ActividadDaoImpl implements ActividadDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Actividad> listActividades() {
-		return getSession().createQuery("from Actividad").list();
+	public List<Actividad> listActividades(String usuario,String perfil) { //modificado
+		if(perfil.equals("Supervisor")){
+			return getSession().createQuery("from Actividad where flgactivo='1' and usuario='"+usuario+"'").list();
+		}else{
+			return getSession().createQuery("from Actividad where flgactivo='1'").list();
+		}
+		
 //		return getSession().createCriteria(Actividad.class).list();
 	}
 
@@ -64,7 +69,9 @@ public class ActividadDaoImpl implements ActividadDao {
 		Actividad actividad = getActividad(id);
 
 		if (null != actividad) {
-			getSession().delete(actividad);
+			//getSession().delete(actividad);
+			actividad.setFlgactivo("0");
+			getSession().update(actividad);
 		}
 
 	}

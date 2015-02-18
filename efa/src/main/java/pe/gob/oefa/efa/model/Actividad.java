@@ -56,6 +56,13 @@ public class Actividad implements java.io.Serializable {
 	private BigDecimal idsupres;	
 	private Set<Responsable> responsables = new HashSet<Responsable>(0);
 	private Set<Supervisor> supervisores = new HashSet<Supervisor> (0);
+	
+	private String flgactivo;
+	private String usuario;
+	private String perfil;
+
+
+	
 
 	public Actividad() {
 	}
@@ -354,6 +361,35 @@ public class Actividad implements java.io.Serializable {
 		this.supervisores = supervisores;
 	}
 
+	
+	@Column
+	public String getFlgactivo() {
+		return flgactivo;
+	}
+
+	public void setFlgactivo(String flgactivo) {
+		this.flgactivo = flgactivo;
+	}
+	
+	@Column
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
+	@Column
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+	
+	
 	
 	
 }

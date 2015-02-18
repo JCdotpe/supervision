@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
+import org.apache.axis.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +48,11 @@ public class SupervisorFileController {
 		
 	@RequestMapping(value = "/savefile", method = RequestMethod.POST)
 	    public String save(@RequestParam("id") BigDecimal ciId, @RequestParam("file") MultipartFile file,
-	    		@RequestParam("tipo") String tipo, Model map) throws IllegalStateException, IOException {
-	        
-			new File("C:/Desarrollo_App/SISEFA/supervisor/supervisor/").mkdirs();	
-			String saveDirectory = "C:/Desarrollo_App/SISEFA/supervisor/";     
+	    		@RequestParam("tipo") String tipo, Model map, HttpSession session) throws IllegalStateException, IOException {
+
+			new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
+			String saveDirectory = "C:/Desarrollo_App/SISEFA/";  
+//			String saveDirectory = "c:/upload-efa/supervisor/";     
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();
 	                
@@ -70,7 +73,7 @@ public class SupervisorFileController {
 			                supervisorFile.setSupervisor(supervisor);
 			                supervisorFile.setNombre(filexname);
 			                supervisorFile.setTipo(tipo);
-			                supervisorFileService.saveSupervisorFile(supervisorFile);
+			                supervisorFileService.saveSupervisorFile(supervisorFile, session);
 		                }else{
 		                	JOptionPane.showMessageDialog(null, "La extension del archivo no esta permitida", "Error",
 	                                JOptionPane.ERROR_MESSAGE);
@@ -81,9 +84,9 @@ public class SupervisorFileController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
+	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id, HttpSession session) {
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		supervisorFileService.deleteSupervisorFile(id);
+		supervisorFileService.deleteSupervisorFile(id,session);
 		selectItems.add(new LabelValue("success","1"));
 		return selectItems;
 	}		

@@ -22,17 +22,17 @@
 <div class="form-group">
         <label for="inputType" class="col-sm-1 control-label">Apellido Paterno<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input maxlength="255" name="appPaterno" path="appPaterno" class="form-control" />
+        	<form:input maxlength="255" name="appPaterno" path="appPaterno" class="form-control" readonly="true" />
         	<div class="help-block error"></div>
         </div> 
         <label for="inputType" class="col-sm-1 control-label">Apellido Materno<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input maxlength="255" name="appMaterno" path="appMaterno" class="form-control" />
+        	<form:input maxlength="255" name="appMaterno" path="appMaterno" class="form-control" readonly="true" />
         	<div class="help-block error"></div>
         </div>     
         <label for="inputType" class="col-sm-1 control-label">Nombre<span class="error"> (*)</span></label>
         <div class="col-sm-3">
-        	<form:input maxlength="255" name="nombre" path="nombre" class="form-control" />
+        	<form:input maxlength="255" name="nombre" path="nombre" class="form-control" readonly="true" />
         	<div class="help-block error"></div>
         </div>              
 </div>
@@ -41,7 +41,7 @@
         <div class="col-sm-3">
 		<form:select id="sexo" path="sexo"  class="form-control">
            <form:option value="-1" label="--- Seleccionar ---"  />
-           <form:options items="${listSexo}" itemValue="value" itemLabel="label"/>
+           <form:options items="${listSexo}" itemValue="value" itemLabel="label" />
          </form:select>        	
         	<div class="help-block error"></div>
         </div> 

@@ -19,7 +19,7 @@ public interface ActividadDao {
 	/*
 	 * READ
 	 */
-	public List<Actividad> listActividades();
+	public List<Actividad> listActividades(String usuario,String perfil);
 	public List listActividades_by(String fechaini, String fechafin, String nombrefa, String nombresup, String nivel, String informe, String codact, String estado, String estadomatriz, String estadoejec );
 	public Actividad getActividad(BigDecimal id);
 //	public List<ActividadResponsable> listActResponsables_by_ID(BigDecimal id);

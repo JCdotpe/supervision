@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class EjecucionFileController {
 		
 	@RequestMapping(value = "/savefile", method = RequestMethod.POST)
 	    public String save(@RequestParam("id") BigDecimal actId, @RequestParam("file") MultipartFile file,
-	    		@RequestParam("tipo") String tipo,@RequestParam("nombre") String nombre, Model map) throws IllegalStateException, IOException {
+	    		@RequestParam("tipo") String tipo,@RequestParam("nombre") String nombre, Model map, HttpSession session) throws IllegalStateException, IOException {
 		
 	 new File("C:/Desarrollo_App/SISEFA/ejecucion/").mkdirs();	
 	 String saveDirectory = "C:/Desarrollo_App/SISEFA/ejecucion/";     
@@ -75,7 +76,7 @@ public class EjecucionFileController {
 			                ejecucionFile.setNombre(nombre);
 			                ejecucionFile.setArchivo(filexname);
 			                ejecucionFile.setTipo(tipo);
-			                ejecucionFileService.saveEjecucionFile(ejecucionFile);
+			                ejecucionFileService.saveEjecucionFile(ejecucionFile,session);
 		                }else{
 		                	JOptionPane.showMessageDialog(null, "La extensión del archivo no esta permitida", "Error",
 	                                JOptionPane.ERROR_MESSAGE);
@@ -86,9 +87,9 @@ public class EjecucionFileController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id) {
+	public List<LabelValue> pdeleteEfa(@RequestParam("id") BigDecimal id, HttpSession session) {
 		List<LabelValue> selectItems = new ArrayList<LabelValue>();
-		ejecucionFileService.deleteEjecucionFile(id);;
+		ejecucionFileService.deleteEjecucionFile(id,session);;
 		selectItems.add(new LabelValue("success","1"));
 		return selectItems;
 	}		

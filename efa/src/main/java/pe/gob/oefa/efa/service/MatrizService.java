@@ -3,6 +3,8 @@ package pe.gob.oefa.efa.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.FuncionesComponente;
@@ -26,27 +28,24 @@ public interface MatrizService {
 	public List<FuncionesComponente> getFunciones(int idcomponente);
 	public List<IndicadoresFuncion> getIndicadores(int idfuncion);
 	public List<MatrizActividad> getMatrizActividad(int codActividad, int codMatriz);
-	public void addMatrizActividadFuncion(MatrizActividadFuncion maf);
-	public List<MatrizActividadFuncion> getListMatrizFuncion(
-			int idmatrizactividad, int idfuncion);
-	public void addArchiveFuncion(ArchivoFunciones af);
+	public void addMatrizActividadFuncion(MatrizActividadFuncion maf, HttpSession session);
+	
+	public List<MatrizActividadFuncion> getListMatrizFuncion(int idmatrizactividad, int idfuncion);
+	
+	public void addArchiveFuncion(ArchivoFunciones af, HttpSession session);
+	
 	public List<ArchivoFunciones> listArchives(int idmatrizactividadfunciones);
-	public void addMatrizactividadindicador(MatrizActividadIndicador mai);
+
+	public void addMatrizactividadindicador(MatrizActividadIndicador mai, HttpSession session);
+	public void cleanMatrizactividadindicador(int idmatrizactividadfuncion, HttpSession session);
+	public void addMatrizActividadComponente(MatrizActividadComponente mac, HttpSession session);
 	
-	public void cleanMatrizactividadindicador(int idmatrizactividadfuncion);
 	
-	public void addMatrizActividadComponente(MatrizActividadComponente mac);
+	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma, HttpSession session);
 	
-	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma);
-	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(
-			BigDecimal idmatrizactividad, String estado);
-	
-	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions);
-	
-	public List<MatrizActividad> getbyMatrizActividad(int codActividad,
-			int codMatriz);
-	public void updateMatrizActividad(MatrizActividad ma);
-	public List<MatrizActividadIndicador> getIndicadoresActividad(
-			int idmatrizactividadfunciones);
-	public void deleteArchive(int idArchive);
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(BigDecimal idmatrizactividad, String estado);
+	public List<MatrizActividad> getbyMatrizActividad(int codActividad, int codMatriz);
+	public void updateMatrizActividad(MatrizActividad ma, HttpSession session);
+	public List<MatrizActividadIndicador> getIndicadoresActividad(int idmatrizactividadfunciones);
+	public void deleteArchive(int idArchive, HttpSession session);
 }

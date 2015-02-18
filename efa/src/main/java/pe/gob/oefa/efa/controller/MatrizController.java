@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,6 @@ import pe.gob.oefa.efa.model.FuncionesComponente;
 import pe.gob.oefa.efa.model.IndicadoresFuncion;
 import pe.gob.oefa.efa.model.Matriz;
 import pe.gob.oefa.efa.model.MatrizActividad;
-import pe.gob.oefa.efa.model.MatrizActividadComponente;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
 import pe.gob.oefa.efa.service.ActividadService;
@@ -68,109 +67,56 @@ public class MatrizController {
 	private UtilService utilService;
 	
 	
-	@RequestMapping(value = "/addIndicadoresbyFuncion", method = RequestMethod.POST, produces = "application/json")
-	@ResponseBody
-	public Boolean addIndicadoresbyFuncion(HttpServletRequest request, Map<String, Object> map) {
+	@RequestMapping(value = "/addIndicadoresbyFuncion", method = RequestMethod.POST)
+	public String addIndicadoresbyFuncion(HttpServletRequest request, Map<String, Object> map, HttpSession session) {
 		String[] chk_indicador = request.getParameterValues("chk_indicador");
 		int idmatrizactividad = Integer.parseInt(request.getParameter("idmatrizactividad"));
 		int idfuncion = Integer.parseInt(request.getParameter("idfuncion"));
 		String txtaObservacion  = request.getParameter("txtaObservacion");
-		int idcomponente = Integer.parseInt(request.getParameter("idcomponente"));
-		
 		MatrizActividadFuncion ma = new MatrizActividadFuncion();
 		
 		List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
 		MatrizActividadFuncion maf = listMaf.get(0);
 		
-		// Actualiza el estado de la funciÃ³n
 		ma.setIdmatrizactividadfunciones(maf.getIdmatrizactividadfunciones());
 		ma.setEstadomatrizactividadfunciones("1");
 		ma.setIdfuncion(maf.getIdfuncion());
 		ma.setIdmatrizactividad(maf.getIdmatrizactividad());
 		ma.setObservaciones(txtaObservacion);
-		matrizservice.saveMatrizActividadFuncion(ma);
-		
-		// Limpiar Indicadores
-		matrizservice.cleanMatrizactividadindicador(maf.getIdmatrizactividadfunciones());
-		
-		// Insertar Nuevos indicadores
+		matrizservice.saveMatrizActividadFuncion(ma, session);
 		for(int i =0; i<chk_indicador.length; i++){
 			MatrizActividadIndicador mai = new MatrizActividadIndicador();
 			mai.setIdmatrizactividadfunciones(maf.getIdmatrizactividadfunciones());
 			mai.setIdindicador(Integer.parseInt(chk_indicador[i]));
-			matrizservice.addMatrizactividadindicador(mai);
+			matrizservice.addMatrizactividadindicador(mai, session);
 		}
 		MatrizActividad mactividad = matrizservice.getMatrizAct(maf.getIdmatrizactividad());
 
-
 		List<ComponenteMatriz> mlistComp = matrizservice.getComponente(mactividad.getIdmatriz());
 		List<FuncionesComponente> lFunciones = new ArrayList<FuncionesComponente>();
-		
-		List<FuncionesComponente> lFuncionesComponente = new ArrayList<FuncionesComponente>();
-		
 		for (int i = 0; i < mlistComp.size(); i++) {
 			List<FuncionesComponente> lf = matrizservice.getFunciones(mlistComp.get(i).getIdcomponente());
 			for (int j = 0; j < lf.size(); j++) {
 				FuncionesComponente fc = lf.get(j);
 				lFunciones.add(fc);
-				
-				if (fc.getIdcomponente() == idcomponente) {
-					lFuncionesComponente.add(fc);
-				}
 			}
 		}
 
-		// Verificar si un componente fue completado
-		String idfunciones = "";
-		for (int i = 0; i < lFuncionesComponente.size(); i++) {
-			idfunciones+=lFuncionesComponente.get(i).getIdfuncion()+",";
-		}
-		idfunciones = idfunciones.substring(0, idfunciones.length()-1);
-		List<MatrizActividadFuncion> mlafc = matrizservice.getListMatrizFuncionByIdMa(idfunciones);
-		
-		
-		int nfuncionesCompleted = 0;
-		for (int i = 0; i < mlafc.size(); i++) {
-			if (mlafc.get(i).getEstadomatrizactividadfunciones().trim().compareToIgnoreCase("1") == 0) {
-				nfuncionesCompleted++;
-			}
-		}
-		
-		System.out.println(nfuncionesCompleted);
-		System.out.println(mlafc.size());
-		
-		if (nfuncionesCompleted == mlafc.size()) {
-			//insert para completado de componente
-			MatrizActividadComponente mac = new MatrizActividadComponente();
-			mac.setIdmatriz(mactividad.getIdmatriz());
-			mac.setIdactividad(mactividad.getIdactividad());
-			mac.setIdcomponente(idcomponente);
-			mac.setCompletado("SI");
-			matrizservice.addMatrizActividadComponente(mac);
-		}
-		
-		// Para verificar que toda la matriz ah sido completada
 		List<MatrizActividadFuncion> mlaf = matrizservice.getListMatrizFuncionByIdMa(mactividad.getIdmatrizactividad(), "1");		
 		if (lFunciones.size() == mlaf.size()) {
 			mactividad.setIdactividad(mactividad.getIdactividad());
 			mactividad.setIdmatriz(mactividad.getIdmatriz());
 			mactividad.setEstadomatrizactividad("2");
-			actividadService.saveActividadMatriz(mactividad);
+			//actividadService.saveActividadMatriz(mactividad,session);
+			actividadService.saveActividadMatriz(mactividad,session);
 		}
 		
-		//return "redirect:get/" + mactividad.getIdactividad();
-		
-		if (nfuncionesCompleted == mlafc.size()) {
-			return false;
-		} else {
-			return true;
-		}
-		
+		return "redirect:get/" + mactividad.getIdactividad();
 	}
 	
 	@RequestMapping(value = { "/saveMatrizActividad" }, method = RequestMethod.POST)
 	@ResponseBody
-	public String saveMatrizActividad(HttpServletRequest request, Map<String, Object> map ){
+	public String saveMatrizActividad(HttpServletRequest request, Map<String, Object> map, HttpSession session ){
 		String chk_matriz = request.getParameter("idMatriz");
 		String estado = request.getParameter("estado");	
 		int codActividad = Integer.parseInt(request.getParameter("idactividad"));
@@ -181,7 +127,8 @@ public class MatrizController {
 			mact.setIdactividad(codActividad);
 			mact.setIdmatriz(codMatriz);
 			mact.setEstadomatrizactividad("1");
-			actividadService.saveActividadMatriz(mact);
+			//actividadService.saveActividadMatriz(mact,session);
+			actividadService.saveActividadMatriz(mact,session);
 			List<ComponenteMatriz> mlistComp = matrizservice.getComponente(codMatriz);
 			for (int k = 0; k < mlistComp.size(); k++) {
 				List<FuncionesComponente> lf = matrizservice.getFunciones(mlistComp.get(k).getIdcomponente());
@@ -192,14 +139,14 @@ public class MatrizController {
 					maf.setIdmatrizactividad(ma.get(0).getIdmatrizactividad().intValueExact());
 					maf.setEstadomatrizactividadfunciones("0");
 					maf.setObservaciones("");
-					matrizservice.addMatrizActividadFuncion(maf);
+					matrizservice.addMatrizActividadFuncion(maf, session);
 				}
 			}
 		}
 		else{
 			MatrizActividad ma = ListMacti.get(0);
 			ma.setEstadomatrizactividad(estado);
-			matrizservice.updateMatrizActividad(ma);
+			matrizservice.updateMatrizActividad(ma,session);
 		}
 		return "redirect:get/"+codActividad;
 		
@@ -298,7 +245,7 @@ public class MatrizController {
 	@ResponseBody
 	public List<ArchivoFunciones> saveArchive(@RequestParam("idmatrizactividad") int idmatrizactividad, @RequestParam("idfuncion") int idfuncion,
 			@RequestParam("tipo") String tipo, @RequestParam("nombrearchivo") String nombrearchivo,
-            @RequestParam("archivo") MultipartFile file, Map<String, Object> map) {
+            @RequestParam("archivo") MultipartFile file, Map<String, Object> map, HttpSession session) {
 		if (!file.isEmpty()) {
 			try {
 
@@ -322,7 +269,7 @@ public class MatrizController {
                 Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
                 
                 if (file.getSize() > max || file.getSize() == 0) {
-                	JOptionPane.showMessageDialog(null, "El tamaï¿½o del archivo no es el permitido", "Error",
+                	JOptionPane.showMessageDialog(null, "El tamaño del archivo no es el permitido", "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }else{            
 	                if(matcher.matches()){
@@ -335,10 +282,10 @@ public class MatrizController {
 						af.setNombrearchivo(nombrearchivo);
 						af.setTipo(tipo);
 						af.setArhivo(filexname);
-						matrizservice.addArchiveFuncion(af);
+						matrizservice.addArchiveFuncion(af, session);
 	                }
 	                else{
-	                	JOptionPane.showMessageDialog(null, "La extensiï¿½n del archivo no esta permitida.", "Error",
+	                	JOptionPane.showMessageDialog(null, "La extension del archivo no esta permitida.", "Error",
                                 JOptionPane.ERROR_MESSAGE);
 	                }
 	           }
@@ -377,8 +324,8 @@ public class MatrizController {
 	
 	@RequestMapping(value = "/deleteArchive", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public boolean deleteArchive(@RequestParam("idArchive") int idArchive) {
-		matrizservice.deleteArchive(idArchive);
+	public boolean deleteArchive(@RequestParam("idArchive") int idArchive, HttpSession session) {
+		matrizservice.deleteArchive(idArchive,session);
 
 		return true;
 	}
