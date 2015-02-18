@@ -302,10 +302,13 @@ public class MatrizController {
 		if (!file.isEmpty()) {
 			try {
 
-				String path = this.getClass().getResource("").getPath();
+				/*String path = this.getClass().getResource("").getPath();
 				String[] pathArray = path.split("/WEB-INF/classes/");
 				System.out.println(pathArray[0]);
 				String basePath = pathArray[0]+"/Desarrollo_App/SISEFA/matriz/";
+				new File(basePath).mkdirs();*/
+				
+				String basePath = System.getProperty("catalina.base")+"/webapps/efa/resources/Desarrollo_App/SISEFA/matriz/";
 				new File(basePath).mkdirs();
 				
 				String saveDirectory = basePath;

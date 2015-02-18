@@ -239,10 +239,10 @@ $(document).ready(function() {
 		var v = data.arhivo;
 		v.replace('"', '');
 		if (estado) {
-			row += '<td colspan="2"><a href="http://10.0.0.59:8080/efa/Desarrollo_App/SISEFA/matriz/'+ v  +'" target="_blank">Archivo</a></td>';
+			row += '<td colspan="2"><a href="http://10.0.0.59:8080/efa/web-resources/Desarrollo_App/SISEFA/matriz/'+ v  +'" target="_blank">Archivo</a></td>';
 		}
 		else{
-			row += '<td><a href="http://10.0.0.59:8080/efa/Desarrollo_App/SISEFA/matriz/'+ v  +'" target="_blank">Archivo</a></td>';
+			row += '<td><a href="http://10.0.0.59:8080/efa/web-resources/Desarrollo_App/SISEFA/matriz/'+ v  +'" target="_blank">Archivo</a></td>';
 			row += '<td><a href="#" class="btn btn-primary delete_archive" data-id="'+ data.idarchivofunciones  +'">X</a></td>';
 		}
 		row += '</tr>';
