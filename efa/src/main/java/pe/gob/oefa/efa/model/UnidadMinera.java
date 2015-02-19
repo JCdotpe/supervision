@@ -39,7 +39,8 @@ public class UnidadMinera implements java.io.Serializable {
 	private String este;	
 	private String zona;	
 	private String direccionunidad;	
-	private String nombreunidad;	
+	private String nombreunidad;
+	private String flgactivo;
 
 	public UnidadMinera() {
 	}
@@ -53,7 +54,7 @@ public class UnidadMinera implements java.io.Serializable {
 			String codinacc, String departamento, String departamentodes, String provincia,
 			String provinciades, String distrito, String distritodes, String cuenca,
 			String direccion, String estado, String norte, String este, String zona, String direccionunidad,
-			String nombreunidad) {
+			String nombreunidad, String flgactivo) {
 		this.idunidadminera = idunidadminera;
 		this.administrado = administrado;
 		this.sector = sector;
@@ -76,6 +77,7 @@ public class UnidadMinera implements java.io.Serializable {
 		this.zona = zona;
 		this.direccionunidad = direccionunidad;
 		this.nombreunidad = nombreunidad;
+		this.flgactivo = flgactivo;
 	}	
 	
 	
@@ -236,6 +238,13 @@ public class UnidadMinera implements java.io.Serializable {
 	public void setNombreunidad(String nombreunidad) {
 		this.nombreunidad = nombreunidad;
 	}
+	@Column
+	public String getFlgactivo() {
+		return flgactivo;
+	}
 
+	public void setFlgactivo(String flgactivo) {
+		this.flgactivo = flgactivo;
+	}
 	
 }

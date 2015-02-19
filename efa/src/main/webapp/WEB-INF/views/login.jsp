@@ -30,7 +30,7 @@
 				<div class="wrapper">
 					<div id="frm-login">
 						<header>
-							<h1>Sistema de Supervsión a Entidades</h1>
+							<h1>Sistema de Supervisión a Entidades</h1>
 						</header>
 						<form:form method="POST" action="login" id="login" commandName="loginForm">
 							<label>

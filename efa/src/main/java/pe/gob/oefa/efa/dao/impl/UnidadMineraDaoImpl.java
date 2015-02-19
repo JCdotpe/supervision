@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
+
 import pe.gob.oefa.efa.dao.UnidadMineraDao;
+import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.UnidadMinera;
 
 @Repository
@@ -27,8 +30,10 @@ public class UnidadMineraDaoImpl implements UnidadMineraDao {
 
 	@SuppressWarnings("unchecked")
 	public List<UnidadMinera> listUnidadMineras() {
-
-		return getSession().createCriteria(UnidadMinera.class).list();
+		
+		return getSession().createQuery("from UnidadMinera where flgactivo='1'").list();
+		
+		//return getSession().createCriteria(UnidadMinera.class).list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,9 +49,18 @@ public class UnidadMineraDaoImpl implements UnidadMineraDao {
 	
 	public void deleteUnidadMinera(BigDecimal id) {
 
-		String sql = "delete from UnidadMinera where IDUNIDADMINERA=:parameter1";
+		/*String sql = "delete from UnidadMinera where IDUNIDADMINERA=:parameter1";
 		Query query = getSession().createQuery(sql).setParameter("parameter1", id);
-		query.executeUpdate();
+		query.executeUpdate();*/
+		
+		UnidadMinera unidadMinera = getUnidadMinera(id);
+
+		if (null != unidadMinera) {
+			//getSession().delete(actividad);
+			unidadMinera.setFlgactivo("0");
+			getSession().update(unidadMinera);
+		}
+		
 	}
 
 	public void deleteUnidadMineras_by_AdmID(BigDecimal id) {

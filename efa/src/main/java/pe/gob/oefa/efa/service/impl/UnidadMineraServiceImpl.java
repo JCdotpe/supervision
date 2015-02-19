@@ -38,7 +38,8 @@ public class UnidadMineraServiceImpl implements UnidadMineraService {
 	private AuditoriaService auditoriaService;
 	
 	@Transactional
-	public void saveUnidadMinera(UnidadMinera unidadMinera, HttpSession session) {	
+	public void saveUnidadMinera(UnidadMinera unidadMinera, HttpSession session) {		
+		unidadMinera.setFlgactivo("1"); //modificado
 		unidadMineraDao.saveUnidadMinera(unidadMinera);
 		
 		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
