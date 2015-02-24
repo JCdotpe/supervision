@@ -86,7 +86,7 @@
 							<td><a><c:out value="${sup.archivo}" /></a></td>
 							</c:when>
 							<c:otherwise>
-							<td><a href="file:///C:/Desarrollo_App/SISEFA/ejecucion/${sup.archivo}" target="_blank"><c:out value="${sup.archivo}" /></a></td>
+							<td><a href="http://10.0.0.59:8080/efa/web-resources/Desarrollo_App/SISEFA/ejecucion/${sup.archivo}" target="_blank"><c:out value="${sup.archivo}" /></a></td>
 							</c:otherwise>
 						</c:choose>
 						

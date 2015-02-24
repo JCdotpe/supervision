@@ -57,7 +57,7 @@
 					  	</c:if>
 						</c:forEach>						
 						</td>							
-						<td><a href="file:///C:/Desarrollo_App/SISEFA/supervisor/${sup.nombre}" target="top"><c:out value="${sup.nombre}" /></a></td>
+						<td><a href="http://10.0.0.59:8080/efa/web-resources/Desarrollo_App/SISEFA/supervisor/${sup.nombre}" target="top"><c:out value="${sup.nombre}" /></a></td>
 						
 						  <td><nobr>																					
 								<a class="btn btn-efa-del btn-xs"

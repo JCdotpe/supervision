@@ -53,8 +53,14 @@ public class EjecucionFileController {
 	    public String save(@RequestParam("id") BigDecimal actId, @RequestParam("file") MultipartFile file,
 	    		@RequestParam("tipo") String tipo,@RequestParam("nombre") String nombre, Model map, HttpSession session) throws IllegalStateException, IOException {
 		
-	 new File("C:/Desarrollo_App/SISEFA/ejecucion/").mkdirs();	
-	 String saveDirectory = "C:/Desarrollo_App/SISEFA/ejecucion/";     
+ 
+	 
+		String basePath = System.getProperty("catalina.base")+"/webapps/efa/resources/Desarrollo_App/SISEFA/ejecucion/";
+		System.out.println(basePath);
+		new File(basePath).mkdirs();	
+		
+		String saveDirectory = basePath;
+	 
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();
 	                

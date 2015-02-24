@@ -50,9 +50,13 @@ public class SupervisorFileController {
 	    public String save(@RequestParam("id") BigDecimal ciId, @RequestParam("file") MultipartFile file,
 	    		@RequestParam("tipo") String tipo, Model map, HttpSession session) throws IllegalStateException, IOException {
 
-			new File("C:/Desarrollo_App/SISEFA/").mkdirs();	
-			String saveDirectory = "C:/Desarrollo_App/SISEFA/";  
-//			String saveDirectory = "c:/upload-efa/supervisor/";     
+		String basePath = System.getProperty("catalina.base")+"/webapps/efa/resources/Desarrollo_App/SISEFA/supervisor/";
+		System.out.println(basePath);
+		new File(basePath).mkdirs();		
+		
+		String saveDirectory = basePath;
+		
+   
 			Integer max = 10 * 1024 * 1024; // 10MB
 	                String fileName = file.getOriginalFilename();
 	                

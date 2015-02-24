@@ -67,7 +67,7 @@
 				<c:if test="${not empty m.opciones}">
 				<ul class="dropdown-menu navmenu-nav nav " role="menu">
 					<c:forEach items="${m.opciones}" varStatus="j" var="o">
-					<li><a href="${o.opcion.url}">${o.opcion.nombre}</a></li>
+					<li><a href="${o.opcion.url}?u=url">${o.opcion.nombre}</a></li>
 					</c:forEach>			
 				</ul>			
 				</c:if>

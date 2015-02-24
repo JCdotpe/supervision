@@ -63,31 +63,10 @@ public class LoginController {
 		try {
 			
 			com.debugsac.bean.Usuario u = new com.debugsac.bean.Usuario();
-			//u.setIdUsuario(0);
 			u.setCodigoEmp(loginForm.getContrasena());
-			/*u.setEmailCoorporativo("0");
-			u.setNombreApellido("0");
-			u.setEstado(null);*/
 			u.setUserName(loginForm.getUsuario());
 			u.setIdComite(2);
-			/*u.setUsuarioTipo(null);
-			u.setListaRol(null);
-			u.setContentStyle("0");
-			u.setSexo("0");
-			u.setCorreoBoleta("0");
-			u.setDireccion("0");
-			Calendar calendar = new GregorianCalendar();
-			u.setFechaNacimiento(calendar.getInstance());
-			u.setEmpresa(null);
-			u.setDNI("0");
-			u.setIdSociedad(0);
-			u.setSociedadDescripcionCorta("0");
-			u.setIdAreaBU(0);
-			u.setAreaBUDescripcionCorta("0");
-			u.setIdCargo(0);
-			u.setCargoDescripcionCorta("0");
-			
-			u.setActivo(0);*/
+
 			
 			com.debugsac.bean.Usuario uv = null;
 			uv = seguridadService.autenticarUsuario(u);
@@ -100,23 +79,13 @@ public class LoginController {
 					usuario.setNombre(uv.getNombreApellido());
 					usuario.setUsuario(u.getUserName());
 					
-					
 					for(Rol rol : uv.getListaRol()){
 						usuario.setPerfil(rol.getNombre());	
 						usuario.setCodPerfil(rol.getIdRol());
 					}
-					/*usuario.setCodPerfil(uv.getListaRol()[0].getIdRol()+"");
-					usuario.setIdUsuario(uv.getIdUsuario());
-					
-					usuario.setIdArea(uv.getIdAreaBU());
-					usuario.setArea(uv.getAreaBUDescripcionCorta());
-					
-					usuario.setIdUnidadOrganica(uv.getIdSociedad());
-					usuario.setUnidadOrganica(uv.getSociedadDescripcionCorta());*/
+
 					
 					Pagina paginas[] = seguridadService.obtenerSitemapPorUsuario(usuario.getUsuario(), 2);
-					
-					
 					List<Menu> listaMenu = new ArrayList<Menu>();
 					for(Pagina pag : paginas){
 						if(pag.getIdPaginaPadre()==0 && pag.getVisible()==true){
@@ -135,6 +104,8 @@ public class LoginController {
 								Opcion opcion = new Opcion();
 								opcion.setOpcion(pag);
 								listaMenu.get(i).getOpciones().add(opcion);
+								
+								
 							}
 						}
 					}
@@ -188,6 +159,11 @@ public class LoginController {
 			return vista;
 			
 		}
+	}
+	
+	@RequestMapping(value="/notAllowed", method=RequestMethod.GET)
+	public String noPermitido(){
+		return "notAllowed";
 	}
 	
 	
