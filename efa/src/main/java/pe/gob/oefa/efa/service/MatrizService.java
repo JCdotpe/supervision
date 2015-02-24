@@ -3,6 +3,8 @@ package pe.gob.oefa.efa.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import pe.gob.oefa.efa.model.ArchivoFunciones;
 import pe.gob.oefa.efa.model.ComponenteMatriz;
 import pe.gob.oefa.efa.model.FuncionesComponente;
@@ -37,7 +39,7 @@ public interface MatrizService {
 	
 	public void addMatrizActividadComponente(MatrizActividadComponente mac);
 	
-	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma);
+	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma, HttpSession session);
 	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(
 			BigDecimal idmatrizactividad, String estado);
 	
@@ -45,8 +47,8 @@ public interface MatrizService {
 	
 	public List<MatrizActividad> getbyMatrizActividad(int codActividad,
 			int codMatriz);
-	public void updateMatrizActividad(MatrizActividad ma);
+	public void updateMatrizActividad(MatrizActividad ma, HttpSession session);
 	public List<MatrizActividadIndicador> getIndicadoresActividad(
 			int idmatrizactividadfunciones);
-	public void deleteArchive(int idArchive);
+	public void deleteArchive(int idArchive, HttpSession session);
 }
