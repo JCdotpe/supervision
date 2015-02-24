@@ -176,7 +176,6 @@ public class LoginController {
 		String vista = "login";
 		try{
 			if(session != null){
-				session.removeAttribute("usuario");
 				session.invalidate();
 			}			
 			

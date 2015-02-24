@@ -4,12 +4,15 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletException;
 
@@ -171,9 +174,24 @@ public class AdministradosController {
 	@RequestMapping({"/um/{admId}"})
 	public String getResponsables(@PathVariable BigDecimal admId, Map<String, Object> map, HttpSession session) {
 		Administrado adm = administradoService.getAdministrado(admId);
+		
+		//Eliminar de la lista los inactivos para mostrar
+		Iterator<UnidadMinera> iterator = adm.getUnidadesm().iterator();
+		while(iterator.hasNext()) {
+			UnidadMinera oUnidadMinera = iterator.next();
+			if((oUnidadMinera.getFlgactivo()==null?"1":oUnidadMinera.getFlgactivo()).equals("0")){
+				iterator.remove();
+			}
+		}		
+		
+	
+		
 		map.put("unidadM", new UnidadMinera());
 		map.put("adm", adm);
 		map.put("listUM", adm.getUnidadesm());
+		
+		
+		
 		return "/administrados/listUnidadesMineras";
 	}		
 	
