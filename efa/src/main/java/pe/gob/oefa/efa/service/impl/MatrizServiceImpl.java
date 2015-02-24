@@ -8,13 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
 import org.apache.commons.beanutils.converters.BigDecimalConverter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +27,8 @@ import pe.gob.oefa.efa.model.MatrizActividad;
 import pe.gob.oefa.efa.model.MatrizActividadComponente;
 import pe.gob.oefa.efa.model.MatrizActividadFuncion;
 import pe.gob.oefa.efa.model.MatrizActividadIndicador;
-import pe.gob.oefa.efa.service.AuditoriaService;
 import pe.gob.oefa.efa.service.MatrizService;
 import pe.gob.oefa.efa.utils.ConnectionManager;
-import pe.gob.oefa.efa.utils.ConstantAuditoria;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 @Service
@@ -41,9 +36,6 @@ public class MatrizServiceImpl implements MatrizService{
 	
 	@Autowired
 	private MatrizDao matrizdao;
-	
-	@Autowired
-	private AuditoriaService auditoriaService;
 	
 	@Transactional(readOnly=true) 
 	public List<LabelValue> listMatrices(int codNivel, BigDecimal idEfa) {
@@ -130,13 +122,9 @@ public class MatrizServiceImpl implements MatrizService{
 	}
 
 	@Transactional
-	public void addMatrizActividadFuncion(MatrizActividadFuncion maf, HttpSession session) {
+	public void addMatrizActividadFuncion(MatrizActividadFuncion maf) {
 		// TODO Auto-generated method stub
 		matrizdao.addMatrizActividadFuncion(maf);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				maf.getIdmatrizactividadfunciones() != 0 ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
-						ConstantAuditoria.Table_Supervision_TEjecucion, maf.getIdmatrizactividadfunciones() <= 0 ?  Integer.toString(maf.getIdmatrizactividadfunciones()) : "");
 	}
 
 	@Transactional
@@ -147,13 +135,9 @@ public class MatrizServiceImpl implements MatrizService{
 	}
 
 	@Transactional
-	public void addArchiveFuncion(ArchivoFunciones af, HttpSession session) {
+	public void addArchiveFuncion(ArchivoFunciones af) {
 		// TODO Auto-generated method stub
 		matrizdao.addArchiveFuncion(af);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				af.getIdarchivofunciones() < 0 ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
-						ConstantAuditoria.Table_Supervision_Archivo_Funciones, af.getIdarchivofunciones() < 0 ?  Integer.toString(af.getIdarchivofunciones()) : "");
 	}
 
 	@Transactional
@@ -162,23 +146,23 @@ public class MatrizServiceImpl implements MatrizService{
 		return  matrizdao.listArchives(idmatrizactividadfunciones);
 	}
 	@Transactional
-	public void addMatrizactividadindicador(MatrizActividadIndicador mai, HttpSession session) {
+	public void addMatrizactividadindicador(MatrizActividadIndicador mai) {
 		// TODO Auto-generated method stub
 		matrizdao.addMatrizactividadindicador(mai);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				mai.getIdmatrizactividadindicador() < 0 ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
-						ConstantAuditoria.Table_Supervision_Matriz_Actividad_Indicador, mai.getIdmatrizactividadindicador() < 0 ?  Integer.toString(mai.getIdmatrizactividadindicador()) : "");
+	}
+	
+	public void cleanMatrizactividadindicador(int idmatrizactividadfuncion) {
+		matrizdao.cleanMatrizactividadindicador(idmatrizactividadfuncion);
+	}
+	
+	public void addMatrizActividadComponente(MatrizActividadComponente mac) {
+		matrizdao.addMatrizActividadComponente(mac);
 	}
 
 	@Transactional
-	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma, HttpSession session) {
+	public void saveMatrizActividadFuncion(MatrizActividadFuncion ma) {
 		// TODO Auto-generated method stub
 		matrizdao.saveMatrizActividadFuncion(ma);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				ma.getIdmatrizactividadfunciones() < 0 ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
-						ConstantAuditoria.Table_Supervision_Matriz_Actividad_Funciones, ma.getIdmatrizactividadfunciones() < 0 ?  Integer.toString(ma.getIdmatrizactividadfunciones()) : "");
 	}
 
 	@Transactional
@@ -207,13 +191,9 @@ public class MatrizServiceImpl implements MatrizService{
 	}
 	
 	@Transactional
-	public void updateMatrizActividad(MatrizActividad ma, HttpSession session) {
+	public void updateMatrizActividad(MatrizActividad ma) {
 		// TODO Auto-generated method stub
 		matrizdao.updateMatrizActividad(ma);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				ConstantAuditoria.Acc_Modificar, ConstantAuditoria.Table_Supervicion_MatrizActividad, 
-				ma.getIdmatrizactividad() != null ?  ma.getIdmatrizactividad().toString() : "");
 	}
 	
 	@Transactional
@@ -224,24 +204,9 @@ public class MatrizServiceImpl implements MatrizService{
 	}
 
 	@Transactional
-	public void deleteArchive(int idArchive, HttpSession session) {
+	public void deleteArchive(int idArchive) {
 		// TODO Auto-generated method stub
 		matrizdao.deleteArchive(idArchive);
-		
-		auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
-				ConstantAuditoria.Acc_Eliminar, ConstantAuditoria.Table_Supervision_Archivo_Funciones, Integer.toString(idArchive));
-	}
-
-	public void cleanMatrizactividadindicador(int idmatrizactividadfuncion,
-			HttpSession session) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addMatrizActividadComponente(MatrizActividadComponente mac,
-			HttpSession session) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

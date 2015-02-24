@@ -13,7 +13,7 @@
     
     <script type="text/javascript" src='<c:url value="/web-resources/js/lib/jquery.form.js"/>'></script>   
  	<script type="text/javascript" src='<c:url value="/web-resources/js/lib/additional-methods.min.js"/>'></script>
- 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?5"/>'></script>   
+ 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?6"/>'></script>   
  	
  
     </jsp:attribute>
