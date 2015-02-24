@@ -51,7 +51,7 @@ $("#administradosForm").validate({
     	},
     	ruc:{
     		digits:true,
-    		exactlenght:11,
+    		minlength:11,
     		required:true,
     	},
     	razonsocial:{
@@ -63,27 +63,27 @@ $("#administradosForm").validate({
     	},    	
     	numerodoc:{
     		digits:true,
-    		required:true,
-    		minlength: 8
+    		minlength: 8,
+    		required:true
     	},    	
     	nombres:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true    		
     	}, 	  
     	appaterno:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true    		
     	}, 	    	
     	apmaterno:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true
     	}, 	       	
     	direccion:{
-    		required:true,
-    		minlength: 6
+    		minlength: 6,
+    		required:true    		
     	}, 	    	
     	departamento:{
     		valueNotEquals:'-1',
@@ -96,31 +96,31 @@ $("#administradosForm").validate({
     	}, 
     	telefono:{
     		digits:true,
-    		required:true,
-    		minlength: 6
+    		minlength: 6,
+    		required:true
     	}, 	  
     	reptipodoc:{
     		valueNotEquals:'-1',
     	},    	
     	repnumdoc:{
     		digits:true,
-    		required:true,
-    		minlength: 8
+    		minlength: 8,
+    		required:true    		
     	},   
     	repnombres:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true    		
     	}, 	  
     	repappaterno:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true    		
     	}, 	    	
     	repapmaterno:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true
     	}, 	     	
     },
 

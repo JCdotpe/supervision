@@ -26,12 +26,23 @@ public class SessionFilter implements Filter{
 			HttpServletResponse res = (HttpServletResponse) response;
 			HttpSession session = req.getSession(false);
 
-			if(session == null){
+			String uri = req.getRequestURI();
+			if( session.getAttribute("usuario")==null && !uri.equals(req.getContextPath()+"/") && 
+					!uri.equals(req.getContextPath()+"/login") && 
+					!uri.equals(req.getContextPath()+"/logout")
+			){
 				session = req.getSession(true);
-				res.sendRedirect(req.getContextPath()+"/");
+				res.sendRedirect(req.getContextPath()+"/");				
 			}else{
-				chain.doFilter(req, res);				
+				if(session == null){
+					session = req.getSession(true);
+					res.sendRedirect(req.getContextPath()+"/");
+				}else{
+					chain.doFilter(req, res);				
+				}
 			}
+			
+			
 			
 		}catch(Exception e){
 			e.printStackTrace();
