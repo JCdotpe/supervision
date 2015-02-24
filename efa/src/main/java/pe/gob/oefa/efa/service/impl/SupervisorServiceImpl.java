@@ -88,39 +88,39 @@ public class SupervisorServiceImpl implements SupervisorService {
 		Map<String, String> selectItems =   new HashMap<String, String>();
 		try {
 			
-		connection = ConnectionManager.getConnection();	
-		String getDBUSERByUserIdSql = "{CALL PADRONES.SP_GET_DATOS_X_DNI2(?,?,?,?,?,?,?,?,?,?)}";
-//		String getDBUSERByUserIdSql = "{CALL SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?,?)}";
-		callableStatement = connection.prepareCall(getDBUSERByUserIdSql);
+			connection = ConnectionManager.getConnection();	
+			String getDBUSERByUserIdSql = "{CALL PADRONES.SP_GET_DATOS_X_DNI2(?,?,?,?,?,?,?,?,?,?)}";
+//			String getDBUSERByUserIdSql = "{CALL SP_GET_DATOS_X_DNI(?,?,?,?,?,?,?,?,?,?)}";
+			callableStatement = connection.prepareCall(getDBUSERByUserIdSql);
 
-		callableStatement.setString(1, dni);
-		callableStatement.registerOutParameter(2, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(3, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(4, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(5, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(6, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(7, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(8, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(9, java.sql.Types.VARCHAR);
-		callableStatement.registerOutParameter(10, java.sql.Types.INTEGER);		
+			callableStatement.setString(1, dni);
+			callableStatement.registerOutParameter(2, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(3, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(4, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(5, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(6, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(7, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(8, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(9, java.sql.Types.VARCHAR);
+			callableStatement.registerOutParameter(10, java.sql.Types.INTEGER);		
 
-		// execute store procedure
-		callableStatement.executeUpdate();
-	    
+			// execute store procedure
+			callableStatement.executeUpdate();
+		    
+			
+		    selectItems.put("APEPAT",callableStatement.getString(2));
+		    selectItems.put("APEMAT",callableStatement.getString(3));
+		    selectItems.put("NOMBRE",callableStatement.getString(4));
+		    selectItems.put("CODSEX",callableStatement.getString(5));
+		    
+		    selectItems.put("CODDEP",callableStatement.getString(6));	    
+		    selectItems.put("CODPRO",callableStatement.getString(7));
+		    selectItems.put("CODDIS",callableStatement.getString(8));
+		    selectItems.put("RESULTADO",callableStatement.getString(9));
+		    selectItems.put("FECNAC",callableStatement.getString(10));
 		
-	    selectItems.put("APEPAT",callableStatement.getString(2));
-	    selectItems.put("APEMAT",callableStatement.getString(3));
-	    selectItems.put("NOMBRE",callableStatement.getString(4));
-	    selectItems.put("FECNAC",callableStatement.getString(5));
-	    
-	    selectItems.put("CODSEX",callableStatement.getString(6));	    
-	    selectItems.put("CODDEP",callableStatement.getString(7));
-	    selectItems.put("CODPRO",callableStatement.getString(8));
-	    selectItems.put("CODDIS",callableStatement.getString(9));
-	    selectItems.put("RESULTADO",callableStatement.getString(10));
-	
 
-		} catch (SQLException e) { e.printStackTrace(); }		
+			} catch (SQLException e) { e.printStackTrace(); }		
 		finally {
 			try{
 				if (callableStatement != null) {

@@ -31,9 +31,17 @@ $("#pn").hide();
 $("#pj").hide();
 $( "#tipopersona" ).change(function() {
 	if($(this).val() == '1'){
-		 $("#pn").show();
-		 $("#pj").hide();
+		$("#ruc").val("");
+		$("#razonsocial").val("");
+		$("#pn").show();
+		$("#pj").hide();
+		 
 	}else if($(this).val() == '2'){
+		$("#nombres").val("");
+		$("#appaterno").val("");		
+		$("#apmaterno").val("");	
+		$("#numerodoc").val("");	
+		$("#tipodoc").val(0);
 		 $("#pn").hide();
 		 $("#pj").show();		 		
 	}else{
