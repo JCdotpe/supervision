@@ -297,7 +297,7 @@ public class MatrizController {
 
 	@RequestMapping(value = "/saveArchive", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<ArchivoFunciones> saveArchive(@RequestParam("idmatrizactividad") int idmatrizactividad, @RequestParam("idfuncion") int idfuncion,
+	public List<Object> saveArchive(@RequestParam("idmatrizactividad") int idmatrizactividad, @RequestParam("idfuncion") int idfuncion,
 			@RequestParam("tipo") String tipo, @RequestParam("nombrearchivo") String nombrearchivo,
             @RequestParam("archivo") MultipartFile file, Map<String, Object> map) {
 		if (!file.isEmpty()) {
@@ -324,8 +324,15 @@ public class MatrizController {
                 Matcher matcher = pattern.matcher(filexname.toLowerCase().replaceAll("\\s",""));
                 
                 if (file.getSize() > max || file.getSize() == 0) {
-                	JOptionPane.showMessageDialog(null, "El tamaï¿½o del archivo no es el permitido", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                	/*JOptionPane.showMessageDialog(null, "El tamaï¿½o del archivo no es el permitido", "Error",
+                            JOptionPane.ERROR_MESSAGE); */
+                	
+                	
+                	List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
+    				List<Object> obj = new ArrayList<Object>();
+    				obj.add(new String("El tamaño del archivo no es el permitido"));
+    				obj.add(matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones()));
+    				return obj;
                 }else{            
 	                if(matcher.matches()){
 		                file.transferTo(new File(saveDirectory + filexname));
@@ -340,21 +347,36 @@ public class MatrizController {
 						matrizservice.addArchiveFuncion(af);
 	                }
 	                else{
-	                	JOptionPane.showMessageDialog(null, "La extensiï¿½n del archivo no esta permitida.", "Error",
-                                JOptionPane.ERROR_MESSAGE);
+	                	/*JOptionPane.showMessageDialog(null, "La extensiï¿½n del archivo no esta permitida.", "Error",
+                                JOptionPane.ERROR_MESSAGE);*/
+	                	
+	                	List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
+	    				List<Object> obj = new ArrayList<Object>();
+	    				obj.add(new String("La extensión del archivo no esta permitida."));
+	    				obj.add(matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones()));
+	    				return obj;
 	                }
 	           }
 				
 			} catch (Exception e) {
 				List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
-				return matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones());
+				List<Object> obj = new ArrayList<Object>();
+				obj.add(new Boolean(false));
+				obj.add(matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones()));
+				return obj;
 			}
 		} else {
 			List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
-			return matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones());
+			List<Object> obj = new ArrayList<Object>();
+			obj.add(new Boolean(false));
+			obj.add(matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones()));
+			return obj;
 		}
 		List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
-		return matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones());
+		List<Object> obj = new ArrayList<Object>();
+		obj.add(new Boolean(true));
+		obj.add(matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones()));
+		return obj;
 		 
 	}
 	

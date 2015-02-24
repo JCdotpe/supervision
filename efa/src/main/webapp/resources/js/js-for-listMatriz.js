@@ -130,6 +130,10 @@ $(document).ready(function() {
 							          
 							          if (response == false) {
 							        	  window.location.reload();
+							          } else {
+							        	  tr = actual.parent().siblings();
+							        	  $(tr[tr.size()-1]).html("SI");
+							        	  
 							          }
 							          actual.removeAttr("disabled");
 							          actual.html("Guardar");
@@ -226,8 +230,11 @@ $(document).ready(function() {
     	}
     }
     function processJson(json_data) {
+    	if (json_data[0] != true) {
+    	   alert(json_data[0]);
+    	} 
     	listArchivos.html("");
-		$.each(json_data, function(i, data){
+		$.each(json_data[1], function(i, data){
 			addListArchive(data, false)
         });
     }
