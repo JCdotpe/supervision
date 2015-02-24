@@ -310,6 +310,7 @@ public class MatrizController {
 				new File(basePath).mkdirs();*/
 				
 				String basePath = System.getProperty("catalina.base")+"/webapps/efa/resources/Desarrollo_App/SISEFA/matriz/";
+				System.out.println(basePath);
 				new File(basePath).mkdirs();
 				
 				String saveDirectory = basePath;
