@@ -112,10 +112,10 @@ $("#supervisorForm").validate({
       validator.focusInvalid();
     },
     submitHandler: function(form) {
-//    	i_enable("#appPaterno");
-//    	i_enable("#appMaterno");
-//    	i_enable("#nombre");
-//    	i_enable("#sexo");    	
+    	i_enable("#appPaterno");
+    	i_enable("#appMaterno");
+    	i_enable("#nombre");
+    	i_enable("#sexo");    	
     	alert("Datos Guardados");
     	$("#supervisorForm").ajaxSubmit();
     }       

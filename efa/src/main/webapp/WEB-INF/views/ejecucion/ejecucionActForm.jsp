@@ -5,7 +5,7 @@
 <c:url var="actionUrl" value="/ejeact/addejeact?id=${actId}" />
 
 <form:form id="ejeactForm"  method="post" modelAttribute="eje" accept-charset="UTF-8"
-	action="${actionUrl}" class="form-horizontal upperx " role="form" >
+	action="${actionUrl}" class="form-horizontal upperx" role="form">
 
 	<fieldset>
 	<!-- 	<legend></legend> -->
