@@ -116,14 +116,14 @@
 
 
 <div class="form-group">
-        <label for="inputType" class="col-sm-1 control-label">Inicio</label>
+        <label for="inputType" class="col-sm-1 control-label" >Inicio </label>
         <div class="col-sm-3">
-        	<form:input name="iniLaboral" path="iniLaboral" class="form-control datepicker" id="fechaInicioDate" readonly="true"/>
+        	<form:input id="fechaInicioDate" name="iniLaboral" path="iniLaboral" class="form-control datepicker" readonly="true"/>
         	<div class="help-block error"></div>
         </div> 
         <label for="inputType" class="col-sm-1 control-label">Fin</label>
         <div class="col-sm-3">
-        	<form:input name="finLaboral" path="finLaboral" class="form-control datepicker" id="fechaFinDate" readonly="true"/>
+        	<form:input id="fechaFinDate" name="finLaboral" path="finLaboral" class="form-control datepicker" readonly="true"/>
         	<div class="help-block error"></div>
         </div>                
 </div>

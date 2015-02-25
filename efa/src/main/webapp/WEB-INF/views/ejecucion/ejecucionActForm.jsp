@@ -5,7 +5,7 @@
 <c:url var="actionUrl" value="/ejeact/addejeact?id=${actId}" />
 
 <form:form id="ejeactForm"  method="post" modelAttribute="eje" accept-charset="UTF-8"
-	action="${actionUrl}" class="form-horizontal upperx" role="form">
+	action="${actionUrl}" class="form-horizontal upperx " role="form" >
 
 	<fieldset>
 	<!-- 	<legend></legend> -->
@@ -58,8 +58,7 @@
 				 <form:options items="${listUMestado}" itemValue="value" itemLabel="label"/>
 	         </form:select>	   
         	<div class="help-block error"></div>
-        </div>    
-        
+        </div>
         <label for="inputType" class="col-sm-1 control-label">Observación<span class="error"> (*)</span></label>
         <div class="col-sm-3">
         	<form:input maxlenght="255" path="observacion" id="observacion" class="form-control" disabled="${desha1}"/>
@@ -74,6 +73,11 @@
 <p class="error obligatorio" >(*) Campos Obligatorios</p>
 <script type="text/javascript">
 $(document).ready(function(){
+	if($("#estado").val() === '3'){
+		$("#ejeactForm :input, #formEjecFile :input").attr('disabled', true);
+ 		$("#tblSupervisor a.btn-efa-del").removeAttr('onclick','').attr('href','javascript:;');
+
+	}
 	
 	$("#ejeactForm").validate({
 	    rules: {  

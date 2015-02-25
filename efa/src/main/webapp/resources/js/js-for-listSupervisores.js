@@ -11,24 +11,24 @@ $(document).ready(function() {
 $("#supervisorForm").validate({
     rules: {  
 		dni:{
-    		required:true,
     		digits:true,
-    		minlength: 8
+    		minlength: 8,
+    		required:true
     	},
     	appPaterno:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true
     	},
     	appMaterno:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true
     	}, 	
     	nombre:{
     		validName:true,
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true
     	}, 	    	
     	sexo:{
     		required:true
@@ -38,12 +38,12 @@ $("#supervisorForm").validate({
     	}, 	
     	telefono:{
     		digits:true,
-    		required:true,
-    		minlength: 6
+    		minlength: 6,
+    		required:true
     	}, 	  
     	direccion:{
-    		required:true,
-    		minlength: 5
+    		minlength: 5,
+    		required:true
     	}, 	    	
     
     	departamento:{
@@ -60,19 +60,15 @@ $("#supervisorForm").validate({
     		valueNotEquals:'-1'
     	}, 	  
     	profesion:{
-    		required:true,
-    		minlength: 2
+    		minlength: 2,
+    		required:true
     	}, 	
     	correo:{
-    		//required:true,
     		email:true
     	}, 	
-    	
-   	
     	modalidad:{
     		valueNotEquals:'-1'
     	}, 	   	
-
     	remuneracion:{
     		digits:true
     	}, 	   	
@@ -81,10 +77,9 @@ $("#supervisorForm").validate({
     	}, 	    	
     	correoIns:{
     		email:true,
-    		required:true,
-    		minlength: 3
+    		minlength: 3,
+    		required:true
     	}, 	   	
-    	
     	cuentaBco:{
     		maxlength: 50
     	}, 		   	
@@ -117,10 +112,10 @@ $("#supervisorForm").validate({
       validator.focusInvalid();
     },
     submitHandler: function(form) {
-    	i_enable("#appPaterno");
-    	i_enable("#appMaterno");
-    	i_enable("#nombre");
-    	i_enable("#sexo");    	
+//    	i_enable("#appPaterno");
+//    	i_enable("#appMaterno");
+//    	i_enable("#nombre");
+//    	i_enable("#sexo");    	
     	alert("Datos Guardados");
     	$("#supervisorForm").ajaxSubmit();
     }       

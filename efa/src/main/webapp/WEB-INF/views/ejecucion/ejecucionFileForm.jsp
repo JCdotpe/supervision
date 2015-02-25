@@ -46,6 +46,7 @@
 	    </table>
 	    <br/>	<button id="btnSubirArchivo" type="submit" class="btn btn-success" ${btnDesha0}>Subir Archivo</button>
 	</form:form>
+	
 	<script type="text/javascript">
 	$(document).ready(function(){
 		 var frm = $('#formEjecFile');
