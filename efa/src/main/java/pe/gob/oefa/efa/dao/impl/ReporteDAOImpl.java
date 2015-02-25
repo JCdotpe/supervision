@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,14 +40,20 @@ public class ReporteDAOImpl implements ReporteDAO {
 		CallableStatement callableStatement = null;
 	    Connection connection = null;
 	    ResultSet rs = null;
-	    Date fecha = new Date();
+	    //Date fecha = new Date();
+	    
+	    Calendar cal = Calendar.getInstance();
+	    Date today = cal.getTime();
+	    cal.add(Calendar.YEAR, 2); // to get previous year add -1
+	    Date nextYear = cal.getTime();
+	    
 	    SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
 	    try{
 	    	connection = ConnectionManager.getConnection();
 		    CallableStatement stmt = connection.prepareCall("BEGIN SP_GET_ACTIVIDADES(?,?,?,?,?,?,?,?,?,?,?,?,?); END;");
 		    stmt.registerOutParameter(1, OracleTypes.CURSOR); //REF CURSOR
 		    stmt.setString(2, form.getNivelGobierno().equals("")?" ":form.getNivelGobierno());
-		    stmt.setString(3, form.getEfa().equals("")?"0":form.getEfa());
+		    stmt.setString(3, form.getEfa().equals("")?" ":form.getEfa());
 		    stmt.setString(4, form.getTipoSupervision().equals("")?" ":form.getTipoSupervision());
 		    stmt.setString(5, form.getActividad().equals("")?" ":form.getActividad());
 		    stmt.setString(6, form.getSupervisor().equals("")?"0":form.getSupervisor());
@@ -54,7 +61,7 @@ public class ReporteDAOImpl implements ReporteDAO {
 		    stmt.setString(8, form.getProvincia().equals("") || form.getProvincia().equals("-1")?" ":form.getProvincia());
 		    stmt.setString(9, form.getDistrito().equals("") || form.getDistrito().equals("-1")?" ":form.getDistrito());
 		    stmt.setString(10,form.getInicioSupervision().equals("")? "01/01/1980":form.getInicioSupervision());
-		    stmt.setString(11,form.getFinSupervision().equals("")? dt1.format(fecha):form.getFinSupervision());
+		    stmt.setString(11,form.getFinSupervision().equals("")? dt1.format(nextYear):form.getFinSupervision());
 		    stmt.setString(12,form.getEstadoActividad().equals("")? " ":form.getEstadoActividad());
 		    stmt.setString(13,form.getComponente().equals("")?"0":form.getComponente());
 		    stmt.execute();
