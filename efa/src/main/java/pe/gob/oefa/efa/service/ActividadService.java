@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import pe.gob.oefa.efa.model.Actividad;
 //import pe.gob.oefa.efa.model.ActividadResponsable;
 import pe.gob.oefa.efa.model.MatrizActividad;
+import pe.gob.oefa.efa.seguridad.Usuario;
 import pe.gob.oefa.efa.utils.LabelValue;
 
 
@@ -26,7 +27,7 @@ public interface ActividadService {
 	 * READ
 	 */
 	public List<Actividad> listActividades(String usuario,String perfil);
-	public List listActividades_by(String fechaini, String fechafin, String nombrefa, String nombresup, String nivel, String informe, String codact, String estado, String estadomatriz, String estadoejec);
+	public List listActividades_by(String fechaini, String fechafin, String nombrefa, String nombresup, String nivel, String informe, String codact, String estado, String estadomatriz, String estadoejec,Usuario usuario);
 	public Actividad getActividad(BigDecimal id);
 //	public List<ActividadResponsable> listActResponsables_by_ID(BigDecimal id);
 	/*

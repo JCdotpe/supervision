@@ -35,7 +35,9 @@ import java.util.Map;
 @RequestMapping("/reporte")
 @SessionAttributes({"reporteForm", "reporteActividad"})
 public class ReporteController {
-
+	
+	
+	
     @Autowired
     private UbigeoService ubigeoService;
     @Autowired
@@ -76,24 +78,27 @@ public class ReporteController {
     }
 
     @ModelAttribute("departamentoList")
-    public List<Departamento> colocarDepartamentosEnContexto() {
-        return ubigeoService.obtenerDepartamentos();
+    public List<LabelValue> colocarDepartamentosEnContexto() {
+        //return ubigeoService.obtenerDepartamentos();
+    	return ubigeoService.listDep();
     }
 
     @ModelAttribute("provinciaList")
-    public List<Provincia> colocarProvinciasEnContexto(@ModelAttribute("reporteForm") ReporteForm form) {
+    public List<LabelValue> colocarProvinciasEnContexto(@ModelAttribute("reporteForm") ReporteForm form) {
         if (form.getDepartamento() == null) {
             return Collections.emptyList();
         }
-        return ubigeoService.obtenerProvincias(form.getDepartamento());
+        //return ubigeoService.obtenerProvincias(form.getDepartamento());
+        return ubigeoService.listProv(form.getDepartamento());
     }
 
     @ModelAttribute("distritoList")
-    public List<Distrito> colocarDistritosEnContexto(@ModelAttribute("reporteForm") ReporteForm form) {
+    public List<LabelValue> colocarDistritosEnContexto(@ModelAttribute("reporteForm") ReporteForm form) {
         if (form.getProvincia() == null) {
             return Collections.emptyList();
         }
-        return ubigeoService.obtenerDistritos(form.getDepartamento(), form.getProvincia());
+        //return ubigeoService.obtenerDistritos(form.getDepartamento(), form.getProvincia());
+        return ubigeoService.listDist(form.getDepartamento(),form.getProvincia());
     }
 
     @ModelAttribute("nivelesGobierno")
@@ -113,7 +118,12 @@ public class ReporteController {
 
     @ModelAttribute("supervisorList")
     public List<Supervisor> colocarSupervisorEnContexto() {
-        return supervisorService.listSupervisores();
+    	List<Supervisor> lstSupervisor = supervisorService.listSupervisores();
+    	
+    	for (Supervisor obj : lstSupervisor) {
+			obj.setNombre(obj.getNombre()+" "+obj.getAppPaterno()+" "+obj.getAppMaterno());
+		}
+    	return lstSupervisor;
     }
 
     @ModelAttribute("estadoActividadList")

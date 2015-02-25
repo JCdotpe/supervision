@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import pe.gob.oefa.efa.dao.ActividadDao;
 import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.MatrizActividad;
+import pe.gob.oefa.efa.seguridad.Usuario;
 //import pe.gob.oefa.efa.model.ActividadResponsable;
 import pe.gob.oefa.efa.utils.ConnectionManager;
 import pe.gob.oefa.efa.utils.NamedParameterStatement;
@@ -119,7 +121,7 @@ public class ActividadDaoImpl implements ActividadDao {
 	@SuppressWarnings("unchecked")
 	public List listActividades_by(String fechaini,
 			String fechafin, String nombrefa, String nombresup,
-			String nivel, String informe, String codact, String estado, String estadomatriz, String estadoejec) {
+			String nivel, String informe, String codact, String estado, String estadomatriz, String estadoejec,Usuario usuario) {
 		
 		ArrayList list = new ArrayList();
 		String[] queryx = new String[8];
@@ -165,7 +167,13 @@ public class ActividadDaoImpl implements ActividadDao {
 		      if(estadoejec.compareTo("0") != 0){
 		    	  queryx[8] = " a.estadoejec = :estadoejec ";
 		    	  com.add(8);
-		      }			      
+		      }	
+		      
+		      
+		    
+		      
+		      
+		      
 		      int ox = 1;
 		      for(int c: com){
 		    	  if(ox != com.size())
@@ -176,6 +184,10 @@ public class ActividadDaoImpl implements ActividadDao {
 		    	}		      
 		      
 //		      PreparedStatement preparedStmt = conn.prepareStatement(query);
+		      
+		      if(usuario.getPerfil().equals("Supervisor")){
+		    	  query += " and a.USUARIO = '"+usuario.getUsuario()+"' ";
+		      }
 		      
 		      NamedParameterStatement p=new NamedParameterStatement(conn, query);
 		            

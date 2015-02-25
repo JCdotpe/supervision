@@ -11,8 +11,10 @@ import javax.servlet.http.HttpSession;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+
 import pe.gob.oefa.efa.utils.ConnectionManager;
 import pe.gob.oefa.efa.utils.LabelValue;
+
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import pe.gob.oefa.efa.model.Actividad;
 //import pe.gob.oefa.efa.model.ActividadResponsable;
 
 import pe.gob.oefa.efa.model.MatrizActividad;
+import pe.gob.oefa.efa.seguridad.Usuario;
 import pe.gob.oefa.efa.service.ActividadService;
 import pe.gob.oefa.efa.service.AuditoriaService;
 import pe.gob.oefa.efa.utils.ConstantAuditoria;
@@ -94,7 +97,7 @@ public class ActividadServiceImpl implements ActividadService {
 	@Transactional(readOnly = true)
 	public List listActividades_by(String fechaini, String fechafin,
 			String nombrefa, String nombresup, String nivel, String informe,
-			String codsup, String estado, String estadomatriz, String estadoejec) {
+			String codsup, String estado, String estadomatriz, String estadoejec,Usuario usuario) {
 //		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		
 //		java.sql.Date fechainix = null;
@@ -112,14 +115,16 @@ public class ActividadServiceImpl implements ActividadService {
 //			e.printStackTrace();
 //		}
 		
-		return actividadDao.listActividades_by(fechaini, fechafin, nombrefa, nombresup, nivel, informe, codsup, estado, estadomatriz, estadoejec);
+		return actividadDao.listActividades_by(fechaini, fechafin, nombrefa, nombresup, nivel, informe, codsup, estado, estadomatriz, estadoejec,usuario);
 	}
 	
 	@Transactional
 	public void setEstadoAct(BigDecimal idact, String estado) {
 		Actividad actividad = actividadDao.getActividad(idact);
 		if(actividad.getEstado().compareTo("0") == 0){
-			/*String cod = ("000000" + idact.toString()).substring(idact.toString().length());
+			
+			/*
+			String cod = ("000000" + idact.toString()).substring(idact.toString().length());
 			int year = Calendar.getInstance().get(Calendar.YEAR);
 				switch ( Integer.parseInt(actividad.getNivel())) {
 				case 1:
@@ -133,9 +138,9 @@ public class ActividadServiceImpl implements ActividadService {
 					break;				
 				default:
 					break;
-				}*/
+				}
 				
-				
+				*/
 		        CallableStatement callableStatement = null;
 		        Connection connection = null;			
 				
@@ -144,13 +149,15 @@ public class ActividadServiceImpl implements ActividadService {
 			    
 			    
 			    String storeProcedure = "{ CALL supervision.get_codactividad(?,?) }";
-			    
+			   
 		        connection = ConnectionManager.getConnection();
 		      
 		        callableStatement = connection.prepareCall(storeProcedure);	    
 			    
 		        callableStatement.setBigDecimal(1, idact);
 		        callableStatement.registerOutParameter(2, java.sql.Types.VARCHAR);
+		      
+		      
 			  
 		        callableStatement.execute();
 		        
@@ -171,7 +178,7 @@ public class ActividadServiceImpl implements ActividadService {
 				}				
 				
 				
-				
+			
 				
 		}
 	

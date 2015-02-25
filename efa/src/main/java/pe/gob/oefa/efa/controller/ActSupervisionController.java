@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,7 @@ import pe.gob.oefa.efa.model.Responsable;
 import pe.gob.oefa.efa.model.Supervisor;
 import pe.gob.oefa.efa.model.SupervisorEmergencia;
 import pe.gob.oefa.efa.model.SupervisorFile;
+import pe.gob.oefa.efa.seguridad.Usuario;
 import pe.gob.oefa.efa.service.ActividadService;
 import pe.gob.oefa.efa.service.EfaService;
 import pe.gob.oefa.efa.service.ResponsableService;
@@ -102,8 +105,9 @@ public class ActSupervisionController {
 	}
 	
 	@RequestMapping(value = { "/", "/listActSupervision" }, method = RequestMethod.POST)
-	public String getResponsablesdsa(HttpServletRequest request, Map<String, Object> map ) {
-		List as = actividadService.listActividades_by(request.getParameter("fechaini"),request.getParameter("fechafin") ,request.getParameter("nombrefa") ,request.getParameter("nombresup")  , request.getParameter("nivel"), request.getParameter("informe"), request.getParameter("codact"), request.getParameter("estado"), request.getParameter("estadomatriz"), request.getParameter("estadoejec"));
+	public String getResponsablesdsa(HttpServletRequest request, Map<String, Object> map,HttpSession session) {
+		Usuario usuario = (Usuario)session.getAttribute("usuario");
+		List as = actividadService.listActividades_by(request.getParameter("fechaini"),request.getParameter("fechafin") ,request.getParameter("nombrefa") ,request.getParameter("nombresup")  , request.getParameter("nivel"), request.getParameter("informe"), request.getParameter("codact"), request.getParameter("estado"), request.getParameter("estadomatriz"), request.getParameter("estadoejec"),usuario);
 		map.put("fechaini", request.getParameter("fechaini"));
 		map.put("fechafin", request.getParameter("fechafin"));
 		map.put("nombrefa", request.getParameter("nombrefa"));

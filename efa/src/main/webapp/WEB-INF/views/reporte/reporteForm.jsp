@@ -64,21 +64,21 @@
             <div class="col-sm-2">
                 <form:select path="departamento" id="departamento" cssClass="form-control">
                     <form:option value="">--- Seleccione ---</form:option>
-                    <form:options items="${departamentoList}" itemLabel="nombre" itemValue="codigo"/>
+                    <form:options items="${departamentoList}" itemLabel="label" itemValue="value"/>
                 </form:select>
             </div>
             <label for="provinciaId" class="col-sm-1 control-label">Provincia</label>
             <div class="col-sm-2">
                 <form:select path="provincia" id="provincia" cssClass="form-control">
                     <form:option value="">--- Seleccione ---</form:option>
-                    <form:options items="${provinciaList}" itemLabel="nombre" itemValue="id.codigo"/>
+                    <form:options items="${provinciaList}" itemLabel="label" itemValue="value"/>
                 </form:select>
             </div>
             <label for="distritoId" class="col-sm-1 control-label">Distrito</label>
             <div class="col-sm-2">
                 <form:select path="distrito" id="distrito" cssClass="form-control">
                     <form:option value="">--- Seleccione ---</form:option>
-                    <form:options items="${distritoList}" itemLabel="nombre" itemValue="id.codigo"/>
+                    <form:options items="${distritoList}" itemLabel="label" itemValue="value"/>
                 </form:select>
             </div>
         </div>
@@ -132,6 +132,18 @@
     $(document).ready(function() {
     	
     	$('#idComponeteVisible').css('display','none');
+    	$( "#idCheckIMatriz" ).prop( "checked", false );
+    	 
+    	var valor = $('#idCheckIMatriz').is(':checked');
+	   	if(valor==true){
+	   	  $('#idComponeteVisible').css('display','block'); 	  
+	   	}else{
+	   	  $('#idComponeteVisible').css('display','none'); 
+	   	  var text = "--- Seleccione ---";
+	   	  $("#componenteId option").filter(function() {        			    
+	  		    return $(this).text() == text; 
+	  	  }).prop('selected', true);	   	
+	   	}
     	//$('#idSubComponeteVisible').css('display','none');
     	
         var defaultOption = "<option value=''>--- Seleccione ---</option>";
@@ -160,15 +172,13 @@
         $('#idCheckIMatriz').change(function(){        	
         	 var valor = $('#idCheckIMatriz').is(':checked');
         	 if(valor==true){
-        		 $('#idComponeteVisible').css('display','block'); 
-        		 //$('#idSubComponeteVisible').css('display','block');
+        		 $('#idComponeteVisible').css('display','block');
         	 }else{
         		 $('#idComponeteVisible').css('display','none'); 
         		 var text = "--- Seleccione ---";
         		 $("#componenteId option").filter(function() {        			    
        			    return $(this).text() == text; 
        			 }).prop('selected', true);
-        		 //$('#idSubComponeteVisible').css('display','none');
         	 }
         });
         
