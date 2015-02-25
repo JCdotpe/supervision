@@ -27,6 +27,8 @@ function ini_table(){
 	
 }
 
+$('#fechaInicioDate').datepicker({ dateFormat: "dd/mm/yy" });
+$('#fechaFinDate').datepicker({ dateFormat: "dd/mm/yy" });
 
 $(function() {
 	$('#fechaInicioDate, #fechaFinDate').datepicker();
