@@ -43,7 +43,7 @@ public class AuditoriaServiceImpl implements AuditoriaService{
 			obj.setHostName(InetAddress.getLocalHost().getHostName().toString());
 			obj.setIp(InetAddress.getLocalHost().getHostAddress());
 			obj.setHora(formatTime.format(new Date()));
-			
+			//MIGUEL
 			auditoriaDao.saveAuditoria(obj);
 		} 
 		catch (UnknownHostException e) {
