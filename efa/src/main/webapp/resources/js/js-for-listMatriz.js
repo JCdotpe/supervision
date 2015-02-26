@@ -10,7 +10,7 @@ $(document).ready(function() {
 		$("#modalverMatriz").attr("href", "/efa/matriz/get/"+codActividad);
 		listMatriz.html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
 		
-		$("#modalverMatriz").css("display","block");
+		$("#modalverMatriz").removeAttr("style");
 		
 		$.post(prefix + '/matriz/getMatrices', 
 			{codActividad:codActividad, codNivel:codNivel},

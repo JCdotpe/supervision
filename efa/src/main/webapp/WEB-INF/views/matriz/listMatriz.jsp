@@ -13,7 +13,7 @@
     
     <script type="text/javascript" src='<c:url value="/web-resources/js/lib/jquery.form.js"/>'></script>   
  	<script type="text/javascript" src='<c:url value="/web-resources/js/lib/additional-methods.min.js"/>'></script>
- 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?8"/>'></script>   
+ 	<script type="text/javascript" src='<c:url value="/web-resources/js/js-for-listMatriz.js?9"/>'></script>   
  	
  
     </jsp:attribute>
@@ -213,7 +213,7 @@
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h4 id="myModalLabel">Archivos</h4>
+		<h4 style="font-size: 9px" id="myModalLabel">Archivos</h4>
 	</div>
 	<div class="modal-body">
 		<c:url var="actionUrlMatriz" value="/matriz/saveArchive" />
