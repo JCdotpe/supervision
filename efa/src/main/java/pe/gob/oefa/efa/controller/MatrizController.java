@@ -207,7 +207,7 @@ public class MatrizController {
 	}
 	
 	@RequestMapping(value = "/get/{idactividad}", method = RequestMethod.GET)
-	public String getByActividad(@PathVariable("idactividad") BigDecimal idactividad, Map<String, Object> map) {
+	public String getByActividad(@PathVariable("idactividad") BigDecimal idactividad, Map<String, Object> map, HttpSession session) {
 		List<MatrizActividad> ma = matrizservice.listByActividad(idactividad);
 		ArrayList<Matriz> mlist = new ArrayList<Matriz>();
 		List<ComponenteMatriz> mlistComponente = new ArrayList<ComponenteMatriz>();
@@ -257,6 +257,22 @@ public class MatrizController {
 			}
 		}
 		
+		
+		//Checkear si se completaron las x Matrices para actualizar la actividad
+		int nCompletadoMatrizActividad = 0;
+		for (int i = 0; i < ma.size(); i++) {
+			MatrizActividad xMa = ma.get(i);
+			if (xMa.getEstadomatrizactividad().compareToIgnoreCase("2") == 0) {
+				nCompletadoMatrizActividad++;
+			}
+		}
+		
+		if (nCompletadoMatrizActividad == mlist.size()) {
+			//Actualiza estado de actividad.
+			Actividad actX= actividadService.getActividad(idactividad);
+			actX.setEstado("2");
+			actividadService.saveActividad(actX, session);
+		}
 		
 		map.put("listMatrices", mlist);
 		map.put("listMatrizActividad", ma);
@@ -330,7 +346,7 @@ public class MatrizController {
                 	
                 	List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
     				List<Object> obj = new ArrayList<Object>();
-    				obj.add(new String("El tamaño del archivo no es el permitido"));
+    				obj.add(new String("El tamaï¿½o del archivo no es el permitido"));
     				obj.add(matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones()));
     				return obj;
                 }else{            
@@ -352,7 +368,7 @@ public class MatrizController {
 	                	
 	                	List<MatrizActividadFuncion> listMaf = matrizservice.getListMatrizFuncion(idmatrizactividad, idfuncion);
 	    				List<Object> obj = new ArrayList<Object>();
-	    				obj.add(new String("La extensión del archivo no esta permitida."));
+	    				obj.add(new String("La extensiï¿½n del archivo no esta permitida."));
 	    				obj.add(matrizservice.listArchives(listMaf.get(0).getIdmatrizactividadfunciones()));
 	    				return obj;
 	                }

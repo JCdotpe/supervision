@@ -9,15 +9,18 @@ $(document).ready(function() {
 		$("#idactividad_modal").val(codActividad);
 		$("#modalverMatriz").attr("href", "/efa/matriz/get/"+codActividad);
 		listMatriz.html('<tr><td colspan="3"><div class="loader"></div></td></tr>');
+		
+		$("#modalverMatriz").css("display","block");
+		
 		$.post(prefix + '/matriz/getMatrices', 
 			{codActividad:codActividad, codNivel:codNivel},
 			function(json_data){
 				listMatriz.html("");
 				$.each(json_data, function(i, data){
-					
 					$.post(prefix + '/matriz/getMatricesActividadbyId', {idMatriz:data.label, idActividad:codActividad},
 							function(response){
 						if (response.length > 0) {
+							var ncheck = 0;
 							$.each(response, function(i, dt){
 								var checked = "";
 								var disabled = false;
@@ -26,6 +29,7 @@ $(document).ready(function() {
 								}
 								else if (dt.estadomatrizactividad === "2") {
 									disabled = true;
+									ncheck++;
 								}
 								var row = '';
 								row += '<tr>';
@@ -37,7 +41,11 @@ $(document).ready(function() {
 								row += '<td>' + data.value + '</td>';
 								row += '</tr>';
 								listMatriz.append(row);
-							})
+							});
+							
+							if (ncheck == response.length) {
+								$("#modalverMatriz").css("display","none");
+							}
 						}
 						else{
 							var row = '';
