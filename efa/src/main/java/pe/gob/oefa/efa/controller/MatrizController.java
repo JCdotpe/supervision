@@ -121,6 +121,8 @@ public class MatrizController {
 			}
 		}
 
+		
+		
 		// Verificar si un componente fue completado
 		String idfunciones = "";
 		for (int i = 0; i < lFuncionesComponente.size(); i++) {
@@ -129,16 +131,16 @@ public class MatrizController {
 		idfunciones = idfunciones.substring(0, idfunciones.length()-1);
 		List<MatrizActividadFuncion> mlafc = matrizservice.getListMatrizFuncionByIdMa(idfunciones);
 		
-		
 		int nfuncionesCompleted = 0;
 		for (int i = 0; i < mlafc.size(); i++) {
 			if (mlafc.get(i).getEstadomatrizactividadfunciones().trim().compareToIgnoreCase("1") == 0) {
 				nfuncionesCompleted++;
 			}
 		}
-		
+		System.out.println("----");
 		System.out.println(nfuncionesCompleted);
 		System.out.println(mlafc.size());
+		System.out.println("----");
 		
 		if (nfuncionesCompleted == mlafc.size()) {
 			//insert para completado de componente
@@ -266,6 +268,10 @@ public class MatrizController {
 				nCompletadoMatrizActividad++;
 			}
 		}
+		
+		System.out.println(nCompletadoMatrizActividad);
+		System.out.println(mlist.size());
+		
 		
 		if (nCompletadoMatrizActividad == mlist.size()) {
 			//Actualiza estado de actividad.
