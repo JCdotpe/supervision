@@ -129,7 +129,8 @@ public class MatrizController {
 			idfunciones+=lFuncionesComponente.get(i).getIdfuncion()+",";
 		}
 		idfunciones = idfunciones.substring(0, idfunciones.length()-1);
-		List<MatrizActividadFuncion> mlafc = matrizservice.getListMatrizFuncionByIdMa(idfunciones);
+		
+		List<MatrizActividadFuncion> mlafc = matrizservice.getListMatrizFuncionByIdMa(idfunciones, mactividad.getIdmatrizactividad());
 		
 		int nfuncionesCompleted = 0;
 		for (int i = 0; i < mlafc.size(); i++) {

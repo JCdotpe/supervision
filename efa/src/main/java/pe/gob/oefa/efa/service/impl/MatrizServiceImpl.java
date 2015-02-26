@@ -184,8 +184,8 @@ public class MatrizServiceImpl implements MatrizService{
 	}
 
 	@Transactional
-	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions) {
-		return matrizdao.getListMatrizFuncionByIdMa(idfuntions);
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions, BigDecimal idmatrizactividad) {
+		return matrizdao.getListMatrizFuncionByIdMa(idfuntions, idmatrizactividad);
 	}
 	
 	@Transactional
