@@ -252,10 +252,10 @@ public class MatrizDaoImpl implements MatrizDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions) {
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions, BigDecimal idmatrizactividad) {
 		// TODO Auto-generated method stub
 		
-		String query = "from MatrizActividadFuncion where IDFUNCION IN ("+idfuntions+")";
+		String query = "from MatrizActividadFuncion where IDFUNCION IN ("+idfuntions+") AND IDMATRIZACTIVIDAD="+ idmatrizactividad.toString();
 		
 		return getSession().createQuery(query).list();
 	}

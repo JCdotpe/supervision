@@ -51,7 +51,7 @@ public interface MatrizDao {
 	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa(
 			BigDecimal idmatrizactividad, String estado);
 	
-	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions);
+	public List<MatrizActividadFuncion> getListMatrizFuncionByIdMa( String idfuntions, BigDecimal idmatrizactividad);
 
 	public List<MatrizActividad> getbyMatrizActividad(int codActividad,
 			int codMatriz);
