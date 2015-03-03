@@ -33,4 +33,7 @@ public interface SupervisorService {
 	 */
 	public void deleteSupervisor(BigDecimal id,HttpSession session);
 	public Map<String, String> getDni(String dni);
+	
+	public List<Supervisor> getSupervisorByDNI(String dni);
+	public void updateSupervisorDNI(Supervisor oSupervisor);
 }

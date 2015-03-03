@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +73,15 @@ public class SupervisorDaoImpl implements SupervisorDao {
 
 	private SessionFactory getSessionFactory() {
 		return sessionFactory;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Supervisor> getSupervisorByDNI(String dni) {		
+		return getSession().createQuery("from Supervisor where dni='"+dni+"'").list();
+	}
+
+	public void updateSupervisorDNI(Supervisor oSupervisor) {
+		getSession().update(oSupervisor);
+		
 	}
 }

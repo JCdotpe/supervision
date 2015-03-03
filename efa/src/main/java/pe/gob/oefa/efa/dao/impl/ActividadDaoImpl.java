@@ -186,7 +186,7 @@ public class ActividadDaoImpl implements ActividadDao {
 //		      PreparedStatement preparedStmt = conn.prepareStatement(query);
 		      
 		      if(usuario.getPerfil().equals("Supervisor")){
-		    	  query += " and a.USUARIO = '"+usuario.getUsuario()+"' ";
+		    	  query += " and s.USUARIO = '"+usuario.getUsuario()+"' ";
 		      }
 		      
 		      NamedParameterStatement p=new NamedParameterStatement(conn, query);
@@ -260,6 +260,10 @@ public class ActividadDaoImpl implements ActividadDao {
 
 	public void saveActividadMatriz(MatrizActividad matrizactividad) {
 		getSession().merge(matrizactividad);
+	}
+
+	public void updateActividad(Actividad actividad) {
+		getSession().update(actividad);		
 	}
 
 

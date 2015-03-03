@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.debugsac.bean.Rol;
 
 import pe.gob.oefa.efa.form.LoginForm;
+import pe.gob.oefa.efa.model.Supervisor;
 import pe.gob.oefa.efa.seguridad.Menu;
 import pe.gob.oefa.efa.seguridad.Opcion;
 import pe.gob.oefa.efa.seguridad.Usuario;
 import pe.gob.oefa.efa.service.SeguridadService;
+import pe.gob.oefa.efa.service.SupervisorService;
 
 
 @Controller
@@ -29,6 +31,10 @@ public class LoginController {
 	
 	@Autowired
 	private SeguridadService seguridadService;
+	
+	@Autowired
+	private SupervisorService supervisorService;	
+	
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(HttpServletRequest request, HttpServletResponse response, ModelMap map){
@@ -83,7 +89,16 @@ public class LoginController {
 						usuario.setPerfil(rol.getNombre());	
 						usuario.setCodPerfil(rol.getIdRol());
 					}
-
+					
+					
+					
+					if(usuario.getPerfil().equals("Supervisor")){
+						Supervisor oSupervisor = supervisorService.getSupervisorByDNI(uv.getDNI()).size() > 0 ? supervisorService.getSupervisorByDNI(uv.getDNI()).get(0):null;
+						if(oSupervisor!=null){
+							oSupervisor.setUsuario(u.getUserName());
+							supervisorService.updateSupervisorDNI(oSupervisor);
+						}
+					}
 					
 					Pagina paginas[] = seguridadService.obtenerSitemapPorUsuario(usuario.getUsuario(), 2);
 					List<Menu> listaMenu = new ArrayList<Menu>();

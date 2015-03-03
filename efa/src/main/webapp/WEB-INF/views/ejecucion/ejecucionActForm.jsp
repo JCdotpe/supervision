@@ -126,12 +126,28 @@ $(document).ready(function(){
 	    }  	
 	});
 	
-// 	$('#btnGuardar').click(function(e){
+//  	$('#btnGuardar').click(function(e){
+//  		debugger;
+//  		var form_data = {
+//  				  id: ${actId}
+//  				};
+//  		$.ajax({
+// 		    type:"post",
+// 		    data:form_data,
+// 		    url:prefix +'/ejeact/updejeact/',
+// 		    success: function(json){
+// 				if(json[0].value == "1"){
+// 					alert("Se cerro la actividad satisfactoriamente");
+// 				}
+// 		    }
+// 		});	
+ 		
+ 		
 // 		e.preventDefault();
 // 		var frmef = $('#ejeactForm');
 // 		var disabled = frmef.find(':input:disabled').removeAttr('disabled');
 // 		frmef.submit();
-// 	});
+//	});
 	
 	
 });

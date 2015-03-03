@@ -1,6 +1,7 @@
 package pe.gob.oefa.efa.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pe.gob.oefa.efa.model.Actividad;
 import pe.gob.oefa.efa.model.Administrado;
@@ -77,11 +79,15 @@ public class EjecucionActividadController {
 	
 	
 	@RequestMapping(value="/addejeact", method = RequestMethod.POST)
-	public String getResponsablesdsa(@RequestParam("id") BigDecimal actId, @ModelAttribute("eje") EjecucionActividad ejecucionActividad, HttpSession session) {
+	public String getResponsablesdsa(@RequestParam("id") BigDecimal actId, @ModelAttribute("eje") EjecucionActividad ejecucionActividad, HttpSession session,@RequestParam("estado") String estado) {
 		Actividad actividad = actividadService.getActividad(actId);
 		
 		actividad.setSupervision(ejecucionActividad.getSupespecial());
 		actividad.setHallazgo(ejecucionActividad.getHallazgos());
+		if(estado.equals("3")){
+			actividad.setEstado("3");
+		}
+		//actividad.setEstado("3");
 		//actividadService.saveActividad(actividad,session);
 		actividadService.saveActividad(actividad,session);
 //		EjecucionActividad peje = ejecucionActividadService.getEjecucionActividad(ideje);
@@ -98,5 +104,18 @@ public class EjecucionActividadController {
 					
 		return linkr;
 	}
+	
+	@RequestMapping(value="/updejeact", method = RequestMethod.POST,produces = "application/json")
+	@ResponseBody
+	public List<LabelValue> updatActividad(@RequestParam("id") BigDecimal actId){
+		Actividad actividad = actividadService.getActividad(actId);
+		List<LabelValue> selectItems = new ArrayList<LabelValue>();
+		actividad.setEstado("3");
+		actividadService.updateActividad(actividad);
+		selectItems.add(new LabelValue("success","1"));
+		return selectItems;
+	}
+	
+	
 	
 }

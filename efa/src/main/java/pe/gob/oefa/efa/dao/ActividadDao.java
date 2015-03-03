@@ -30,4 +30,6 @@ public interface ActividadDao {
 	public void deleteActResponsable(BigDecimal actid, BigDecimal resid );
 	public void deleteActSupervisor(BigDecimal actid, BigDecimal supid );
 	public void deleteActividad(BigDecimal id);
+	
+	public void updateActividad(Actividad actividad);
 }

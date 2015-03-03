@@ -37,4 +37,6 @@ public interface ActividadService {
 	public void deleteActResponsable(BigDecimal actid, BigDecimal resid,HttpSession session);
 	public void deleteActSupervisor(BigDecimal actid, BigDecimal supid,HttpSession session );
 	public void deleteActividad(BigDecimal id,HttpSession session);
+	
+	public void updateActividad(Actividad actividad);
 }

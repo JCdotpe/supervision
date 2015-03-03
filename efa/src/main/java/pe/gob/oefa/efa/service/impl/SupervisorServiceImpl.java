@@ -16,6 +16,7 @@ import java.util.Map;
 
 
 
+
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Query;
@@ -137,4 +138,17 @@ public class SupervisorServiceImpl implements SupervisorService {
 	    return selectItems;	
 
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Supervisor> getSupervisorByDNI(String dni){
+		return supervisorDao.getSupervisorByDNI(dni);
+	}
+	
+	@Transactional
+	public void updateSupervisorDNI(Supervisor oSupervisor) {
+		supervisorDao.updateSupervisorDNI(oSupervisor);
+	}
+	
+	
+	
 }

@@ -26,4 +26,8 @@ public interface SupervisorDao {
 	 * DELETE
 	 */
 	public void deleteSupervisor(BigDecimal id);
+	
+	public List<Supervisor> getSupervisorByDNI(String dni);
+	public void updateSupervisorDNI(Supervisor oSupervisor);
+	
 }

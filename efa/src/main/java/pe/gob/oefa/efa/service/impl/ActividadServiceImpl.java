@@ -194,6 +194,12 @@ public class ActividadServiceImpl implements ActividadService {
 		 auditoriaService.saveAuditoria(((pe.gob.oefa.efa.seguridad.Usuario)session.getAttribute("usuario")).getUsuario(), 
 				 matrizactividad.getIdmatrizactividad() != null ? ConstantAuditoria.Acc_Modificar : ConstantAuditoria.Acc_Registrar,
 							ConstantAuditoria.Table_Supervicion_MatrizActividad, matrizactividad.getIdmatrizactividad() != null ? matrizactividad.getIdmatrizactividad().toString() : "");
+	}
+	
+	@Transactional
+	public void updateActividad(Actividad actividad) {
+		actividadDao.updateActividad(actividad);
+		
 	}	
 	
 

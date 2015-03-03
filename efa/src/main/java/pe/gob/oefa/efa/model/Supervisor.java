@@ -52,6 +52,9 @@ public class Supervisor implements java.io.Serializable {
 	private Set<SupervisorFile> supervisorFiles = new HashSet<SupervisorFile>(0);
 	private Set<SupervisorEmergencia>  supervisorEmergencias = new HashSet<SupervisorEmergencia>(0);
 	private Set<Actividad> actividades = new HashSet<Actividad>(0);
+	
+	
+	private String usuario;
 
 	private String flgactivo;
 	
@@ -339,6 +342,15 @@ public class Supervisor implements java.io.Serializable {
 
 	public void setFlgactivo(String flgactivo) {
 		this.flgactivo = flgactivo;
+	}
+	
+	@Column
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}	
 	
 	
