@@ -58,5 +58,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jore/Desktop/Decipher.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/jore/Desktop/BASE64Decoder.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
